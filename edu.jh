@@ -1,9 +1,5 @@
 
-entity Domain {
-	title String
-    description String
-    city String
-}
+
 
 entity Scenario {
 	title String
@@ -35,6 +31,11 @@ entity Educator {
 	email String
 }
 
+entity Domain {
+	title String
+    description String
+    city String
+}
 
 enum Language {
      ENGLISH, ITALIAN
@@ -44,9 +45,6 @@ enum Level {
 }
 
 
-relationship OneToMany {
-   Scenario { Learner(lastName) } to Learner {Scenario(title)}
-}
 
 relationship OneToOne {
    Module { Scenario(title) } to Scenario {Module(title)}
@@ -57,7 +55,11 @@ relationship OneToOne {
 }
 
 relationship ManyToMany {
-  Educator { Scenario(title) } to Scenario {Educator(lastName)}
+  Scenario { Educator(lastName) } to Educator{Scenario(title)}
+}
+
+relationship ManyToMany {
+  Scenario { Learnet(lastName) } to Learnet{Scenario(title)}
 }
 
 
