@@ -144,12 +144,17 @@ public class EducatorResource {
     /**
      * {@code GET  /educators} : get all the educators.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of educators in body.
      */
     @GetMapping("/educators")
-    public List<Educator> getAllEducators() {
+    public List<Educator> getAllEducators(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Educators");
-        return educatorRepository.findAll();
+        if (eagerload) {
+            return educatorRepository.findAllWithEagerRelationships();
+        } else {
+            return educatorRepository.findAll();
+        }
     }
 
     /**
@@ -161,7 +166,7 @@ public class EducatorResource {
     @GetMapping("/educators/{id}")
     public ResponseEntity<Educator> getEducator(@PathVariable String id) {
         log.debug("REST request to get Educator : {}", id);
-        Optional<Educator> educator = educatorRepository.findById(id);
+        Optional<Educator> educator = educatorRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(educator);
     }
 

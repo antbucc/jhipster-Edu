@@ -21,8 +21,9 @@
       "title": "Title",
       "description": "Description",
       "language": "Language",
+      "domain": "Domain",
       "module": "Module",
-      "domain": "Domain"
+      "educator": "Educator"
     }
   }
 }

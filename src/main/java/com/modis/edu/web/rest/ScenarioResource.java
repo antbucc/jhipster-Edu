@@ -153,13 +153,15 @@ public class ScenarioResource {
      * {@code GET  /scenarios} : get all the scenarios.
      *
      * @param pageable the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of scenarios in body.
      */
     @GetMapping("/scenarios")
     public ResponseEntity<List<Scenario>> getAllScenarios(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        @RequestParam(required = false) String filter
+        @RequestParam(required = false) String filter,
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
     ) {
         if ("module-is-null".equals(filter)) {
             log.debug("REST request to get all Scenarios where module is null");
@@ -172,7 +174,12 @@ public class ScenarioResource {
             );
         }
         log.debug("REST request to get a page of Scenarios");
-        Page<Scenario> page = scenarioRepository.findAll(pageable);
+        Page<Scenario> page;
+        if (eagerload) {
+            page = scenarioRepository.findAllWithEagerRelationships(pageable);
+        } else {
+            page = scenarioRepository.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -186,7 +193,7 @@ public class ScenarioResource {
     @GetMapping("/scenarios/{id}")
     public ResponseEntity<Scenario> getScenario(@PathVariable String id) {
         log.debug("REST request to get Scenario : {}", id);
-        Optional<Scenario> scenario = scenarioRepository.findById(id);
+        Optional<Scenario> scenario = scenarioRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(scenario);
     }
 

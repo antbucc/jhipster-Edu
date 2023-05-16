@@ -2,8 +2,6 @@ package com.modis.edu.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -31,9 +29,7 @@ public class Domain implements Serializable {
     private String city;
 
     @DBRef
-    @Field("scenarios")
-    @JsonIgnoreProperties(value = { "module", "domains" }, allowSetters = true)
-    private Set<Scenario> scenarios = new HashSet<>();
+    private Scenario scenario;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -89,28 +85,22 @@ public class Domain implements Serializable {
         this.city = city;
     }
 
-    public Set<Scenario> getScenarios() {
-        return this.scenarios;
+    public Scenario getScenario() {
+        return this.scenario;
     }
 
-    public void setScenarios(Set<Scenario> scenarios) {
-        this.scenarios = scenarios;
+    public void setScenario(Scenario scenario) {
+        if (this.scenario != null) {
+            this.scenario.setDomain(null);
+        }
+        if (scenario != null) {
+            scenario.setDomain(this);
+        }
+        this.scenario = scenario;
     }
 
-    public Domain scenarios(Set<Scenario> scenarios) {
-        this.setScenarios(scenarios);
-        return this;
-    }
-
-    public Domain addScenario(Scenario scenario) {
-        this.scenarios.add(scenario);
-        scenario.getDomains().add(this);
-        return this;
-    }
-
-    public Domain removeScenario(Scenario scenario) {
-        this.scenarios.remove(scenario);
-        scenario.getDomains().remove(this);
+    public Domain scenario(Scenario scenario) {
+        this.setScenario(scenario);
         return this;
     }
 

@@ -60,6 +60,9 @@ export const Educator = () => {
                 <th>
                   <Translate contentKey="eduApp.educator.email">Email</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="eduApp.educator.scenario">Scenario</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -74,6 +77,16 @@ export const Educator = () => {
                   <td>{educator.firstName}</td>
                   <td>{educator.lastName}</td>
                   <td>{educator.email}</td>
+                  <td>
+                    {educator.scenarios
+                      ? educator.scenarios.map((val, j) => (
+                          <span key={j}>
+                            <Link to={`/scenario/${val.id}`}>{val.title}</Link>
+                            {j === educator.scenarios.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/educator/${educator.id}`} color="info" size="sm" data-cy="entityDetailsButton">

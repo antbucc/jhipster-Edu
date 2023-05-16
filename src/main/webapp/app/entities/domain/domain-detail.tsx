@@ -50,19 +50,6 @@ export const DomainDetail = () => {
             </span>
           </dt>
           <dd>{domainEntity.city}</dd>
-          <dt>
-            <Translate contentKey="eduApp.domain.scenario">Scenario</Translate>
-          </dt>
-          <dd>
-            {domainEntity.scenarios
-              ? domainEntity.scenarios.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
-                    {domainEntity.scenarios && i === domainEntity.scenarios.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
         </dl>
         <Button tag={Link} to="/domain" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

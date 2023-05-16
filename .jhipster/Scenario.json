@@ -27,6 +27,14 @@
   "relationships": [
     {
       "otherEntityField": "title",
+      "otherEntityName": "domain",
+      "otherEntityRelationshipName": "scenario",
+      "ownerSide": true,
+      "relationshipName": "domain",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "title",
       "otherEntityName": "module",
       "otherEntityRelationshipName": "scenario",
       "ownerSide": false,
@@ -34,10 +42,11 @@
       "relationshipType": "one-to-one"
     },
     {
-      "otherEntityName": "domain",
+      "otherEntityField": "lastName",
+      "otherEntityName": "educator",
       "otherEntityRelationshipName": "scenario",
       "ownerSide": false,
-      "relationshipName": "domain",
+      "relationshipName": "educator",
       "relationshipType": "many-to-many"
     }
   ],

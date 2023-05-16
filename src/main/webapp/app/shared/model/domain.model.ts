@@ -5,7 +5,7 @@ export interface IDomain {
   title?: string | null;
   description?: string | null;
   city?: string | null;
-  scenarios?: IScenario[] | null;
+  scenario?: IScenario | null;
 }
 
 export const defaultValue: Readonly<IDomain> = {};

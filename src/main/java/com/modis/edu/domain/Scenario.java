@@ -32,12 +32,16 @@ public class Scenario implements Serializable {
     private Language language;
 
     @DBRef
+    @Field("domain")
+    private Domain domain;
+
+    @DBRef
     private Module module;
 
     @DBRef
-    @Field("domains")
+    @Field("educators")
     @JsonIgnoreProperties(value = { "scenarios" }, allowSetters = true)
-    private Set<Domain> domains = new HashSet<>();
+    private Set<Educator> educators = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -93,6 +97,19 @@ public class Scenario implements Serializable {
         this.language = language;
     }
 
+    public Domain getDomain() {
+        return this.domain;
+    }
+
+    public void setDomain(Domain domain) {
+        this.domain = domain;
+    }
+
+    public Scenario domain(Domain domain) {
+        this.setDomain(domain);
+        return this;
+    }
+
     public Module getModule() {
         return this.module;
     }
@@ -112,34 +129,34 @@ public class Scenario implements Serializable {
         return this;
     }
 
-    public Set<Domain> getDomains() {
-        return this.domains;
+    public Set<Educator> getEducators() {
+        return this.educators;
     }
 
-    public void setDomains(Set<Domain> domains) {
-        if (this.domains != null) {
-            this.domains.forEach(i -> i.removeScenario(this));
+    public void setEducators(Set<Educator> educators) {
+        if (this.educators != null) {
+            this.educators.forEach(i -> i.removeScenario(this));
         }
-        if (domains != null) {
-            domains.forEach(i -> i.addScenario(this));
+        if (educators != null) {
+            educators.forEach(i -> i.addScenario(this));
         }
-        this.domains = domains;
+        this.educators = educators;
     }
 
-    public Scenario domains(Set<Domain> domains) {
-        this.setDomains(domains);
+    public Scenario educators(Set<Educator> educators) {
+        this.setEducators(educators);
         return this;
     }
 
-    public Scenario addDomain(Domain domain) {
-        this.domains.add(domain);
-        domain.getScenarios().add(this);
+    public Scenario addEducator(Educator educator) {
+        this.educators.add(educator);
+        educator.getScenarios().add(this);
         return this;
     }
 
-    public Scenario removeDomain(Domain domain) {
-        this.domains.remove(domain);
-        domain.getScenarios().remove(this);
+    public Scenario removeEducator(Educator educator) {
+        this.educators.remove(educator);
+        educator.getScenarios().remove(this);
         return this;
     }
 

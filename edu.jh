@@ -45,14 +45,19 @@ enum Level {
 
 
 
-relationship ManyToMany {
-	Domain to Scenario
-}
-
 
 relationship OneToOne {
    Module { Scenario(title) } to Scenario {Module(title)}
 }
+
+relationship OneToOne {
+  Scenario { Domain(title) } to Domain {Scenario(title)}
+}
+
+relationship ManyToMany {
+  Educator { Scenario(title) } to Scenario {Educator(lastName)}
+}
+
 
 
 

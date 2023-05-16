@@ -8,10 +8,12 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IModule } from 'app/shared/model/module.model';
-import { getEntities as getModules } from 'app/entities/module/module.reducer';
 import { IDomain } from 'app/shared/model/domain.model';
 import { getEntities as getDomains } from 'app/entities/domain/domain.reducer';
+import { IModule } from 'app/shared/model/module.model';
+import { getEntities as getModules } from 'app/entities/module/module.reducer';
+import { IEducator } from 'app/shared/model/educator.model';
+import { getEntities as getEducators } from 'app/entities/educator/educator.reducer';
 import { IScenario } from 'app/shared/model/scenario.model';
 import { Language } from 'app/shared/model/enumerations/language.model';
 import { getEntity, updateEntity, createEntity, reset } from './scenario.reducer';
@@ -24,8 +26,9 @@ export const ScenarioUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const modules = useAppSelector(state => state.module.entities);
   const domains = useAppSelector(state => state.domain.entities);
+  const modules = useAppSelector(state => state.module.entities);
+  const educators = useAppSelector(state => state.educator.entities);
   const scenarioEntity = useAppSelector(state => state.scenario.entity);
   const loading = useAppSelector(state => state.scenario.loading);
   const updating = useAppSelector(state => state.scenario.updating);
@@ -43,8 +46,9 @@ export const ScenarioUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getModules({}));
     dispatch(getDomains({}));
+    dispatch(getModules({}));
+    dispatch(getEducators({}));
   }, []);
 
   useEffect(() => {
@@ -57,6 +61,7 @@ export const ScenarioUpdate = () => {
     const entity = {
       ...scenarioEntity,
       ...values,
+      domain: domains.find(it => it.id.toString() === values.domain.toString()),
     };
 
     if (isNew) {
@@ -72,6 +77,7 @@ export const ScenarioUpdate = () => {
       : {
           language: 'ENGLISH',
           ...scenarioEntity,
+          domain: scenarioEntity?.domain?.id,
         };
 
   return (
@@ -119,6 +125,16 @@ export const ScenarioUpdate = () => {
                     {translate('eduApp.Language.' + language)}
                   </option>
                 ))}
+              </ValidatedField>
+              <ValidatedField id="scenario-domain" name="domain" data-cy="domain" label={translate('eduApp.scenario.domain')} type="select">
+                <option value="" key="0" />
+                {domains
+                  ? domains.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.title}
+                      </option>
+                    ))
+                  : null}
               </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/scenario" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

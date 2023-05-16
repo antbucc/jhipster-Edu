@@ -50,6 +50,10 @@ export const ScenarioDetail = () => {
             </span>
           </dt>
           <dd>{scenarioEntity.language}</dd>
+          <dt>
+            <Translate contentKey="eduApp.scenario.domain">Domain</Translate>
+          </dt>
+          <dd>{scenarioEntity.domain ? scenarioEntity.domain.title : ''}</dd>
         </dl>
         <Button tag={Link} to="/scenario" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

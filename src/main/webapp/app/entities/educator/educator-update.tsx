@@ -8,6 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { IScenario } from 'app/shared/model/scenario.model';
+import { getEntities as getScenarios } from 'app/entities/scenario/scenario.reducer';
 import { IEducator } from 'app/shared/model/educator.model';
 import { getEntity, updateEntity, createEntity, reset } from './educator.reducer';
 
@@ -19,6 +21,7 @@ export const EducatorUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const scenarios = useAppSelector(state => state.scenario.entities);
   const educatorEntity = useAppSelector(state => state.educator.entity);
   const loading = useAppSelector(state => state.educator.loading);
   const updating = useAppSelector(state => state.educator.updating);
@@ -34,6 +37,8 @@ export const EducatorUpdate = () => {
     } else {
       dispatch(getEntity(id));
     }
+
+    dispatch(getScenarios({}));
   }, []);
 
   useEffect(() => {
@@ -46,6 +51,7 @@ export const EducatorUpdate = () => {
     const entity = {
       ...educatorEntity,
       ...values,
+      scenarios: mapIdList(values.scenarios),
     };
 
     if (isNew) {
@@ -60,6 +66,7 @@ export const EducatorUpdate = () => {
       ? {}
       : {
           ...educatorEntity,
+          scenarios: educatorEntity?.scenarios?.map(e => e.id.toString()),
         };
 
   return (
@@ -102,6 +109,23 @@ export const EducatorUpdate = () => {
                 type="text"
               />
               <ValidatedField label={translate('eduApp.educator.email')} id="educator-email" name="email" data-cy="email" type="text" />
+              <ValidatedField
+                label={translate('eduApp.educator.scenario')}
+                id="educator-scenario"
+                data-cy="scenario"
+                type="select"
+                multiple
+                name="scenarios"
+              >
+                <option value="" key="0" />
+                {scenarios
+                  ? scenarios.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.title}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/educator" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

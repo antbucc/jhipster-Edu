@@ -114,6 +114,9 @@ export const Scenario = () => {
                 <th className="hand" onClick={sort('language')}>
                   <Translate contentKey="eduApp.scenario.language">Language</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  <Translate contentKey="eduApp.scenario.domain">Domain</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -130,6 +133,7 @@ export const Scenario = () => {
                   <td>
                     <Translate contentKey={`eduApp.Language.${scenario.language}`} />
                   </td>
+                  <td>{scenario.domain ? <Link to={`/domain/${scenario.domain.id}`}>{scenario.domain.title}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/scenario/${scenario.id}`} color="info" size="sm" data-cy="entityDetailsButton">
