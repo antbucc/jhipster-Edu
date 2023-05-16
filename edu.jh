@@ -50,9 +50,8 @@ relationship ManyToMany {
 }
 
 relationship OneToMany {
-    Scenario to Module
-}
-
+    Scenario{name} to Module{scenario}
+} 
 
 
 // Set pagination options
