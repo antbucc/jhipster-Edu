@@ -8,6 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { IModule } from 'app/shared/model/module.model';
+import { getEntities as getModules } from 'app/entities/module/module.reducer';
 import { IDomain } from 'app/shared/model/domain.model';
 import { getEntities as getDomains } from 'app/entities/domain/domain.reducer';
 import { IScenario } from 'app/shared/model/scenario.model';
@@ -22,6 +24,7 @@ export const ScenarioUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const modules = useAppSelector(state => state.module.entities);
   const domains = useAppSelector(state => state.domain.entities);
   const scenarioEntity = useAppSelector(state => state.scenario.entity);
   const loading = useAppSelector(state => state.scenario.loading);
@@ -40,6 +43,7 @@ export const ScenarioUpdate = () => {
       dispatch(getEntity(id));
     }
 
+    dispatch(getModules({}));
     dispatch(getDomains({}));
   }, []);
 

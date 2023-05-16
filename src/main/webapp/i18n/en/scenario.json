@@ -21,7 +21,7 @@
       "title": "Title",
       "description": "Description",
       "language": "Language",
-      "name": "Name",
+      "module": "Module",
       "domain": "Domain"
     }
   }

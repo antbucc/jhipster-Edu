@@ -34,10 +34,12 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "title",
       "otherEntityName": "scenario",
-      "otherEntityRelationshipName": "name",
+      "otherEntityRelationshipName": "module",
+      "ownerSide": true,
       "relationshipName": "scenario",
-      "relationshipType": "many-to-one"
+      "relationshipType": "one-to-one"
     }
   ],
   "service": "no"
