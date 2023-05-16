@@ -44,7 +44,9 @@ enum Level {
 }
 
 
-
+relationship OneToMany {
+   Scenario { Learner(lastName) } to Learner {Scenario(title)}
+}
 
 relationship OneToOne {
    Module { Scenario(title) } to Scenario {Module(title)}
@@ -62,7 +64,7 @@ relationship ManyToMany {
 
 
 // Set pagination options
-paginate Learner with infinite-scroll
+paginate Learner, Educator with infinite-scroll
 paginate Domain, Scenario with pagination
 
 // Use Data Transfer Objects (DTO)
