@@ -23,6 +23,15 @@
   "name": "Educator",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "scenario",
+      "otherEntityRelationshipName": "educator",
+      "ownerSide": true,
+      "relationshipName": "scenario",
+      "relationshipType": "many-to-many"
+    }
+  ],
   "service": "no"
 }

@@ -51,7 +51,6 @@ export const DomainUpdate = () => {
     const entity = {
       ...domainEntity,
       ...values,
-      scenarios: mapIdList(values.scenarios),
     };
 
     if (isNew) {
@@ -66,7 +65,6 @@ export const DomainUpdate = () => {
       ? {}
       : {
           ...domainEntity,
-          scenarios: domainEntity?.scenarios?.map(e => e.id.toString()),
         };
 
   return (
@@ -103,23 +101,6 @@ export const DomainUpdate = () => {
                 type="text"
               />
               <ValidatedField label={translate('eduApp.domain.city')} id="domain-city" name="city" data-cy="city" type="text" />
-              <ValidatedField
-                label={translate('eduApp.domain.scenario')}
-                id="domain-scenario"
-                data-cy="scenario"
-                type="select"
-                multiple
-                name="scenarios"
-              >
-                <option value="" key="0" />
-                {scenarios
-                  ? scenarios.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/domain" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

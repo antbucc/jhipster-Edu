@@ -1,7 +1,11 @@
 package com.modis.edu.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -25,6 +29,11 @@ public class Educator implements Serializable {
 
     @Field("email")
     private String email;
+
+    @DBRef
+    @Field("scenarios")
+    @JsonIgnoreProperties(value = { "domain", "module", "educators" }, allowSetters = true)
+    private Set<Scenario> scenarios = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -78,6 +87,31 @@ public class Educator implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Scenario> getScenarios() {
+        return this.scenarios;
+    }
+
+    public void setScenarios(Set<Scenario> scenarios) {
+        this.scenarios = scenarios;
+    }
+
+    public Educator scenarios(Set<Scenario> scenarios) {
+        this.setScenarios(scenarios);
+        return this;
+    }
+
+    public Educator addScenario(Scenario scenario) {
+        this.scenarios.add(scenario);
+        scenario.getEducators().add(this);
+        return this;
+    }
+
+    public Educator removeScenario(Scenario scenario) {
+        this.scenarios.remove(scenario);
+        scenario.getEducators().remove(this);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

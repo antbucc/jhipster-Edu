@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -146,21 +148,26 @@ public class DomainResource {
      * {@code GET  /domains} : get all the domains.
      *
      * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of domains in body.
      */
     @GetMapping("/domains")
     public ResponseEntity<List<Domain>> getAllDomains(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+        @RequestParam(required = false) String filter
     ) {
-        log.debug("REST request to get a page of Domains");
-        Page<Domain> page;
-        if (eagerload) {
-            page = domainRepository.findAllWithEagerRelationships(pageable);
-        } else {
-            page = domainRepository.findAll(pageable);
+        if ("scenario-is-null".equals(filter)) {
+            log.debug("REST request to get all Domains where scenario is null");
+            return new ResponseEntity<>(
+                StreamSupport
+                    .stream(domainRepository.findAll().spliterator(), false)
+                    .filter(domain -> domain.getScenario() == null)
+                    .collect(Collectors.toList()),
+                HttpStatus.OK
+            );
         }
+        log.debug("REST request to get a page of Domains");
+        Page<Domain> page = domainRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -174,7 +181,7 @@ public class DomainResource {
     @GetMapping("/domains/{id}")
     public ResponseEntity<Domain> getDomain(@PathVariable String id) {
         log.debug("REST request to get Domain : {}", id);
-        Optional<Domain> domain = domainRepository.findOneWithEagerRelationships(id);
+        Optional<Domain> domain = domainRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(domain);
     }
 
