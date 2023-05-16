@@ -1,0 +1,66 @@
+
+entity Domain {
+	title String
+    description String
+    city String
+}
+
+entity Scenario {
+	title String
+    description String
+    language Language
+}
+
+
+entity Module {
+	title String,
+	description String,
+	startDate Instant,
+	endData Instant
+    level Level
+}
+
+
+entity Learner {
+	
+	firstName String,
+	lastName String,
+	email String,
+	phoneNumber String
+}
+
+entity Educator {
+	firstName String,
+	lastName String,
+	email String
+}
+
+
+enum Language {
+     ENGLISH, ITALIAN
+}
+enum Level {
+     BEGINNER, INTERMEDIATE, ADVANCED
+}
+
+
+
+relationship ManyToMany {
+	Domain to Scenario
+    Scenario to Module
+}
+
+
+
+// Set pagination options
+paginate Learner with infinite-scroll
+paginate Domain, Scenario with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+//service all with serviceImpl except Domain, Scenario
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
