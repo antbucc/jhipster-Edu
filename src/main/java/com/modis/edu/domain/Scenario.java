@@ -32,9 +32,9 @@ public class Scenario implements Serializable {
     private Language language;
 
     @DBRef
-    @Field("module")
+    @Field("name")
     @JsonIgnoreProperties(value = { "scenario" }, allowSetters = true)
-    private Set<Module> modules = new HashSet<>();
+    private Set<Module> names = new HashSet<>();
 
     @DBRef
     @Field("domains")
@@ -95,33 +95,33 @@ public class Scenario implements Serializable {
         this.language = language;
     }
 
-    public Set<Module> getModules() {
-        return this.modules;
+    public Set<Module> getNames() {
+        return this.names;
     }
 
-    public void setModules(Set<Module> modules) {
-        if (this.modules != null) {
-            this.modules.forEach(i -> i.setScenario(null));
+    public void setNames(Set<Module> modules) {
+        if (this.names != null) {
+            this.names.forEach(i -> i.setScenario(null));
         }
         if (modules != null) {
             modules.forEach(i -> i.setScenario(this));
         }
-        this.modules = modules;
+        this.names = modules;
     }
 
-    public Scenario modules(Set<Module> modules) {
-        this.setModules(modules);
+    public Scenario names(Set<Module> modules) {
+        this.setNames(modules);
         return this;
     }
 
-    public Scenario addModule(Module module) {
-        this.modules.add(module);
+    public Scenario addName(Module module) {
+        this.names.add(module);
         module.setScenario(this);
         return this;
     }
 
-    public Scenario removeModule(Module module) {
-        this.modules.remove(module);
+    public Scenario removeName(Module module) {
+        this.names.remove(module);
         module.setScenario(null);
         return this;
     }

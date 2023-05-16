@@ -35,7 +35,7 @@
   "relationships": [
     {
       "otherEntityName": "scenario",
-      "otherEntityRelationshipName": "module",
+      "otherEntityRelationshipName": "name",
       "relationshipName": "scenario",
       "relationshipType": "many-to-one"
     }
