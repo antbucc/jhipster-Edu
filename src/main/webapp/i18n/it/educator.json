@@ -1,0 +1,26 @@
+{
+  "eduApp": {
+    "educator": {
+      "home": {
+        "title": "Educators",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Educator",
+        "createOrEditLabel": "Genera o modifica un Educator",
+        "notFound": "No Educators found"
+      },
+      "created": "&Egrave; stato generato un nuovo Educator con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Educator identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Educator con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Educator {{ id }}?"
+      },
+      "detail": {
+        "title": "Educator"
+      },
+      "id": "ID",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email"
+    }
+  }
+}

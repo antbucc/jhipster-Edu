@@ -1,0 +1,27 @@
+{
+  "eduApp": {
+    "domain": {
+      "home": {
+        "title": "Domains",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Domain",
+        "createOrEditLabel": "Genera o modifica un Domain",
+        "notFound": "No Domains found"
+      },
+      "created": "&Egrave; stato generato un nuovo Domain con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Domain identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Domain con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Domain {{ id }}?"
+      },
+      "detail": {
+        "title": "Domain"
+      },
+      "id": "ID",
+      "title": "Title",
+      "description": "Description",
+      "city": "City",
+      "scenario": "Scenario"
+    }
+  }
+}

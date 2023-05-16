@@ -1,0 +1,28 @@
+{
+  "eduApp": {
+    "scenario": {
+      "home": {
+        "title": "Scenarios",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Scenario",
+        "createOrEditLabel": "Genera o modifica un Scenario",
+        "notFound": "No Scenarios found"
+      },
+      "created": "&Egrave; stato generato un nuovo Scenario con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Scenario identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Scenario con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Scenario {{ id }}?"
+      },
+      "detail": {
+        "title": "Scenario"
+      },
+      "id": "ID",
+      "title": "Title",
+      "description": "Description",
+      "language": "Language",
+      "module": "Module",
+      "domain": "Domain"
+    }
+  }
+}
