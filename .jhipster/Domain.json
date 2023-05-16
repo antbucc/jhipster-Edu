@@ -1,0 +1,36 @@
+{
+  "applications": "*",
+  "changelogDate": "20230516075901",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "domain",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "city",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Domain",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "scenario",
+      "otherEntityRelationshipName": "domain",
+      "ownerSide": true,
+      "relationshipName": "scenario",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

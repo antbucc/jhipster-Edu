@@ -1,0 +1,29 @@
+{
+  "eduApp": {
+    "module": {
+      "home": {
+        "title": "Modules",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Module",
+        "createOrEditLabel": "Genera o modifica un Module",
+        "notFound": "No Modules found"
+      },
+      "created": "&Egrave; stato generato un nuovo Module con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Module identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Module con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Module {{ id }}?"
+      },
+      "detail": {
+        "title": "Module"
+      },
+      "id": "ID",
+      "title": "Title",
+      "description": "Description",
+      "startDate": "Start Date",
+      "endData": "End Data",
+      "level": "Level",
+      "scenario": "Scenario"
+    }
+  }
+}

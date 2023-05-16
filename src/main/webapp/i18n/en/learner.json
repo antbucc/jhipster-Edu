@@ -1,0 +1,27 @@
+{
+  "eduApp": {
+    "learner": {
+      "home": {
+        "title": "Learners",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Learner",
+        "createOrEditLabel": "Create or edit a Learner",
+        "notFound": "No Learners found"
+      },
+      "created": "A new Learner is created with identifier {{ param }}",
+      "updated": "A Learner is updated with identifier {{ param }}",
+      "deleted": "A Learner is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Learner {{ id }}?"
+      },
+      "detail": {
+        "title": "Learner"
+      },
+      "id": "ID",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phoneNumber": "Phone Number"
+    }
+  }
+}
