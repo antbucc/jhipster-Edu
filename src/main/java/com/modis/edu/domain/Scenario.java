@@ -36,6 +36,11 @@ public class Scenario implements Serializable {
     private Domain domain;
 
     @DBRef
+    @Field("learner")
+    @JsonIgnoreProperties(value = { "scenario" }, allowSetters = true)
+    private Set<Learner> learners = new HashSet<>();
+
+    @DBRef
     private Module module;
 
     @DBRef
@@ -107,6 +112,37 @@ public class Scenario implements Serializable {
 
     public Scenario domain(Domain domain) {
         this.setDomain(domain);
+        return this;
+    }
+
+    public Set<Learner> getLearners() {
+        return this.learners;
+    }
+
+    public void setLearners(Set<Learner> learners) {
+        if (this.learners != null) {
+            this.learners.forEach(i -> i.setScenario(null));
+        }
+        if (learners != null) {
+            learners.forEach(i -> i.setScenario(this));
+        }
+        this.learners = learners;
+    }
+
+    public Scenario learners(Set<Learner> learners) {
+        this.setLearners(learners);
+        return this;
+    }
+
+    public Scenario addLearner(Learner learner) {
+        this.learners.add(learner);
+        learner.setScenario(this);
+        return this;
+    }
+
+    public Scenario removeLearner(Learner learner) {
+        this.learners.remove(learner);
+        learner.setScenario(null);
         return this;
     }
 

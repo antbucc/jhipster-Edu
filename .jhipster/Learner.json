@@ -27,6 +27,14 @@
   "name": "Learner",
   "pagination": "infinite-scroll",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "scenario",
+      "otherEntityRelationshipName": "learner",
+      "relationshipName": "scenario",
+      "relationshipType": "many-to-one"
+    }
+  ],
   "service": "no"
 }

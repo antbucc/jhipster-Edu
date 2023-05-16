@@ -8,6 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { IScenario } from 'app/shared/model/scenario.model';
+import { getEntities as getScenarios } from 'app/entities/scenario/scenario.reducer';
 import { ILearner } from 'app/shared/model/learner.model';
 import { getEntity, updateEntity, createEntity, reset } from './learner.reducer';
 
@@ -19,6 +21,7 @@ export const LearnerUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const scenarios = useAppSelector(state => state.scenario.entities);
   const learnerEntity = useAppSelector(state => state.learner.entity);
   const loading = useAppSelector(state => state.learner.loading);
   const updating = useAppSelector(state => state.learner.updating);
@@ -32,6 +35,8 @@ export const LearnerUpdate = () => {
     if (!isNew) {
       dispatch(getEntity(id));
     }
+
+    dispatch(getScenarios({}));
   }, []);
 
   useEffect(() => {
@@ -44,6 +49,7 @@ export const LearnerUpdate = () => {
     const entity = {
       ...learnerEntity,
       ...values,
+      scenario: scenarios.find(it => it.id.toString() === values.scenario.toString()),
     };
 
     if (isNew) {
@@ -58,6 +64,7 @@ export const LearnerUpdate = () => {
       ? {}
       : {
           ...learnerEntity,
+          scenario: learnerEntity?.scenario?.id,
         };
 
   return (
@@ -107,6 +114,22 @@ export const LearnerUpdate = () => {
                 data-cy="phoneNumber"
                 type="text"
               />
+              <ValidatedField
+                id="learner-scenario"
+                name="scenario"
+                data-cy="scenario"
+                label={translate('eduApp.learner.scenario')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {scenarios
+                  ? scenarios.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.title}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/learner" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

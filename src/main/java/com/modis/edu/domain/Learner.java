@@ -1,7 +1,9 @@
 package com.modis.edu.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -28,6 +30,11 @@ public class Learner implements Serializable {
 
     @Field("phone_number")
     private String phoneNumber;
+
+    @DBRef
+    @Field("scenario")
+    @JsonIgnoreProperties(value = { "domain", "learners", "module", "educators" }, allowSetters = true)
+    private Scenario scenario;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -94,6 +101,19 @@ public class Learner implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Scenario getScenario() {
+        return this.scenario;
+    }
+
+    public void setScenario(Scenario scenario) {
+        this.scenario = scenario;
+    }
+
+    public Learner scenario(Scenario scenario) {
+        this.setScenario(scenario);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

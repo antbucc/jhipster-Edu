@@ -21,7 +21,7 @@
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
   "name": "Educator",
-  "pagination": "no",
+  "pagination": "infinite-scroll",
   "readOnly": false,
   "relationships": [
     {

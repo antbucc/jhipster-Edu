@@ -22,6 +22,7 @@
       "description": "Description",
       "language": "Language",
       "domain": "Domain",
+      "learner": "Learner",
       "module": "Module",
       "educator": "Educator"
     }

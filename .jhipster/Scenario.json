@@ -34,6 +34,13 @@
       "relationshipType": "one-to-one"
     },
     {
+      "otherEntityField": "lastName",
+      "otherEntityName": "learner",
+      "otherEntityRelationshipName": "scenario",
+      "relationshipName": "learner",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityField": "title",
       "otherEntityName": "module",
       "otherEntityRelationshipName": "scenario",

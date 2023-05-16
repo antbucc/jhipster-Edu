@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
+import { loadMoreDataWhenScrolled, parseHeaderForLinks } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
@@ -10,7 +11,9 @@ const initialState: EntityState<IEducator> = {
   errorMessage: null,
   entities: [],
   entity: defaultValue,
+  links: { next: 0 },
   updating: false,
+  totalItems: 0,
   updateSuccess: false,
 };
 
@@ -19,7 +22,7 @@ const apiUrl = 'api/educators';
 // Actions
 
 export const getEntities = createAsyncThunk('educator/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
-  const requestUrl = `${apiUrl}?cacheBuster=${new Date().getTime()}`;
+  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
   return axios.get<IEducator[]>(requestUrl);
 });
 
@@ -35,9 +38,7 @@ export const getEntity = createAsyncThunk(
 export const createEntity = createAsyncThunk(
   'educator/create_entity',
   async (entity: IEducator, thunkAPI) => {
-    const result = await axios.post<IEducator>(apiUrl, cleanEntity(entity));
-    thunkAPI.dispatch(getEntities({}));
-    return result;
+    return axios.post<IEducator>(apiUrl, cleanEntity(entity));
   },
   { serializeError: serializeAxiosError }
 );
@@ -45,9 +46,7 @@ export const createEntity = createAsyncThunk(
 export const updateEntity = createAsyncThunk(
   'educator/update_entity',
   async (entity: IEducator, thunkAPI) => {
-    const result = await axios.put<IEducator>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
-    thunkAPI.dispatch(getEntities({}));
-    return result;
+    return axios.put<IEducator>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
   },
   { serializeError: serializeAxiosError }
 );
@@ -55,9 +54,7 @@ export const updateEntity = createAsyncThunk(
 export const partialUpdateEntity = createAsyncThunk(
   'educator/partial_update_entity',
   async (entity: IEducator, thunkAPI) => {
-    const result = await axios.patch<IEducator>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
-    thunkAPI.dispatch(getEntities({}));
-    return result;
+    return axios.patch<IEducator>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
   },
   { serializeError: serializeAxiosError }
 );
@@ -66,9 +63,7 @@ export const deleteEntity = createAsyncThunk(
   'educator/delete_entity',
   async (id: string | number, thunkAPI) => {
     const requestUrl = `${apiUrl}/${id}`;
-    const result = await axios.delete<IEducator>(requestUrl);
-    thunkAPI.dispatch(getEntities({}));
-    return result;
+    return await axios.delete<IEducator>(requestUrl);
   },
   { serializeError: serializeAxiosError }
 );
@@ -90,12 +85,15 @@ export const EducatorSlice = createEntitySlice({
         state.entity = {};
       })
       .addMatcher(isFulfilled(getEntities), (state, action) => {
-        const { data } = action.payload;
+        const { data, headers } = action.payload;
+        const links = parseHeaderForLinks(headers.link);
 
         return {
           ...state,
           loading: false,
-          entities: data,
+          links,
+          entities: loadMoreDataWhenScrolled(state.entities, data, links),
+          totalItems: parseInt(headers['x-total-count'], 10),
         };
       })
       .addMatcher(isFulfilled(createEntity, updateEntity, partialUpdateEntity), (state, action) => {
