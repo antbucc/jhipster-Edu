@@ -7,7 +7,7 @@ export interface IScenario {
   title?: string | null;
   description?: string | null;
   language?: Language | null;
-  modules?: IModule[] | null;
+  names?: IModule[] | null;
   domains?: IDomain[] | null;
 }
 
