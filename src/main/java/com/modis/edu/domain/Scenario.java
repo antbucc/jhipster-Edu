@@ -36,17 +36,17 @@ public class Scenario implements Serializable {
     private Domain domain;
 
     @DBRef
-    @Field("learner")
-    @JsonIgnoreProperties(value = { "scenario" }, allowSetters = true)
+    @Field("educators")
+    @JsonIgnoreProperties(value = { "scenarios" }, allowSetters = true)
+    private Set<Educator> educators = new HashSet<>();
+
+    @DBRef
+    @Field("learners")
+    @JsonIgnoreProperties(value = { "scenarios" }, allowSetters = true)
     private Set<Learner> learners = new HashSet<>();
 
     @DBRef
     private Module module;
-
-    @DBRef
-    @Field("educators")
-    @JsonIgnoreProperties(value = { "scenarios" }, allowSetters = true)
-    private Set<Educator> educators = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -115,17 +115,36 @@ public class Scenario implements Serializable {
         return this;
     }
 
+    public Set<Educator> getEducators() {
+        return this.educators;
+    }
+
+    public void setEducators(Set<Educator> educators) {
+        this.educators = educators;
+    }
+
+    public Scenario educators(Set<Educator> educators) {
+        this.setEducators(educators);
+        return this;
+    }
+
+    public Scenario addEducator(Educator educator) {
+        this.educators.add(educator);
+        educator.getScenarios().add(this);
+        return this;
+    }
+
+    public Scenario removeEducator(Educator educator) {
+        this.educators.remove(educator);
+        educator.getScenarios().remove(this);
+        return this;
+    }
+
     public Set<Learner> getLearners() {
         return this.learners;
     }
 
     public void setLearners(Set<Learner> learners) {
-        if (this.learners != null) {
-            this.learners.forEach(i -> i.setScenario(null));
-        }
-        if (learners != null) {
-            learners.forEach(i -> i.setScenario(this));
-        }
         this.learners = learners;
     }
 
@@ -136,13 +155,13 @@ public class Scenario implements Serializable {
 
     public Scenario addLearner(Learner learner) {
         this.learners.add(learner);
-        learner.setScenario(this);
+        learner.getScenarios().add(this);
         return this;
     }
 
     public Scenario removeLearner(Learner learner) {
         this.learners.remove(learner);
-        learner.setScenario(null);
+        learner.getScenarios().remove(this);
         return this;
     }
 
@@ -162,37 +181,6 @@ public class Scenario implements Serializable {
 
     public Scenario module(Module module) {
         this.setModule(module);
-        return this;
-    }
-
-    public Set<Educator> getEducators() {
-        return this.educators;
-    }
-
-    public void setEducators(Set<Educator> educators) {
-        if (this.educators != null) {
-            this.educators.forEach(i -> i.removeScenario(this));
-        }
-        if (educators != null) {
-            educators.forEach(i -> i.addScenario(this));
-        }
-        this.educators = educators;
-    }
-
-    public Scenario educators(Set<Educator> educators) {
-        this.setEducators(educators);
-        return this;
-    }
-
-    public Scenario addEducator(Educator educator) {
-        this.educators.add(educator);
-        educator.getScenarios().add(this);
-        return this;
-    }
-
-    public Scenario removeEducator(Educator educator) {
-        this.educators.remove(educator);
-        educator.getScenarios().remove(this);
         return this;
     }
 

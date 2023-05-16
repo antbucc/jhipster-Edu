@@ -6,7 +6,7 @@ export interface ILearner {
   lastName?: string | null;
   email?: string | null;
   phoneNumber?: string | null;
-  scenario?: IScenario | null;
+  scenarios?: IScenario[] | null;
 }
 
 export const defaultValue: Readonly<ILearner> = {};

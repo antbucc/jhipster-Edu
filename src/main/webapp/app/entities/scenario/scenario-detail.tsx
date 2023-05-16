@@ -54,6 +54,32 @@ export const ScenarioDetail = () => {
             <Translate contentKey="eduApp.scenario.domain">Domain</Translate>
           </dt>
           <dd>{scenarioEntity.domain ? scenarioEntity.domain.title : ''}</dd>
+          <dt>
+            <Translate contentKey="eduApp.scenario.educator">Educator</Translate>
+          </dt>
+          <dd>
+            {scenarioEntity.educators
+              ? scenarioEntity.educators.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.lastName}</a>
+                    {scenarioEntity.educators && i === scenarioEntity.educators.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
+          <dt>
+            <Translate contentKey="eduApp.scenario.learner">Learner</Translate>
+          </dt>
+          <dd>
+            {scenarioEntity.learners
+              ? scenarioEntity.learners.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.lastName}</a>
+                    {scenarioEntity.learners && i === scenarioEntity.learners.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/scenario" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

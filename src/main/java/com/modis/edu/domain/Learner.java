@@ -2,6 +2,8 @@ package com.modis.edu.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -32,9 +34,9 @@ public class Learner implements Serializable {
     private String phoneNumber;
 
     @DBRef
-    @Field("scenario")
-    @JsonIgnoreProperties(value = { "domain", "learners", "module", "educators" }, allowSetters = true)
-    private Scenario scenario;
+    @Field("scenarios")
+    @JsonIgnoreProperties(value = { "domain", "educators", "learners", "module" }, allowSetters = true)
+    private Set<Scenario> scenarios = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -103,16 +105,34 @@ public class Learner implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public Scenario getScenario() {
-        return this.scenario;
+    public Set<Scenario> getScenarios() {
+        return this.scenarios;
     }
 
-    public void setScenario(Scenario scenario) {
-        this.scenario = scenario;
+    public void setScenarios(Set<Scenario> scenarios) {
+        if (this.scenarios != null) {
+            this.scenarios.forEach(i -> i.removeLearner(this));
+        }
+        if (scenarios != null) {
+            scenarios.forEach(i -> i.addLearner(this));
+        }
+        this.scenarios = scenarios;
     }
 
-    public Learner scenario(Scenario scenario) {
-        this.setScenario(scenario);
+    public Learner scenarios(Set<Scenario> scenarios) {
+        this.setScenarios(scenarios);
+        return this;
+    }
+
+    public Learner addScenario(Scenario scenario) {
+        this.scenarios.add(scenario);
+        scenario.getLearners().add(this);
+        return this;
+    }
+
+    public Learner removeScenario(Scenario scenario) {
+        this.scenarios.remove(scenario);
+        scenario.getLearners().remove(this);
         return this;
     }
 

@@ -10,10 +10,12 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IDomain } from 'app/shared/model/domain.model';
 import { getEntities as getDomains } from 'app/entities/domain/domain.reducer';
-import { IModule } from 'app/shared/model/module.model';
-import { getEntities as getModules } from 'app/entities/module/module.reducer';
 import { IEducator } from 'app/shared/model/educator.model';
 import { getEntities as getEducators } from 'app/entities/educator/educator.reducer';
+import { ILearner } from 'app/shared/model/learner.model';
+import { getEntities as getLearners } from 'app/entities/learner/learner.reducer';
+import { IModule } from 'app/shared/model/module.model';
+import { getEntities as getModules } from 'app/entities/module/module.reducer';
 import { IScenario } from 'app/shared/model/scenario.model';
 import { Language } from 'app/shared/model/enumerations/language.model';
 import { getEntity, updateEntity, createEntity, reset } from './scenario.reducer';
@@ -27,8 +29,9 @@ export const ScenarioUpdate = () => {
   const isNew = id === undefined;
 
   const domains = useAppSelector(state => state.domain.entities);
-  const modules = useAppSelector(state => state.module.entities);
   const educators = useAppSelector(state => state.educator.entities);
+  const learners = useAppSelector(state => state.learner.entities);
+  const modules = useAppSelector(state => state.module.entities);
   const scenarioEntity = useAppSelector(state => state.scenario.entity);
   const loading = useAppSelector(state => state.scenario.loading);
   const updating = useAppSelector(state => state.scenario.updating);
@@ -47,8 +50,9 @@ export const ScenarioUpdate = () => {
     }
 
     dispatch(getDomains({}));
-    dispatch(getModules({}));
     dispatch(getEducators({}));
+    dispatch(getLearners({}));
+    dispatch(getModules({}));
   }, []);
 
   useEffect(() => {
@@ -61,6 +65,8 @@ export const ScenarioUpdate = () => {
     const entity = {
       ...scenarioEntity,
       ...values,
+      educators: mapIdList(values.educators),
+      learners: mapIdList(values.learners),
       domain: domains.find(it => it.id.toString() === values.domain.toString()),
     };
 
@@ -78,6 +84,8 @@ export const ScenarioUpdate = () => {
           language: 'ENGLISH',
           ...scenarioEntity,
           domain: scenarioEntity?.domain?.id,
+          educators: scenarioEntity?.educators?.map(e => e.id.toString()),
+          learners: scenarioEntity?.learners?.map(e => e.id.toString()),
         };
 
   return (
@@ -132,6 +140,40 @@ export const ScenarioUpdate = () => {
                   ? domains.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.title}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                label={translate('eduApp.scenario.educator')}
+                id="scenario-educator"
+                data-cy="educator"
+                type="select"
+                multiple
+                name="educators"
+              >
+                <option value="" key="0" />
+                {educators
+                  ? educators.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.lastName}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                label={translate('eduApp.scenario.learner')}
+                id="scenario-learner"
+                data-cy="learner"
+                type="select"
+                multiple
+                name="learners"
+              >
+                <option value="" key="0" />
+                {learners
+                  ? learners.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.lastName}
                       </option>
                     ))
                   : null}

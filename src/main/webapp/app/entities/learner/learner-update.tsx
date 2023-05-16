@@ -49,7 +49,6 @@ export const LearnerUpdate = () => {
     const entity = {
       ...learnerEntity,
       ...values,
-      scenario: scenarios.find(it => it.id.toString() === values.scenario.toString()),
     };
 
     if (isNew) {
@@ -64,7 +63,6 @@ export const LearnerUpdate = () => {
       ? {}
       : {
           ...learnerEntity,
-          scenario: learnerEntity?.scenario?.id,
         };
 
   return (
@@ -114,22 +112,6 @@ export const LearnerUpdate = () => {
                 data-cy="phoneNumber"
                 type="text"
               />
-              <ValidatedField
-                id="learner-scenario"
-                name="scenario"
-                data-cy="scenario"
-                label={translate('eduApp.learner.scenario')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {scenarios
-                  ? scenarios.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.title}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/learner" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

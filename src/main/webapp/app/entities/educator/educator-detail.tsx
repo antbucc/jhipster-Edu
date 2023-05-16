@@ -50,19 +50,6 @@ export const EducatorDetail = () => {
             </span>
           </dt>
           <dd>{educatorEntity.email}</dd>
-          <dt>
-            <Translate contentKey="eduApp.educator.scenario">Scenario</Translate>
-          </dt>
-          <dd>
-            {educatorEntity.scenarios
-              ? educatorEntity.scenarios.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.title}</a>
-                    {educatorEntity.scenarios && i === educatorEntity.scenarios.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
         </dl>
         <Button tag={Link} to="/educator" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

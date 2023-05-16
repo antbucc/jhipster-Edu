@@ -35,10 +35,19 @@
     },
     {
       "otherEntityField": "lastName",
+      "otherEntityName": "educator",
+      "otherEntityRelationshipName": "scenario",
+      "ownerSide": true,
+      "relationshipName": "educator",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "lastName",
       "otherEntityName": "learner",
       "otherEntityRelationshipName": "scenario",
+      "ownerSide": true,
       "relationshipName": "learner",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-many"
     },
     {
       "otherEntityField": "title",
@@ -47,14 +56,6 @@
       "ownerSide": false,
       "relationshipName": "module",
       "relationshipType": "one-to-one"
-    },
-    {
-      "otherEntityField": "lastName",
-      "otherEntityName": "educator",
-      "otherEntityRelationshipName": "scenario",
-      "ownerSide": false,
-      "relationshipName": "educator",
-      "relationshipType": "many-to-many"
     }
   ],
   "service": "no"
