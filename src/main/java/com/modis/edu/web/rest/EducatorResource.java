@@ -151,21 +151,12 @@ public class EducatorResource {
      * {@code GET  /educators} : get all the educators.
      *
      * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of educators in body.
      */
     @GetMapping("/educators")
-    public ResponseEntity<List<Educator>> getAllEducators(
-        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        @RequestParam(required = false, defaultValue = "false") boolean eagerload
-    ) {
+    public ResponseEntity<List<Educator>> getAllEducators(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Educators");
-        Page<Educator> page;
-        if (eagerload) {
-            page = educatorRepository.findAllWithEagerRelationships(pageable);
-        } else {
-            page = educatorRepository.findAll(pageable);
-        }
+        Page<Educator> page = educatorRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -179,7 +170,7 @@ public class EducatorResource {
     @GetMapping("/educators/{id}")
     public ResponseEntity<Educator> getEducator(@PathVariable String id) {
         log.debug("REST request to get Educator : {}", id);
-        Optional<Educator> educator = educatorRepository.findOneWithEagerRelationships(id);
+        Optional<Educator> educator = educatorRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(educator);
     }
 

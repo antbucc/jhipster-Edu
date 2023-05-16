@@ -32,8 +32,9 @@
       "otherEntityField": "title",
       "otherEntityName": "scenario",
       "otherEntityRelationshipName": "learner",
+      "ownerSide": false,
       "relationshipName": "scenario",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "no"

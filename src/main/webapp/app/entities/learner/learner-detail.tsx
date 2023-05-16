@@ -56,10 +56,6 @@ export const LearnerDetail = () => {
             </span>
           </dt>
           <dd>{learnerEntity.phoneNumber}</dd>
-          <dt>
-            <Translate contentKey="eduApp.learner.scenario">Scenario</Translate>
-          </dt>
-          <dd>{learnerEntity.scenario ? learnerEntity.scenario.title : ''}</dd>
         </dl>
         <Button tag={Link} to="/learner" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -28,7 +28,7 @@
       "otherEntityField": "title",
       "otherEntityName": "scenario",
       "otherEntityRelationshipName": "educator",
-      "ownerSide": true,
+      "ownerSide": false,
       "relationshipName": "scenario",
       "relationshipType": "many-to-many"
     }

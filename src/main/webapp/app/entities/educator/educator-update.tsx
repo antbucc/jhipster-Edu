@@ -49,7 +49,6 @@ export const EducatorUpdate = () => {
     const entity = {
       ...educatorEntity,
       ...values,
-      scenarios: mapIdList(values.scenarios),
     };
 
     if (isNew) {
@@ -64,7 +63,6 @@ export const EducatorUpdate = () => {
       ? {}
       : {
           ...educatorEntity,
-          scenarios: educatorEntity?.scenarios?.map(e => e.id.toString()),
         };
 
   return (
@@ -107,23 +105,6 @@ export const EducatorUpdate = () => {
                 type="text"
               />
               <ValidatedField label={translate('eduApp.educator.email')} id="educator-email" name="email" data-cy="email" type="text" />
-              <ValidatedField
-                label={translate('eduApp.educator.scenario')}
-                id="educator-scenario"
-                data-cy="scenario"
-                type="select"
-                multiple
-                name="scenarios"
-              >
-                <option value="" key="0" />
-                {scenarios
-                  ? scenarios.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.title}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/educator" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

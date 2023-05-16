@@ -22,9 +22,9 @@
       "description": "Description",
       "language": "Language",
       "domain": "Domain",
+      "educator": "Educator",
       "learner": "Learner",
-      "module": "Module",
-      "educator": "Educator"
+      "module": "Module"
     }
   }
 }
