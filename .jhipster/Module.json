@@ -1,0 +1,44 @@
+{
+  "applications": "*",
+  "changelogDate": "20230516092009",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "module",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "startDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "endData",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "level",
+      "fieldType": "Level",
+      "fieldValues": "BEGINNER,INTERMEDIATE,ADVANCED"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Module",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "scenario",
+      "otherEntityRelationshipName": "module",
+      "relationshipName": "scenario",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

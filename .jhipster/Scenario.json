@@ -1,0 +1,43 @@
+{
+  "applications": "*",
+  "changelogDate": "20230516092008",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "scenario",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "language",
+      "fieldType": "Language",
+      "fieldValues": "ENGLISH,ITALIAN"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Scenario",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "module",
+      "otherEntityRelationshipName": "scenario",
+      "relationshipName": "module",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "domain",
+      "otherEntityRelationshipName": "scenario",
+      "ownerSide": false,
+      "relationshipName": "domain",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}
