@@ -54,6 +54,15 @@ relationship OneToOne {
    Module { Scenario(title) } to Scenario {Module(title)}
 }
 
+relationship OneToOne {
+  Scenario { Domain(title) } to Domain {Scenario(title)}
+}
+
+relationship OneToMany {
+  Educator { Scenario(title) } to Scenario {Educator(lastName)}
+}
+
+
 
 
 // Set pagination options
