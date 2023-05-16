@@ -32,9 +32,7 @@ public class Scenario implements Serializable {
     private Language language;
 
     @DBRef
-    @Field("name")
-    @JsonIgnoreProperties(value = { "scenario" }, allowSetters = true)
-    private Set<Module> names = new HashSet<>();
+    private Module module;
 
     @DBRef
     @Field("domains")
@@ -95,34 +93,22 @@ public class Scenario implements Serializable {
         this.language = language;
     }
 
-    public Set<Module> getNames() {
-        return this.names;
+    public Module getModule() {
+        return this.module;
     }
 
-    public void setNames(Set<Module> modules) {
-        if (this.names != null) {
-            this.names.forEach(i -> i.setScenario(null));
+    public void setModule(Module module) {
+        if (this.module != null) {
+            this.module.setScenario(null);
         }
-        if (modules != null) {
-            modules.forEach(i -> i.setScenario(this));
+        if (module != null) {
+            module.setScenario(this);
         }
-        this.names = modules;
+        this.module = module;
     }
 
-    public Scenario names(Set<Module> modules) {
-        this.setNames(modules);
-        return this;
-    }
-
-    public Scenario addName(Module module) {
-        this.names.add(module);
-        module.setScenario(this);
-        return this;
-    }
-
-    public Scenario removeName(Module module) {
-        this.names.remove(module);
-        module.setScenario(null);
+    public Scenario module(Module module) {
+        this.setModule(module);
         return this;
     }
 

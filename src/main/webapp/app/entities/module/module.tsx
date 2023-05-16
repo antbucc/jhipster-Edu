@@ -87,7 +87,7 @@ export const Module = () => {
                   <td>
                     <Translate contentKey={`eduApp.Level.${module.level}`} />
                   </td>
-                  <td>{module.scenario ? <Link to={`/scenario/${module.scenario.id}`}>{module.scenario.id}</Link> : ''}</td>
+                  <td>{module.scenario ? <Link to={`/scenario/${module.scenario.id}`}>{module.scenario.title}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/module/${module.id}`} color="info" size="sm" data-cy="entityDetailsButton">

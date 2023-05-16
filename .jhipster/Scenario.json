@@ -26,10 +26,12 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "title",
       "otherEntityName": "module",
       "otherEntityRelationshipName": "scenario",
-      "relationshipName": "name",
-      "relationshipType": "one-to-many"
+      "ownerSide": false,
+      "relationshipName": "module",
+      "relationshipType": "one-to-one"
     },
     {
       "otherEntityName": "domain",

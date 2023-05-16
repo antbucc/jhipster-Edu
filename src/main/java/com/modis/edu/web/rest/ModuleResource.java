@@ -145,12 +145,17 @@ public class ModuleResource {
     /**
      * {@code GET  /modules} : get all the modules.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of modules in body.
      */
     @GetMapping("/modules")
-    public List<Module> getAllModules() {
+    public List<Module> getAllModules(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Modules");
-        return moduleRepository.findAll();
+        if (eagerload) {
+            return moduleRepository.findAllWithEagerRelationships();
+        } else {
+            return moduleRepository.findAll();
+        }
     }
 
     /**
@@ -162,7 +167,7 @@ public class ModuleResource {
     @GetMapping("/modules/{id}")
     public ResponseEntity<Module> getModule(@PathVariable String id) {
         log.debug("REST request to get Module : {}", id);
-        Optional<Module> module = moduleRepository.findById(id);
+        Optional<Module> module = moduleRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(module);
     }
 

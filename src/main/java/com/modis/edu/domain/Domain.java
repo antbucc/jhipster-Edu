@@ -32,7 +32,7 @@ public class Domain implements Serializable {
 
     @DBRef
     @Field("scenarios")
-    @JsonIgnoreProperties(value = { "names", "domains" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "module", "domains" }, allowSetters = true)
     private Set<Scenario> scenarios = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

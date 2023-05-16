@@ -65,7 +65,7 @@ export const ModuleDetail = () => {
           <dt>
             <Translate contentKey="eduApp.module.scenario">Scenario</Translate>
           </dt>
-          <dd>{moduleEntity.scenario ? moduleEntity.scenario.id : ''}</dd>
+          <dd>{moduleEntity.scenario ? moduleEntity.scenario.title : ''}</dd>
         </dl>
         <Button tag={Link} to="/module" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

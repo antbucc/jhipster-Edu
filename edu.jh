@@ -49,9 +49,11 @@ relationship ManyToMany {
 	Domain to Scenario
 }
 
-relationship OneToMany {
-    Scenario{name} to Module{scenario}
-} 
+
+relationship OneToOne {
+   Module { Scenario(title) } to Scenario {Module(title)}
+}
+
 
 
 // Set pagination options
