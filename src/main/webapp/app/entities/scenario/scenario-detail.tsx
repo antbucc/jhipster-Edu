@@ -68,6 +68,19 @@ export const ScenarioDetail = () => {
               : null}
           </dd>
           <dt>
+            <Translate contentKey="eduApp.scenario.competence">Competence</Translate>
+          </dt>
+          <dd>
+            {scenarioEntity.competences
+              ? scenarioEntity.competences.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.title}</a>
+                    {scenarioEntity.competences && i === scenarioEntity.competences.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
+          <dt>
             <Translate contentKey="eduApp.scenario.learner">Learner</Translate>
           </dt>
           <dd>

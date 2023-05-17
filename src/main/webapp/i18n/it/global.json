@@ -12,6 +12,8 @@
         "module": "Module",
         "learner": "Learner",
         "educator": "Educator",
+        "competence": "Competence",
+        "concept": "Concept",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
