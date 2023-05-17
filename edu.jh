@@ -37,11 +37,21 @@ entity Domain {
     city String
 }
 
+entity Competence {
+ title String
+ description String
+ type CompetenceType
+}
+
 enum Language {
      ENGLISH, ITALIAN
 }
 enum Level {
      BEGINNER, INTERMEDIATE, ADVANCED
+}
+
+enum CompetenceType {
+SKILL, KNOWLEDGE, ATTITUDE
 }
 
 
@@ -57,6 +67,11 @@ relationship OneToOne {
 relationship ManyToMany {
   Scenario { Educator(lastName) } to Educator{Scenario(title)}
 }
+
+relationship ManyToMany {
+  Scenario { Competence(title) } to Compentece{Scenario(title)}
+}
+
 
 relationship ManyToMany {
   Scenario { Learner(lastName) } to Learner{Scenario(title)}
