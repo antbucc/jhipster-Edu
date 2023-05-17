@@ -5,6 +5,8 @@ import learner from 'app/entities/learner/learner.reducer';
 import educator from 'app/entities/educator/educator.reducer';
 import competence from 'app/entities/competence/competence.reducer';
 import concept from 'app/entities/concept/concept.reducer';
+import activity from 'app/entities/activity/activity.reducer';
+import fragment from 'app/entities/fragment/fragment.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const entitiesReducers = {
@@ -15,6 +17,8 @@ const entitiesReducers = {
   educator,
   competence,
   concept,
+  activity,
+  fragment,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
 };
 

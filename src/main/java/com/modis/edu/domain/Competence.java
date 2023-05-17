@@ -32,11 +32,6 @@ public class Competence implements Serializable {
     private CompetenceType type;
 
     @DBRef
-    @Field("concepts")
-    @JsonIgnoreProperties(value = { "competences" }, allowSetters = true)
-    private Set<Concept> concepts = new HashSet<>();
-
-    @DBRef
     @Field("scenarios")
     @JsonIgnoreProperties(value = { "domain", "educators", "competences", "learners", "module" }, allowSetters = true)
     private Set<Scenario> scenarios = new HashSet<>();
@@ -93,31 +88,6 @@ public class Competence implements Serializable {
 
     public void setType(CompetenceType type) {
         this.type = type;
-    }
-
-    public Set<Concept> getConcepts() {
-        return this.concepts;
-    }
-
-    public void setConcepts(Set<Concept> concepts) {
-        this.concepts = concepts;
-    }
-
-    public Competence concepts(Set<Concept> concepts) {
-        this.setConcepts(concepts);
-        return this;
-    }
-
-    public Competence addConcept(Concept concept) {
-        this.concepts.add(concept);
-        concept.getCompetences().add(this);
-        return this;
-    }
-
-    public Competence removeConcept(Concept concept) {
-        this.concepts.remove(concept);
-        concept.getCompetences().remove(this);
-        return this;
     }
 
     public Set<Scenario> getScenarios() {

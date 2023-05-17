@@ -1,0 +1,48 @@
+{
+  "applications": "*",
+  "changelogDate": "20230517112354",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "activity",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "ActivityType",
+      "fieldValues": "INDIVIDUAL,GROUP"
+    },
+    {
+      "fieldName": "tool",
+      "fieldType": "Tool",
+      "fieldValues": "COMPUTER,MOBILE"
+    },
+    {
+      "fieldName": "difficulty",
+      "fieldType": "Difficulty",
+      "fieldValues": "LOW,MODERATE,INTERMEDIATE,HIGH,ADVANCED,PERSONALIZED"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Activity",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "fragment",
+      "otherEntityRelationshipName": "activity",
+      "ownerSide": false,
+      "relationshipName": "fragment",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

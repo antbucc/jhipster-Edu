@@ -1,0 +1,36 @@
+{
+  "applications": "*",
+  "changelogDate": "20230517112355",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "fragment",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Fragment",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "activity",
+      "otherEntityRelationshipName": "fragment",
+      "ownerSide": true,
+      "relationshipName": "activity",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "module",
+      "otherEntityRelationshipName": "fragment",
+      "relationshipName": "module",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

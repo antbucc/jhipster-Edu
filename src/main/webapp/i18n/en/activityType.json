@@ -1,0 +1,9 @@
+{
+  "eduApp": {
+    "ActivityType": {
+      "null": "",
+      "INDIVIDUAL": "INDIVIDUAL",
+      "GROUP": "GROUP"
+    }
+  }
+}

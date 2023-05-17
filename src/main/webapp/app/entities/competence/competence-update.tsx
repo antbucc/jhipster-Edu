@@ -8,8 +8,6 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IConcept } from 'app/shared/model/concept.model';
-import { getEntities as getConcepts } from 'app/entities/concept/concept.reducer';
 import { IScenario } from 'app/shared/model/scenario.model';
 import { getEntities as getScenarios } from 'app/entities/scenario/scenario.reducer';
 import { ICompetence } from 'app/shared/model/competence.model';
@@ -24,7 +22,6 @@ export const CompetenceUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const concepts = useAppSelector(state => state.concept.entities);
   const scenarios = useAppSelector(state => state.scenario.entities);
   const competenceEntity = useAppSelector(state => state.competence.entity);
   const loading = useAppSelector(state => state.competence.loading);
@@ -43,7 +40,6 @@ export const CompetenceUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getConcepts({}));
     dispatch(getScenarios({}));
   }, []);
 
@@ -57,7 +53,6 @@ export const CompetenceUpdate = () => {
     const entity = {
       ...competenceEntity,
       ...values,
-      concepts: mapIdList(values.concepts),
     };
 
     if (isNew) {
@@ -73,7 +68,6 @@ export const CompetenceUpdate = () => {
       : {
           type: 'SKILL',
           ...competenceEntity,
-          concepts: competenceEntity?.concepts?.map(e => e.id.toString()),
         };
 
   return (
@@ -115,23 +109,6 @@ export const CompetenceUpdate = () => {
                     {translate('eduApp.CompetenceType.' + competenceType)}
                   </option>
                 ))}
-              </ValidatedField>
-              <ValidatedField
-                label={translate('eduApp.competence.concept')}
-                id="competence-concept"
-                data-cy="concept"
-                type="select"
-                multiple
-                name="concepts"
-              >
-                <option value="" key="0" />
-                {concepts
-                  ? concepts.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.title}
-                      </option>
-                    ))
-                  : null}
               </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/competence" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

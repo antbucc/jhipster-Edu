@@ -1,0 +1,29 @@
+{
+  "eduApp": {
+    "activity": {
+      "home": {
+        "title": "Activities",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Activity",
+        "createOrEditLabel": "Genera o modifica un Activity",
+        "notFound": "No Activities found"
+      },
+      "created": "&Egrave; stato generato un nuovo Activity con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Activity identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Activity con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Activity {{ id }}?"
+      },
+      "detail": {
+        "title": "Activity"
+      },
+      "id": "ID",
+      "title": "Title",
+      "description": "Description",
+      "type": "Type",
+      "tool": "Tool",
+      "difficulty": "Difficulty",
+      "fragment": "Fragment"
+    }
+  }
+}

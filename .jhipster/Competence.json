@@ -27,14 +27,6 @@
   "relationships": [
     {
       "otherEntityField": "title",
-      "otherEntityName": "concept",
-      "otherEntityRelationshipName": "competence",
-      "ownerSide": true,
-      "relationshipName": "concept",
-      "relationshipType": "many-to-many"
-    },
-    {
-      "otherEntityField": "title",
       "otherEntityName": "scenario",
       "otherEntityRelationshipName": "competence",
       "ownerSide": false,

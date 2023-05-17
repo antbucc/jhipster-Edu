@@ -1,11 +1,7 @@
 package com.modis.edu.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -24,10 +20,8 @@ public class Concept implements Serializable {
     @Field("title")
     private String title;
 
-    @DBRef
-    @Field("competences")
-    @JsonIgnoreProperties(value = { "concepts", "scenarios" }, allowSetters = true)
-    private Set<Competence> competences = new HashSet<>();
+    @Field("description")
+    private String description;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -57,35 +51,17 @@ public class Concept implements Serializable {
         this.title = title;
     }
 
-    public Set<Competence> getCompetences() {
-        return this.competences;
+    public String getDescription() {
+        return this.description;
     }
 
-    public void setCompetences(Set<Competence> competences) {
-        if (this.competences != null) {
-            this.competences.forEach(i -> i.removeConcept(this));
-        }
-        if (competences != null) {
-            competences.forEach(i -> i.addConcept(this));
-        }
-        this.competences = competences;
-    }
-
-    public Concept competences(Set<Competence> competences) {
-        this.setCompetences(competences);
+    public Concept description(String description) {
+        this.setDescription(description);
         return this;
     }
 
-    public Concept addCompetence(Competence competence) {
-        this.competences.add(competence);
-        competence.getConcepts().add(this);
-        return this;
-    }
-
-    public Concept removeCompetence(Competence competence) {
-        this.competences.remove(competence);
-        competence.getConcepts().remove(this);
-        return this;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -113,6 +89,7 @@ public class Concept implements Serializable {
         return "Concept{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
+            ", description='" + getDescription() + "'" +
             "}";
     }
 }

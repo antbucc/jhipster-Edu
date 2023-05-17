@@ -23,7 +23,8 @@
       "startDate": "Start Date",
       "endData": "End Data",
       "level": "Level",
-      "scenario": "Scenario"
+      "scenario": "Scenario",
+      "fragment": "Fragment"
     }
   }
 }

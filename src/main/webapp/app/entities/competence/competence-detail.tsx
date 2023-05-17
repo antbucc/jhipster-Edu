@@ -50,19 +50,6 @@ export const CompetenceDetail = () => {
             </span>
           </dt>
           <dd>{competenceEntity.type}</dd>
-          <dt>
-            <Translate contentKey="eduApp.competence.concept">Concept</Translate>
-          </dt>
-          <dd>
-            {competenceEntity.concepts
-              ? competenceEntity.concepts.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.title}</a>
-                    {competenceEntity.concepts && i === competenceEntity.concepts.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
         </dl>
         <Button tag={Link} to="/competence" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
