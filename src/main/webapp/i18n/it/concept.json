@@ -1,0 +1,25 @@
+{
+  "eduApp": {
+    "concept": {
+      "home": {
+        "title": "Concepts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Concept",
+        "createOrEditLabel": "Genera o modifica un Concept",
+        "notFound": "No Concepts found"
+      },
+      "created": "&Egrave; stato generato un nuovo Concept con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Concept identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Concept con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Concept {{ id }}?"
+      },
+      "detail": {
+        "title": "Concept"
+      },
+      "id": "ID",
+      "title": "Title",
+      "competence": "Competence"
+    }
+  }
+}

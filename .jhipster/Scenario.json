@@ -42,6 +42,14 @@
       "relationshipType": "many-to-many"
     },
     {
+      "otherEntityField": "title",
+      "otherEntityName": "competence",
+      "otherEntityRelationshipName": "scenario",
+      "ownerSide": true,
+      "relationshipName": "competence",
+      "relationshipType": "many-to-many"
+    },
+    {
       "otherEntityField": "lastName",
       "otherEntityName": "learner",
       "otherEntityRelationshipName": "scenario",

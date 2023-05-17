@@ -3,6 +3,8 @@ import scenario from 'app/entities/scenario/scenario.reducer';
 import module from 'app/entities/module/module.reducer';
 import learner from 'app/entities/learner/learner.reducer';
 import educator from 'app/entities/educator/educator.reducer';
+import competence from 'app/entities/competence/competence.reducer';
+import concept from 'app/entities/concept/concept.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const entitiesReducers = {
@@ -11,6 +13,8 @@ const entitiesReducers = {
   module,
   learner,
   educator,
+  competence,
+  concept,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
 };
 

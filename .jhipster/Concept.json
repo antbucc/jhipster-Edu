@@ -1,0 +1,29 @@
+{
+  "applications": "*",
+  "changelogDate": "20230517103055",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "concept",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Concept",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "competence",
+      "otherEntityRelationshipName": "concept",
+      "ownerSide": false,
+      "relationshipName": "competence",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

@@ -12,6 +12,8 @@ import { IDomain } from 'app/shared/model/domain.model';
 import { getEntities as getDomains } from 'app/entities/domain/domain.reducer';
 import { IEducator } from 'app/shared/model/educator.model';
 import { getEntities as getEducators } from 'app/entities/educator/educator.reducer';
+import { ICompetence } from 'app/shared/model/competence.model';
+import { getEntities as getCompetences } from 'app/entities/competence/competence.reducer';
 import { ILearner } from 'app/shared/model/learner.model';
 import { getEntities as getLearners } from 'app/entities/learner/learner.reducer';
 import { IModule } from 'app/shared/model/module.model';
@@ -30,6 +32,7 @@ export const ScenarioUpdate = () => {
 
   const domains = useAppSelector(state => state.domain.entities);
   const educators = useAppSelector(state => state.educator.entities);
+  const competences = useAppSelector(state => state.competence.entities);
   const learners = useAppSelector(state => state.learner.entities);
   const modules = useAppSelector(state => state.module.entities);
   const scenarioEntity = useAppSelector(state => state.scenario.entity);
@@ -51,6 +54,7 @@ export const ScenarioUpdate = () => {
 
     dispatch(getDomains({}));
     dispatch(getEducators({}));
+    dispatch(getCompetences({}));
     dispatch(getLearners({}));
     dispatch(getModules({}));
   }, []);
@@ -66,6 +70,7 @@ export const ScenarioUpdate = () => {
       ...scenarioEntity,
       ...values,
       educators: mapIdList(values.educators),
+      competences: mapIdList(values.competences),
       learners: mapIdList(values.learners),
       domain: domains.find(it => it.id.toString() === values.domain.toString()),
     };
@@ -85,6 +90,7 @@ export const ScenarioUpdate = () => {
           ...scenarioEntity,
           domain: scenarioEntity?.domain?.id,
           educators: scenarioEntity?.educators?.map(e => e.id.toString()),
+          competences: scenarioEntity?.competences?.map(e => e.id.toString()),
           learners: scenarioEntity?.learners?.map(e => e.id.toString()),
         };
 
@@ -157,6 +163,23 @@ export const ScenarioUpdate = () => {
                   ? educators.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.lastName}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                label={translate('eduApp.scenario.competence')}
+                id="scenario-competence"
+                data-cy="competence"
+                type="select"
+                multiple
+                name="competences"
+              >
+                <option value="" key="0" />
+                {competences
+                  ? competences.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.title}
                       </option>
                     ))
                   : null}

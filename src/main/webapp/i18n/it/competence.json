@@ -1,0 +1,28 @@
+{
+  "eduApp": {
+    "competence": {
+      "home": {
+        "title": "Competences",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Competence",
+        "createOrEditLabel": "Genera o modifica un Competence",
+        "notFound": "No Competences found"
+      },
+      "created": "&Egrave; stato generato un nuovo Competence con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Competence identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Competence con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Competence {{ id }}?"
+      },
+      "detail": {
+        "title": "Competence"
+      },
+      "id": "ID",
+      "title": "Title",
+      "description": "Description",
+      "type": "Type",
+      "concept": "Concept",
+      "scenario": "Scenario"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "eduApp": {
+    "CompetenceType": {
+      "null": "",
+      "SKILL": "SKILL",
+      "KNOWLEDGE": "KNOWLEDGE",
+      "ATTITUDE": "ATTITUDE"
+    }
+  }
+}

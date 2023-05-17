@@ -41,6 +41,11 @@ public class Scenario implements Serializable {
     private Set<Educator> educators = new HashSet<>();
 
     @DBRef
+    @Field("competences")
+    @JsonIgnoreProperties(value = { "concepts", "scenarios" }, allowSetters = true)
+    private Set<Competence> competences = new HashSet<>();
+
+    @DBRef
     @Field("learners")
     @JsonIgnoreProperties(value = { "scenarios" }, allowSetters = true)
     private Set<Learner> learners = new HashSet<>();
@@ -137,6 +142,31 @@ public class Scenario implements Serializable {
     public Scenario removeEducator(Educator educator) {
         this.educators.remove(educator);
         educator.getScenarios().remove(this);
+        return this;
+    }
+
+    public Set<Competence> getCompetences() {
+        return this.competences;
+    }
+
+    public void setCompetences(Set<Competence> competences) {
+        this.competences = competences;
+    }
+
+    public Scenario competences(Set<Competence> competences) {
+        this.setCompetences(competences);
+        return this;
+    }
+
+    public Scenario addCompetence(Competence competence) {
+        this.competences.add(competence);
+        competence.getScenarios().add(this);
+        return this;
+    }
+
+    public Scenario removeCompetence(Competence competence) {
+        this.competences.remove(competence);
+        competence.getScenarios().remove(this);
         return this;
     }
 

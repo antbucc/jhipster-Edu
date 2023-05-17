@@ -8,6 +8,8 @@ import Scenario from './scenario';
 import Module from './module';
 import Learner from './learner';
 import Educator from './educator';
+import Competence from './competence';
+import Concept from './concept';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 export default () => {
@@ -20,6 +22,8 @@ export default () => {
         <Route path="module/*" element={<Module />} />
         <Route path="learner/*" element={<Learner />} />
         <Route path="educator/*" element={<Educator />} />
+        <Route path="competence/*" element={<Competence />} />
+        <Route path="concept/*" element={<Concept />} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </ErrorBoundaryRoutes>
     </div>
