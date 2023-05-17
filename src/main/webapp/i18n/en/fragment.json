@@ -1,0 +1,26 @@
+{
+  "eduApp": {
+    "fragment": {
+      "home": {
+        "title": "Fragments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Fragment",
+        "createOrEditLabel": "Create or edit a Fragment",
+        "notFound": "No Fragments found"
+      },
+      "created": "A new Fragment is created with identifier {{ param }}",
+      "updated": "A Fragment is updated with identifier {{ param }}",
+      "deleted": "A Fragment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Fragment {{ id }}?"
+      },
+      "detail": {
+        "title": "Fragment"
+      },
+      "id": "ID",
+      "title": "Title",
+      "activity": "Activity",
+      "module": "Module"
+    }
+  }
+}

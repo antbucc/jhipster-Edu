@@ -124,6 +124,9 @@ public class ConceptResource {
                 if (concept.getTitle() != null) {
                     existingConcept.setTitle(concept.getTitle());
                 }
+                if (concept.getDescription() != null) {
+                    existingConcept.setDescription(concept.getDescription());
+                }
 
                 return existingConcept;
             })

@@ -38,6 +38,12 @@ export const ConceptDetail = () => {
             </span>
           </dt>
           <dd>{conceptEntity.title}</dd>
+          <dt>
+            <span id="description">
+              <Translate contentKey="eduApp.concept.description">Description</Translate>
+            </span>
+          </dt>
+          <dd>{conceptEntity.description}</dd>
         </dl>
         <Button tag={Link} to="/concept" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

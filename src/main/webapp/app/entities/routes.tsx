@@ -10,6 +10,8 @@ import Learner from './learner';
 import Educator from './educator';
 import Competence from './competence';
 import Concept from './concept';
+import Activity from './activity';
+import Fragment from './fragment';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 export default () => {
@@ -24,6 +26,8 @@ export default () => {
         <Route path="educator/*" element={<Educator />} />
         <Route path="competence/*" element={<Competence />} />
         <Route path="concept/*" element={<Concept />} />
+        <Route path="activity/*" element={<Activity />} />
+        <Route path="fragment/*" element={<Fragment />} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </ErrorBoundaryRoutes>
     </div>

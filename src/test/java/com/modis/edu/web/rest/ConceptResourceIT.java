@@ -29,6 +29,9 @@ class ConceptResourceIT {
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/concepts";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -47,7 +50,7 @@ class ConceptResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Concept createEntity() {
-        Concept concept = new Concept().title(DEFAULT_TITLE);
+        Concept concept = new Concept().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION);
         return concept;
     }
 
@@ -58,7 +61,7 @@ class ConceptResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Concept createUpdatedEntity() {
-        Concept concept = new Concept().title(UPDATED_TITLE);
+        Concept concept = new Concept().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION);
         return concept;
     }
 
@@ -81,6 +84,7 @@ class ConceptResourceIT {
         assertThat(conceptList).hasSize(databaseSizeBeforeCreate + 1);
         Concept testConcept = conceptList.get(conceptList.size() - 1);
         assertThat(testConcept.getTitle()).isEqualTo(DEFAULT_TITLE);
+        assertThat(testConcept.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
     @Test
@@ -111,7 +115,8 @@ class ConceptResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(concept.getId())))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)));
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
     }
 
     @Test
@@ -125,7 +130,8 @@ class ConceptResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(concept.getId()))
-            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE));
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
     }
 
     @Test
@@ -143,7 +149,7 @@ class ConceptResourceIT {
 
         // Update the concept
         Concept updatedConcept = conceptRepository.findById(concept.getId()).get();
-        updatedConcept.title(UPDATED_TITLE);
+        updatedConcept.title(UPDATED_TITLE).description(UPDATED_DESCRIPTION);
 
         restConceptMockMvc
             .perform(
@@ -158,6 +164,7 @@ class ConceptResourceIT {
         assertThat(conceptList).hasSize(databaseSizeBeforeUpdate);
         Concept testConcept = conceptList.get(conceptList.size() - 1);
         assertThat(testConcept.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testConcept.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 
     @Test
@@ -224,7 +231,7 @@ class ConceptResourceIT {
         Concept partialUpdatedConcept = new Concept();
         partialUpdatedConcept.setId(concept.getId());
 
-        partialUpdatedConcept.title(UPDATED_TITLE);
+        partialUpdatedConcept.title(UPDATED_TITLE).description(UPDATED_DESCRIPTION);
 
         restConceptMockMvc
             .perform(
@@ -239,6 +246,7 @@ class ConceptResourceIT {
         assertThat(conceptList).hasSize(databaseSizeBeforeUpdate);
         Concept testConcept = conceptList.get(conceptList.size() - 1);
         assertThat(testConcept.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testConcept.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 
     @Test
@@ -252,7 +260,7 @@ class ConceptResourceIT {
         Concept partialUpdatedConcept = new Concept();
         partialUpdatedConcept.setId(concept.getId());
 
-        partialUpdatedConcept.title(UPDATED_TITLE);
+        partialUpdatedConcept.title(UPDATED_TITLE).description(UPDATED_DESCRIPTION);
 
         restConceptMockMvc
             .perform(
@@ -267,6 +275,7 @@ class ConceptResourceIT {
         assertThat(conceptList).hasSize(databaseSizeBeforeUpdate);
         Concept testConcept = conceptList.get(conceptList.size() - 1);
         assertThat(testConcept.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testConcept.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 
     @Test

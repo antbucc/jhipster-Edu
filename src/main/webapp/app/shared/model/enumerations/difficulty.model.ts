@@ -1,0 +1,13 @@
+export enum Difficulty {
+  LOW = 'LOW',
+
+  MODERATE = 'MODERATE',
+
+  INTERMEDIATE = 'INTERMEDIATE',
+
+  HIGH = 'HIGH',
+
+  ADVANCED = 'ADVANCED',
+
+  PERSONALIZED = 'PERSONALIZED',
+}

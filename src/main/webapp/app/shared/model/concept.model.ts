@@ -1,9 +1,7 @@
-import { ICompetence } from 'app/shared/model/competence.model';
-
 export interface IConcept {
   id?: string;
   title?: string | null;
-  competences?: ICompetence[] | null;
+  description?: string | null;
 }
 
 export const defaultValue: Readonly<IConcept> = {};
