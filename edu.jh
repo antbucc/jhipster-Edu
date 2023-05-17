@@ -45,6 +45,31 @@ entity Competence {
 
 entity Concept {
  title String
+ description String
+}
+
+entity Activity {
+title String
+description String
+type ActivityType
+tool Tool
+difficulty Difficulty
+}
+
+entity Fragment {
+ title String 
+}
+
+
+enum Tool {
+ COMPUTER, MOBILE
+}
+
+enum ActivityType {
+INDIVIDUAL, GROUP
+}
+enum Difficulty {
+LOW, MODERATE, INTERMEDIATE, HIGH, ADVANCED, PERSONALIZED
 }
 
 enum Language {
@@ -77,15 +102,37 @@ relationship ManyToMany {
 }
 
 
-relationship ManyToMany {
-  Competence { Concept(title) } to Concept{Competence(title)}
-}
+//relationship ManyToMany {
+ // Competence { Concept(title) } to Concept{ Competence(title) }
+//}
 
 
 relationship ManyToMany {
   Scenario { Learner(lastName) } to Learner{Scenario(title)}
 }
 
+relationship ManyToMany {
+  Fragment { Activity(title) } to Activity{Fragment(title)}
+}
+
+
+//relationship OneToMany {
+ // Competence { Competence(title) } to Competence{ Competence(title) }
+//}
+
+
+//relationship OneToMany {
+//  Concept { Concept(title) } to Concept{Concept(title)}
+//}
+
+relationship OneToMany {
+ Fragment{ Fragment(title) } to Fragment{Fragment(title)}
+}
+
+
+relationship OneToMany {
+  Module { Fragment(title) } to Fragment{Module(title)}
+}
 
 
 
