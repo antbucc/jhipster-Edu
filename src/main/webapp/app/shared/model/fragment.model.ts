@@ -14,7 +14,6 @@ export interface IFragment {
   goals?: IGoal[] | null;
   activities?: IActivity[] | null;
   children?: IFragment | null;
-  module?: IModule | null;
   modules?: IModule[] | null;
 }
 

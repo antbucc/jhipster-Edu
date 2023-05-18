@@ -12,7 +12,6 @@ export interface IModule {
   level?: Level | null;
   scenario?: IScenario | null;
   fragments?: IFragment[] | null;
-  fragments?: IFragment[] | null;
 }
 
 export const defaultValue: Readonly<IModule> = {};

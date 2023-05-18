@@ -31,7 +31,7 @@ public class Fragment implements Serializable {
     @DBRef
     @Field("parent")
     @JsonIgnoreProperties(
-        value = { "condition", "parents", "preconditions", "effects", "goals", "activities", "children", "module", "modules" },
+        value = { "condition", "parents", "preconditions", "effects", "goals", "activities", "children", "modules" },
         allowSetters = true
     )
     private Set<Fragment> parents = new HashSet<>();
@@ -59,19 +59,14 @@ public class Fragment implements Serializable {
     @DBRef
     @Field("children")
     @JsonIgnoreProperties(
-        value = { "condition", "parents", "preconditions", "effects", "goals", "activities", "children", "module", "modules" },
+        value = { "condition", "parents", "preconditions", "effects", "goals", "activities", "children", "modules" },
         allowSetters = true
     )
     private Fragment children;
 
     @DBRef
-    @Field("module")
-    @JsonIgnoreProperties(value = { "scenario", "fragments", "fragments" }, allowSetters = true)
-    private Module module;
-
-    @DBRef
     @Field("modules")
-    @JsonIgnoreProperties(value = { "scenario", "fragments", "fragments" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "scenario", "fragments" }, allowSetters = true)
     private Set<Module> modules = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -274,19 +269,6 @@ public class Fragment implements Serializable {
 
     public Fragment children(Fragment fragment) {
         this.setChildren(fragment);
-        return this;
-    }
-
-    public Module getModule() {
-        return this.module;
-    }
-
-    public void setModule(Module module) {
-        this.module = module;
-    }
-
-    public Fragment module(Module module) {
-        this.setModule(module);
         return this;
     }
 
