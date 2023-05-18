@@ -67,18 +67,9 @@ export const ModuleDetail = () => {
           </dt>
           <dd>{moduleEntity.scenario ? moduleEntity.scenario.title : ''}</dd>
           <dt>
-            <Translate contentKey="eduApp.module.fragments">Fragments</Translate>
+            <Translate contentKey="eduApp.module.path">Path</Translate>
           </dt>
-          <dd>
-            {moduleEntity.fragments
-              ? moduleEntity.fragments.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
-                    {moduleEntity.fragments && i === moduleEntity.fragments.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
+          <dd>{moduleEntity.path ? moduleEntity.path.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/module" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

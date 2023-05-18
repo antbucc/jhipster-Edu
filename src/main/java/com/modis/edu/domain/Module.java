@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.modis.edu.domain.enumeration.Level;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -43,9 +41,9 @@ public class Module implements Serializable {
     private Scenario scenario;
 
     @DBRef
-    @Field("fragments")
-    @JsonIgnoreProperties(value = { "outgoingConditions", "preconditions", "effects", "activities", "modules" }, allowSetters = true)
-    private Set<Fragment> fragments = new HashSet<>();
+    @Field("path")
+    @JsonIgnoreProperties(value = { "modules" }, allowSetters = true)
+    private Path path;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -140,28 +138,16 @@ public class Module implements Serializable {
         return this;
     }
 
-    public Set<Fragment> getFragments() {
-        return this.fragments;
+    public Path getPath() {
+        return this.path;
     }
 
-    public void setFragments(Set<Fragment> fragments) {
-        this.fragments = fragments;
+    public void setPath(Path path) {
+        this.path = path;
     }
 
-    public Module fragments(Set<Fragment> fragments) {
-        this.setFragments(fragments);
-        return this;
-    }
-
-    public Module addFragments(Fragment fragment) {
-        this.fragments.add(fragment);
-        fragment.getModules().add(this);
-        return this;
-    }
-
-    public Module removeFragments(Fragment fragment) {
-        this.fragments.remove(fragment);
-        fragment.getModules().remove(this);
+    public Module path(Path path) {
+        this.setPath(path);
         return this;
     }
 

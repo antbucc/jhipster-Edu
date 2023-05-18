@@ -10,8 +10,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IScenario } from 'app/shared/model/scenario.model';
 import { getEntities as getScenarios } from 'app/entities/scenario/scenario.reducer';
-import { IFragment } from 'app/shared/model/fragment.model';
-import { getEntities as getFragments } from 'app/entities/fragment/fragment.reducer';
+import { IPath } from 'app/shared/model/path.model';
+import { getEntities as getPaths } from 'app/entities/path/path.reducer';
 import { IModule } from 'app/shared/model/module.model';
 import { Level } from 'app/shared/model/enumerations/level.model';
 import { getEntity, updateEntity, createEntity, reset } from './module.reducer';
@@ -25,7 +25,7 @@ export const ModuleUpdate = () => {
   const isNew = id === undefined;
 
   const scenarios = useAppSelector(state => state.scenario.entities);
-  const fragments = useAppSelector(state => state.fragment.entities);
+  const paths = useAppSelector(state => state.path.entities);
   const moduleEntity = useAppSelector(state => state.module.entity);
   const loading = useAppSelector(state => state.module.loading);
   const updating = useAppSelector(state => state.module.updating);
@@ -44,7 +44,7 @@ export const ModuleUpdate = () => {
     }
 
     dispatch(getScenarios({}));
-    dispatch(getFragments({}));
+    dispatch(getPaths({}));
   }, []);
 
   useEffect(() => {
@@ -60,8 +60,8 @@ export const ModuleUpdate = () => {
     const entity = {
       ...moduleEntity,
       ...values,
-      fragments: mapIdList(values.fragments),
       scenario: scenarios.find(it => it.id.toString() === values.scenario.toString()),
+      path: paths.find(it => it.id.toString() === values.path.toString()),
     };
 
     if (isNew) {
@@ -83,7 +83,7 @@ export const ModuleUpdate = () => {
           startDate: convertDateTimeFromServer(moduleEntity.startDate),
           endData: convertDateTimeFromServer(moduleEntity.endData),
           scenario: moduleEntity?.scenario?.id,
-          fragments: moduleEntity?.fragments?.map(e => e.id.toString()),
+          path: moduleEntity?.path?.id,
         };
 
   return (
@@ -158,17 +158,10 @@ export const ModuleUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
-              <ValidatedField
-                label={translate('eduApp.module.fragments')}
-                id="module-fragments"
-                data-cy="fragments"
-                type="select"
-                multiple
-                name="fragments"
-              >
+              <ValidatedField id="module-path" name="path" data-cy="path" label={translate('eduApp.module.path')} type="select">
                 <option value="" key="0" />
-                {fragments
-                  ? fragments.map(otherEntity => (
+                {paths
+                  ? paths.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

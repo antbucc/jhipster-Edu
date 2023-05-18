@@ -10,8 +10,6 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IActivity } from 'app/shared/model/activity.model';
 import { getEntities as getActivities } from 'app/entities/activity/activity.reducer';
-import { IModule } from 'app/shared/model/module.model';
-import { getEntities as getModules } from 'app/entities/module/module.reducer';
 import { IFragment } from 'app/shared/model/fragment.model';
 import { getEntity, updateEntity, createEntity, reset } from './fragment.reducer';
 
@@ -24,7 +22,6 @@ export const FragmentUpdate = () => {
   const isNew = id === undefined;
 
   const activities = useAppSelector(state => state.activity.entities);
-  const modules = useAppSelector(state => state.module.entities);
   const fragmentEntity = useAppSelector(state => state.fragment.entity);
   const loading = useAppSelector(state => state.fragment.loading);
   const updating = useAppSelector(state => state.fragment.updating);
@@ -42,7 +39,6 @@ export const FragmentUpdate = () => {
     }
 
     dispatch(getActivities({}));
-    dispatch(getModules({}));
   }, []);
 
   useEffect(() => {
