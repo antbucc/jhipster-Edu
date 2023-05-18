@@ -1,6 +1,3 @@
-
-
-
 entity Scenario {
 	title String
     description String
@@ -101,11 +98,9 @@ relationship ManyToMany {
   Scenario { Competence(title) } to Competence{Scenario(title)}
 }
 
-
 relationship ManyToMany {
   Competence { Concept(title) } to Concept { Competence(title) }
 }
-
 
 relationship ManyToMany {
   Scenario { Learner(lastName) } to Learner{Scenario(title)}
@@ -118,16 +113,6 @@ relationship ManyToMany {
 relationship ManyToMany {
   Activity { Concept(title) } to Concept{ Activity(title) }
 }
-
-
-relationship OneToMany {
-  Competence{sons} to Competence{parent}
-}
-
-relationship OneToMany {
-  Concept{sons} to Concept{parent}
-}
-
 
 relationship OneToMany {
   Module { Fragment(title) } to Fragment{Module(title)}
