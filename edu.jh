@@ -67,15 +67,20 @@ entity Effect{
 }
 
 
+entity Condition {
+	title String
+	type ConditionType
+}
 
 
 relationship OneToMany {
-  Fragment{parent} to Fragment{children}
+Fragment{outgoingConditions} to Condition{sourceFragment}
 }
 
-relationship OneToOne {
-Fragment{condition} to Fragment
+relationship ManyToOne {
+Condition{targetFragment} to Fragment
 }
+
 
 
 enum Tool {
@@ -84,6 +89,10 @@ enum Tool {
 
 enum ActivityType {
 INDIVIDUAL, GROUP
+}
+
+enum ConditionType {
+PASS, FAIL, UNCONDITIONAL
 }
 enum Difficulty {
 LOW, MODERATE, INTERMEDIATE, HIGH, ADVANCED, PERSONALIZED
