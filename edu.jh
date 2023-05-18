@@ -144,7 +144,7 @@ relationship OneToMany {
 
 
 relationship ManyToMany {
-  Competence { Competence(title) } to Competence{ Competence(title) }
+  Competence  to Competence
 }
 
 
