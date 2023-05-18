@@ -32,7 +32,8 @@
       "Precondition",
       "Effect",
       "Condition",
-      "Path"
+      "Path",
+      "Goal"
     ],
     "entitySuffix": "",
     "gitCompany": "",
@@ -40,7 +41,7 @@
     "jhipsterVersion": "7.9.3",
     "jwtSecretKey": "Njg2NTYwZWUwMTc3OWM5YzI0NzRlODNlZjM5ZGZhMWFmZDc0ZDk4MTMyMTcwMDgwNjViZGU4YzU1OWRlY2NjMDhjMmIwZGU3ZTNiNDI5MmIxYzBmZjVlNjY4ZTcwMDRiOGFjNzM4M2VjODMzNGY0MzE5MDE4ZDA5ODk4ZjE1ZTU=",
     "languages": ["en", "it"],
-    "lastLiquibaseTimestamp": 1684397730000,
+    "lastLiquibaseTimestamp": 1684399653000,
     "messageBroker": false,
     "nativeLanguage": "en",
     "otherModules": [],

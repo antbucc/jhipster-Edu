@@ -9,7 +9,6 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { ICondition } from 'app/shared/model/condition.model';
-import { ConditionType } from 'app/shared/model/enumerations/condition-type.model';
 import { getEntity, updateEntity, createEntity, reset } from './condition.reducer';
 
 export const ConditionUpdate = () => {
@@ -24,7 +23,6 @@ export const ConditionUpdate = () => {
   const loading = useAppSelector(state => state.condition.loading);
   const updating = useAppSelector(state => state.condition.updating);
   const updateSuccess = useAppSelector(state => state.condition.updateSuccess);
-  const conditionTypeValues = Object.keys(ConditionType);
 
   const handleClose = () => {
     navigate('/condition');
@@ -61,7 +59,6 @@ export const ConditionUpdate = () => {
     isNew
       ? {}
       : {
-          type: 'UNCONDITIONAL',
           ...conditionEntity,
         };
 
@@ -90,20 +87,7 @@ export const ConditionUpdate = () => {
                   validate={{ required: true }}
                 />
               ) : null}
-              <ValidatedField
-                label={translate('eduApp.condition.description')}
-                id="condition-description"
-                name="description"
-                data-cy="description"
-                type="text"
-              />
-              <ValidatedField label={translate('eduApp.condition.type')} id="condition-type" name="type" data-cy="type" type="select">
-                {conditionTypeValues.map(conditionType => (
-                  <option value={conditionType} key={conditionType}>
-                    {translate('eduApp.ConditionType.' + conditionType)}
-                  </option>
-                ))}
-              </ValidatedField>
+              <ValidatedField label={translate('eduApp.condition.title')} id="condition-title" name="title" data-cy="title" type="text" />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/condition" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

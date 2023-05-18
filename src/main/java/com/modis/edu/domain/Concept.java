@@ -28,33 +28,13 @@ public class Concept implements Serializable {
     private String description;
 
     @DBRef
-    @Field("sons")
-    @JsonIgnoreProperties(value = { "sons", "precondition", "effect", "parent", "competences", "activities" }, allowSetters = true)
-    private Set<Concept> sons = new HashSet<>();
-
-    @DBRef
-    @Field("precondition")
-    @JsonIgnoreProperties(value = { "concepts", "activity" }, allowSetters = true)
-    private Precondition precondition;
-
-    @DBRef
-    @Field("effect")
-    @JsonIgnoreProperties(value = { "concepts", "activity" }, allowSetters = true)
-    private Effect effect;
-
-    @DBRef
-    @Field("parent")
-    @JsonIgnoreProperties(value = { "sons", "precondition", "effect", "parent", "competences", "activities" }, allowSetters = true)
-    private Concept parent;
-
-    @DBRef
     @Field("competences")
-    @JsonIgnoreProperties(value = { "sons", "concepts", "parent", "scenarios" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "concepts", "scenarios" }, allowSetters = true)
     private Set<Competence> competences = new HashSet<>();
 
     @DBRef
     @Field("activities")
-    @JsonIgnoreProperties(value = { "preconditions", "effects", "concepts", "fragments" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "concepts", "fragments" }, allowSetters = true)
     private Set<Activity> activities = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -96,76 +76,6 @@ public class Concept implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Set<Concept> getSons() {
-        return this.sons;
-    }
-
-    public void setSons(Set<Concept> concepts) {
-        if (this.sons != null) {
-            this.sons.forEach(i -> i.setParent(null));
-        }
-        if (concepts != null) {
-            concepts.forEach(i -> i.setParent(this));
-        }
-        this.sons = concepts;
-    }
-
-    public Concept sons(Set<Concept> concepts) {
-        this.setSons(concepts);
-        return this;
-    }
-
-    public Concept addSons(Concept concept) {
-        this.sons.add(concept);
-        concept.setParent(this);
-        return this;
-    }
-
-    public Concept removeSons(Concept concept) {
-        this.sons.remove(concept);
-        concept.setParent(null);
-        return this;
-    }
-
-    public Precondition getPrecondition() {
-        return this.precondition;
-    }
-
-    public void setPrecondition(Precondition precondition) {
-        this.precondition = precondition;
-    }
-
-    public Concept precondition(Precondition precondition) {
-        this.setPrecondition(precondition);
-        return this;
-    }
-
-    public Effect getEffect() {
-        return this.effect;
-    }
-
-    public void setEffect(Effect effect) {
-        this.effect = effect;
-    }
-
-    public Concept effect(Effect effect) {
-        this.setEffect(effect);
-        return this;
-    }
-
-    public Concept getParent() {
-        return this.parent;
-    }
-
-    public void setParent(Concept concept) {
-        this.parent = concept;
-    }
-
-    public Concept parent(Concept concept) {
-        this.setParent(concept);
-        return this;
     }
 
     public Set<Competence> getCompetences() {

@@ -2,8 +2,6 @@ package com.modis.edu.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,18 +19,13 @@ public class Precondition implements Serializable {
     @Id
     private String id;
 
-    @Field("metadata")
-    private String metadata;
+    @Field("title")
+    private String title;
 
     @DBRef
-    @Field("concept")
-    @JsonIgnoreProperties(value = { "sons", "precondition", "effect", "parent", "competences", "activities" }, allowSetters = true)
-    private Set<Concept> concepts = new HashSet<>();
-
-    @DBRef
-    @Field("activity")
-    @JsonIgnoreProperties(value = { "preconditions", "effects", "concepts", "fragments" }, allowSetters = true)
-    private Activity activity;
+    @Field("fragment")
+    @JsonIgnoreProperties(value = { "preconditions", "effects", "goals", "activities", "module" }, allowSetters = true)
+    private Fragment fragment;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -49,60 +42,29 @@ public class Precondition implements Serializable {
         this.id = id;
     }
 
-    public String getMetadata() {
-        return this.metadata;
+    public String getTitle() {
+        return this.title;
     }
 
-    public Precondition metadata(String metadata) {
-        this.setMetadata(metadata);
+    public Precondition title(String title) {
+        this.setTitle(title);
         return this;
     }
 
-    public void setMetadata(String metadata) {
-        this.metadata = metadata;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Set<Concept> getConcepts() {
-        return this.concepts;
+    public Fragment getFragment() {
+        return this.fragment;
     }
 
-    public void setConcepts(Set<Concept> concepts) {
-        if (this.concepts != null) {
-            this.concepts.forEach(i -> i.setPrecondition(null));
-        }
-        if (concepts != null) {
-            concepts.forEach(i -> i.setPrecondition(this));
-        }
-        this.concepts = concepts;
+    public void setFragment(Fragment fragment) {
+        this.fragment = fragment;
     }
 
-    public Precondition concepts(Set<Concept> concepts) {
-        this.setConcepts(concepts);
-        return this;
-    }
-
-    public Precondition addConcept(Concept concept) {
-        this.concepts.add(concept);
-        concept.setPrecondition(this);
-        return this;
-    }
-
-    public Precondition removeConcept(Concept concept) {
-        this.concepts.remove(concept);
-        concept.setPrecondition(null);
-        return this;
-    }
-
-    public Activity getActivity() {
-        return this.activity;
-    }
-
-    public void setActivity(Activity activity) {
-        this.activity = activity;
-    }
-
-    public Precondition activity(Activity activity) {
-        this.setActivity(activity);
+    public Precondition fragment(Fragment fragment) {
+        this.setFragment(fragment);
         return this;
     }
 
@@ -130,7 +92,7 @@ public class Precondition implements Serializable {
     public String toString() {
         return "Precondition{" +
             "id=" + getId() +
-            ", metadata='" + getMetadata() + "'" +
+            ", title='" + getTitle() + "'" +
             "}";
     }
 }

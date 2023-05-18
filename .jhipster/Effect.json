@@ -6,9 +6,8 @@
   "entityTableName": "effect",
   "fields": [
     {
-      "fieldName": "metadata",
-      "fieldType": "byte[]",
-      "fieldTypeBlobContent": "text"
+      "fieldName": "title",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,
@@ -19,16 +18,9 @@
   "relationships": [
     {
       "otherEntityField": "title",
-      "otherEntityName": "concept",
+      "otherEntityName": "fragment",
       "otherEntityRelationshipName": "effect",
-      "relationshipName": "concept",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityField": "title",
-      "otherEntityName": "activity",
-      "otherEntityRelationshipName": "effect",
-      "relationshipName": "activity",
+      "relationshipName": "fragment",
       "relationshipType": "many-to-one"
     }
   ],

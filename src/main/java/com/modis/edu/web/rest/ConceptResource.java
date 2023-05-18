@@ -138,17 +138,12 @@ public class ConceptResource {
     /**
      * {@code GET  /concepts} : get all the concepts.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of concepts in body.
      */
     @GetMapping("/concepts")
-    public List<Concept> getAllConcepts(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public List<Concept> getAllConcepts() {
         log.debug("REST request to get all Concepts");
-        if (eagerload) {
-            return conceptRepository.findAllWithEagerRelationships();
-        } else {
-            return conceptRepository.findAll();
-        }
+        return conceptRepository.findAll();
     }
 
     /**
@@ -160,7 +155,7 @@ public class ConceptResource {
     @GetMapping("/concepts/{id}")
     public ResponseEntity<Concept> getConcept(@PathVariable String id) {
         log.debug("REST request to get Concept : {}", id);
-        Optional<Concept> concept = conceptRepository.findOneWithEagerRelationships(id);
+        Optional<Concept> concept = conceptRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(concept);
     }
 

@@ -6,13 +6,8 @@
   "entityTableName": "condition",
   "fields": [
     {
-      "fieldName": "description",
+      "fieldName": "title",
       "fieldType": "String"
-    },
-    {
-      "fieldName": "type",
-      "fieldType": "ConditionType",
-      "fieldValues": "UNCONDITIONAL,PASS,FAIL"
     }
   ],
   "fluentMethods": true,
@@ -20,13 +15,6 @@
   "name": "Condition",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [
-    {
-      "otherEntityName": "fragment",
-      "otherEntityRelationshipName": "source",
-      "relationshipName": "type",
-      "relationshipType": "one-to-many"
-    }
-  ],
+  "relationships": [],
   "service": "no"
 }

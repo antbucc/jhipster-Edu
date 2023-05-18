@@ -71,7 +71,7 @@ class EffectGatlingTest extends Simulation {
             .post("/api/effects")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "metadata":null
+                "title":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_effect_url"))).exitHereIfFailed
