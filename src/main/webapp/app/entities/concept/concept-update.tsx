@@ -8,6 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { IGoal } from 'app/shared/model/goal.model';
+import { getEntities as getGoals } from 'app/entities/goal/goal.reducer';
 import { ICompetence } from 'app/shared/model/competence.model';
 import { getEntities as getCompetences } from 'app/entities/competence/competence.reducer';
 import { IActivity } from 'app/shared/model/activity.model';
@@ -23,6 +25,7 @@ export const ConceptUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const goals = useAppSelector(state => state.goal.entities);
   const competences = useAppSelector(state => state.competence.entities);
   const activities = useAppSelector(state => state.activity.entities);
   const conceptEntity = useAppSelector(state => state.concept.entity);
@@ -41,6 +44,7 @@ export const ConceptUpdate = () => {
       dispatch(getEntity(id));
     }
 
+    dispatch(getGoals({}));
     dispatch(getCompetences({}));
     dispatch(getActivities({}));
   }, []);
@@ -55,6 +59,7 @@ export const ConceptUpdate = () => {
     const entity = {
       ...conceptEntity,
       ...values,
+      goal: goals.find(it => it.id.toString() === values.goal.toString()),
     };
 
     if (isNew) {
@@ -69,6 +74,7 @@ export const ConceptUpdate = () => {
       ? {}
       : {
           ...conceptEntity,
+          goal: conceptEntity?.goal?.id,
         };
 
   return (
@@ -104,6 +110,16 @@ export const ConceptUpdate = () => {
                 data-cy="description"
                 type="text"
               />
+              <ValidatedField id="concept-goal" name="goal" data-cy="goal" label={translate('eduApp.concept.goal')} type="select">
+                <option value="" key="0" />
+                {goals
+                  ? goals.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.title}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/concept" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

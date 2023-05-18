@@ -72,6 +72,11 @@ entity Path {
 }
 
 
+entity Goal {
+ title String
+}
+
+
 
 
 
@@ -146,6 +151,16 @@ relationship OneToMany {
 relationship OneToMany {
   Fragment { Effect(title) } to Effect{ Fragment(title) }
 }
+
+
+relationship OneToMany {
+  Fragment { Goal(title) } to Goal{ Fragment(title) }
+}
+
+relationship OneToMany {
+  Goal { Concept(title) } to Concept{ Goal(title) }
+}
+
 
 
 

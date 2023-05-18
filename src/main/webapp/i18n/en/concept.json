@@ -20,6 +20,7 @@
       "id": "ID",
       "title": "Title",
       "description": "Description",
+      "goal": "Goal",
       "competence": "Competence",
       "activity": "Activity"
     }

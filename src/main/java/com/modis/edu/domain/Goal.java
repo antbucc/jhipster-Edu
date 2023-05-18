@@ -2,6 +2,8 @@ package com.modis.edu.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -23,8 +25,13 @@ public class Goal implements Serializable {
     private String title;
 
     @DBRef
+    @Field("concept")
+    @JsonIgnoreProperties(value = { "goal", "competences", "activities" }, allowSetters = true)
+    private Set<Concept> concepts = new HashSet<>();
+
+    @DBRef
     @Field("fragment")
-    @JsonIgnoreProperties(value = { "preconditions", "effects", "outgoingPaths", "activities" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "preconditions", "effects", "goals", "outgoingPaths", "activities" }, allowSetters = true)
     private Fragment fragment;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -53,6 +60,37 @@ public class Goal implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Set<Concept> getConcepts() {
+        return this.concepts;
+    }
+
+    public void setConcepts(Set<Concept> concepts) {
+        if (this.concepts != null) {
+            this.concepts.forEach(i -> i.setGoal(null));
+        }
+        if (concepts != null) {
+            concepts.forEach(i -> i.setGoal(this));
+        }
+        this.concepts = concepts;
+    }
+
+    public Goal concepts(Set<Concept> concepts) {
+        this.setConcepts(concepts);
+        return this;
+    }
+
+    public Goal addConcept(Concept concept) {
+        this.concepts.add(concept);
+        concept.setGoal(this);
+        return this;
+    }
+
+    public Goal removeConcept(Concept concept) {
+        this.concepts.remove(concept);
+        concept.setGoal(null);
+        return this;
     }
 
     public Fragment getFragment() {
