@@ -96,7 +96,7 @@ export const Competence = () => {
                     {competence.competences
                       ? competence.competences.map((val, j) => (
                           <span key={j}>
-                            <Link to={`/competence/${val.id}`}>{val.title}</Link>
+                            <Link to={`/competence/${val.id}`}>{val.id}</Link>
                             {j === competence.competences.length - 1 ? '' : ', '}
                           </span>
                         ))
