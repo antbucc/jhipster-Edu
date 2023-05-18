@@ -59,7 +59,7 @@ export const ConceptUpdate = () => {
     const entity = {
       ...conceptEntity,
       ...values,
-      goal: goals.find(it => it.id.toString() === values.goal.toString()),
+      goals: mapIdList(values.goals),
     };
 
     if (isNew) {
@@ -74,7 +74,7 @@ export const ConceptUpdate = () => {
       ? {}
       : {
           ...conceptEntity,
-          goal: conceptEntity?.goal?.id,
+          goals: conceptEntity?.goals?.map(e => e.id.toString()),
         };
 
   return (
@@ -110,7 +110,7 @@ export const ConceptUpdate = () => {
                 data-cy="description"
                 type="text"
               />
-              <ValidatedField id="concept-goal" name="goal" data-cy="goal" label={translate('eduApp.concept.goal')} type="select">
+              <ValidatedField label={translate('eduApp.concept.goal')} id="concept-goal" data-cy="goal" type="select" multiple name="goals">
                 <option value="" key="0" />
                 {goals
                   ? goals.map(otherEntity => (

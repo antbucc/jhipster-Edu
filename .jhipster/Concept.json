@@ -24,8 +24,9 @@
       "otherEntityField": "title",
       "otherEntityName": "goal",
       "otherEntityRelationshipName": "concept",
+      "ownerSide": true,
       "relationshipName": "goal",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-many"
     },
     {
       "otherEntityField": "title",

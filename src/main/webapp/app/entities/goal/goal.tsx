@@ -69,7 +69,16 @@ export const Goal = () => {
                     </Button>
                   </td>
                   <td>{goal.title}</td>
-                  <td>{goal.fragment ? <Link to={`/fragment/${goal.fragment.id}`}>{goal.fragment.title}</Link> : ''}</td>
+                  <td>
+                    {goal.fragments
+                      ? goal.fragments.map((val, j) => (
+                          <span key={j}>
+                            <Link to={`/fragment/${val.id}`}>{val.title}</Link>
+                            {j === goal.fragments.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/goal/${goal.id}`} color="info" size="sm" data-cy="entityDetailsButton">

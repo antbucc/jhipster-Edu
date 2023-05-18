@@ -6,7 +6,7 @@ export interface IConcept {
   id?: string;
   title?: string | null;
   description?: string | null;
-  goal?: IGoal | null;
+  goals?: IGoal[] | null;
   competences?: ICompetence[] | null;
   activities?: IActivity[] | null;
 }

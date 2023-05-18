@@ -41,7 +41,16 @@ export const GoalDetail = () => {
           <dt>
             <Translate contentKey="eduApp.goal.fragment">Fragment</Translate>
           </dt>
-          <dd>{goalEntity.fragment ? goalEntity.fragment.title : ''}</dd>
+          <dd>
+            {goalEntity.fragments
+              ? goalEntity.fragments.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.title}</a>
+                    {goalEntity.fragments && i === goalEntity.fragments.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/goal" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

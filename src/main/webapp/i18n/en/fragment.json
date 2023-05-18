@@ -21,9 +21,9 @@
       "title": "Title",
       "precondition": "Precondition",
       "effect": "Effect",
-      "goal": "Goal",
       "outgoingPaths": "Outgoing Paths",
-      "activity": "Activity"
+      "activity": "Activity",
+      "goal": "Goal"
     }
   }
 }
