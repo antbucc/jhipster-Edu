@@ -25,7 +25,7 @@ public class Precondition implements Serializable {
     @DBRef
     @Field("fragment")
     @JsonIgnoreProperties(
-        value = { "condition", "parents", "preconditions", "effects", "goals", "activities", "children", "module" },
+        value = { "condition", "parents", "preconditions", "effects", "goals", "activities", "children", "module", "modules" },
         allowSetters = true
     )
     private Fragment fragment;

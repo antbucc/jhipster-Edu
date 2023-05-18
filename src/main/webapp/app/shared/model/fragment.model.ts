@@ -15,6 +15,7 @@ export interface IFragment {
   activities?: IActivity[] | null;
   children?: IFragment | null;
   module?: IModule | null;
+  modules?: IModule[] | null;
 }
 
 export const defaultValue: Readonly<IFragment> = {};

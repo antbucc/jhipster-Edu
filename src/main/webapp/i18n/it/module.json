@@ -24,7 +24,8 @@
       "endData": "End Data",
       "level": "Level",
       "scenario": "Scenario",
-      "fragment": "Fragment"
+      "fragment": "Fragment",
+      "fragments": "Fragments"
     }
   }
 }

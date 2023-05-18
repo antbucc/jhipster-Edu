@@ -69,6 +69,9 @@ export const Module = () => {
                 <th>
                   <Translate contentKey="eduApp.module.scenario">Scenario</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="eduApp.module.fragments">Fragments</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -88,6 +91,16 @@ export const Module = () => {
                     <Translate contentKey={`eduApp.Level.${module.level}`} />
                   </td>
                   <td>{module.scenario ? <Link to={`/scenario/${module.scenario.id}`}>{module.scenario.title}</Link> : ''}</td>
+                  <td>
+                    {module.fragments
+                      ? module.fragments.map((val, j) => (
+                          <span key={j}>
+                            <Link to={`/fragment/${val.id}`}>{val.id}</Link>
+                            {j === module.fragments.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/module/${module.id}`} color="info" size="sm" data-cy="entityDetailsButton">
