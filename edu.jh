@@ -68,23 +68,11 @@ entity Effect{
 
 entity Path {
  title String
+ type PathType
 }
 
 
 
-entity Condition {
-	title String
-	type ConditionType
-}
-
-
-relationship OneToMany {
-Fragment{outgoingConditions} to Condition{sourceFragment}
-}
-
-relationship ManyToOne {
-Condition{targetFragment} to Fragment
-}
 
 
 
@@ -96,7 +84,7 @@ enum ActivityType {
 INDIVIDUAL, GROUP
 }
 
-enum ConditionType {
+enum PathType {
 PASS, FAIL, UNCONDITIONAL
 }
 enum Difficulty {
@@ -113,6 +101,8 @@ enum Level {
 enum CompetenceType {
 SKILL, KNOWLEDGE, ATTITUDE
 }
+
+
 
 
 relationship OneToOne {
@@ -159,9 +149,19 @@ relationship OneToMany {
 
 
 
-relationship ManyToOne {
+relationship ManyToMany {
 Module{Path} to Path{modules}
 }
+
+relationship OneToMany {
+Fragment{outgoingPaths} to Path{sourceFragment}
+}
+
+relationship ManyToOne {
+Path{targetFragment} to Fragment
+}
+
+
 // Set pagination options
 paginate Learner, Educator with infinite-scroll
 paginate Domain, Scenario with pagination
