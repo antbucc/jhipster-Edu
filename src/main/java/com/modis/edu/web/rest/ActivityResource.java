@@ -2,7 +2,6 @@ package com.modis.edu.web.rest;
 
 import com.modis.edu.domain.Activity;
 import com.modis.edu.repository.ActivityRepository;
-import com.modis.edu.service.ActivityService;
 import com.modis.edu.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,12 +30,9 @@ public class ActivityResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ActivityService activityService;
-
     private final ActivityRepository activityRepository;
 
-    public ActivityResource(ActivityService activityService, ActivityRepository activityRepository) {
-        this.activityService = activityService;
+    public ActivityResource(ActivityRepository activityRepository) {
         this.activityRepository = activityRepository;
     }
 
@@ -53,7 +49,7 @@ public class ActivityResource {
         if (activity.getId() != null) {
             throw new BadRequestAlertException("A new activity cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Activity result = activityService.save(activity);
+        Activity result = activityRepository.save(activity);
         return ResponseEntity
             .created(new URI("/api/activities/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -87,7 +83,7 @@ public class ActivityResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Activity result = activityService.update(activity);
+        Activity result = activityRepository.save(activity);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, activity.getId()))
@@ -122,7 +118,28 @@ public class ActivityResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Activity> result = activityService.partialUpdate(activity);
+        Optional<Activity> result = activityRepository
+            .findById(activity.getId())
+            .map(existingActivity -> {
+                if (activity.getTitle() != null) {
+                    existingActivity.setTitle(activity.getTitle());
+                }
+                if (activity.getDescription() != null) {
+                    existingActivity.setDescription(activity.getDescription());
+                }
+                if (activity.getType() != null) {
+                    existingActivity.setType(activity.getType());
+                }
+                if (activity.getTool() != null) {
+                    existingActivity.setTool(activity.getTool());
+                }
+                if (activity.getDifficulty() != null) {
+                    existingActivity.setDifficulty(activity.getDifficulty());
+                }
+
+                return existingActivity;
+            })
+            .map(activityRepository::save);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -139,7 +156,11 @@ public class ActivityResource {
     @GetMapping("/activities")
     public List<Activity> getAllActivities(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Activities");
-        return activityService.findAll();
+        if (eagerload) {
+            return activityRepository.findAllWithEagerRelationships();
+        } else {
+            return activityRepository.findAll();
+        }
     }
 
     /**
@@ -151,7 +172,7 @@ public class ActivityResource {
     @GetMapping("/activities/{id}")
     public ResponseEntity<Activity> getActivity(@PathVariable String id) {
         log.debug("REST request to get Activity : {}", id);
-        Optional<Activity> activity = activityService.findOne(id);
+        Optional<Activity> activity = activityRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(activity);
     }
 
@@ -164,7 +185,7 @@ public class ActivityResource {
     @DeleteMapping("/activities/{id}")
     public ResponseEntity<Void> deleteActivity(@PathVariable String id) {
         log.debug("REST request to delete Activity : {}", id);
-        activityService.delete(id);
+        activityRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

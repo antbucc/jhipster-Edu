@@ -10,7 +10,6 @@ import com.modis.edu.IntegrationTest;
 import com.modis.edu.domain.Module;
 import com.modis.edu.domain.enumeration.Level;
 import com.modis.edu.repository.ModuleRepository;
-import com.modis.edu.service.ModuleService;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -62,9 +61,6 @@ class ModuleResourceIT {
 
     @Mock
     private ModuleRepository moduleRepositoryMock;
-
-    @Mock
-    private ModuleService moduleServiceMock;
 
     @Autowired
     private MockMvc restModuleMockMvc;
@@ -165,16 +161,16 @@ class ModuleResourceIT {
 
     @SuppressWarnings({ "unchecked" })
     void getAllModulesWithEagerRelationshipsIsEnabled() throws Exception {
-        when(moduleServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(moduleRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restModuleMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
-        verify(moduleServiceMock, times(1)).findAllWithEagerRelationships(any());
+        verify(moduleRepositoryMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @SuppressWarnings({ "unchecked" })
     void getAllModulesWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(moduleServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(moduleRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restModuleMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
         verify(moduleRepositoryMock, times(1)).findAll(any(Pageable.class));

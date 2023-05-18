@@ -2,7 +2,6 @@ package com.modis.edu.web.rest;
 
 import com.modis.edu.domain.Goal;
 import com.modis.edu.repository.GoalRepository;
-import com.modis.edu.service.GoalService;
 import com.modis.edu.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,12 +30,9 @@ public class GoalResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final GoalService goalService;
-
     private final GoalRepository goalRepository;
 
-    public GoalResource(GoalService goalService, GoalRepository goalRepository) {
-        this.goalService = goalService;
+    public GoalResource(GoalRepository goalRepository) {
         this.goalRepository = goalRepository;
     }
 
@@ -53,7 +49,7 @@ public class GoalResource {
         if (goal.getId() != null) {
             throw new BadRequestAlertException("A new goal cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Goal result = goalService.save(goal);
+        Goal result = goalRepository.save(goal);
         return ResponseEntity
             .created(new URI("/api/goals/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -85,7 +81,7 @@ public class GoalResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Goal result = goalService.update(goal);
+        Goal result = goalRepository.save(goal);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, goal.getId()))
@@ -118,7 +114,16 @@ public class GoalResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Goal> result = goalService.partialUpdate(goal);
+        Optional<Goal> result = goalRepository
+            .findById(goal.getId())
+            .map(existingGoal -> {
+                if (goal.getTitle() != null) {
+                    existingGoal.setTitle(goal.getTitle());
+                }
+
+                return existingGoal;
+            })
+            .map(goalRepository::save);
 
         return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, goal.getId()));
     }
@@ -132,7 +137,11 @@ public class GoalResource {
     @GetMapping("/goals")
     public List<Goal> getAllGoals(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Goals");
-        return goalService.findAll();
+        if (eagerload) {
+            return goalRepository.findAllWithEagerRelationships();
+        } else {
+            return goalRepository.findAll();
+        }
     }
 
     /**
@@ -144,7 +153,7 @@ public class GoalResource {
     @GetMapping("/goals/{id}")
     public ResponseEntity<Goal> getGoal(@PathVariable String id) {
         log.debug("REST request to get Goal : {}", id);
-        Optional<Goal> goal = goalService.findOne(id);
+        Optional<Goal> goal = goalRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(goal);
     }
 
@@ -157,7 +166,7 @@ public class GoalResource {
     @DeleteMapping("/goals/{id}")
     public ResponseEntity<Void> deleteGoal(@PathVariable String id) {
         log.debug("REST request to delete Goal : {}", id);
-        goalService.delete(id);
+        goalRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

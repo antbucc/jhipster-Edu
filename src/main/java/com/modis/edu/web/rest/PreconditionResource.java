@@ -2,7 +2,6 @@ package com.modis.edu.web.rest;
 
 import com.modis.edu.domain.Precondition;
 import com.modis.edu.repository.PreconditionRepository;
-import com.modis.edu.service.PreconditionService;
 import com.modis.edu.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,12 +30,9 @@ public class PreconditionResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final PreconditionService preconditionService;
-
     private final PreconditionRepository preconditionRepository;
 
-    public PreconditionResource(PreconditionService preconditionService, PreconditionRepository preconditionRepository) {
-        this.preconditionService = preconditionService;
+    public PreconditionResource(PreconditionRepository preconditionRepository) {
         this.preconditionRepository = preconditionRepository;
     }
 
@@ -53,7 +49,7 @@ public class PreconditionResource {
         if (precondition.getId() != null) {
             throw new BadRequestAlertException("A new precondition cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Precondition result = preconditionService.save(precondition);
+        Precondition result = preconditionRepository.save(precondition);
         return ResponseEntity
             .created(new URI("/api/preconditions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -87,7 +83,7 @@ public class PreconditionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Precondition result = preconditionService.update(precondition);
+        Precondition result = preconditionRepository.save(precondition);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, precondition.getId()))
@@ -122,7 +118,16 @@ public class PreconditionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Precondition> result = preconditionService.partialUpdate(precondition);
+        Optional<Precondition> result = preconditionRepository
+            .findById(precondition.getId())
+            .map(existingPrecondition -> {
+                if (precondition.getTitle() != null) {
+                    existingPrecondition.setTitle(precondition.getTitle());
+                }
+
+                return existingPrecondition;
+            })
+            .map(preconditionRepository::save);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -139,7 +144,11 @@ public class PreconditionResource {
     @GetMapping("/preconditions")
     public List<Precondition> getAllPreconditions(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Preconditions");
-        return preconditionService.findAll();
+        if (eagerload) {
+            return preconditionRepository.findAllWithEagerRelationships();
+        } else {
+            return preconditionRepository.findAll();
+        }
     }
 
     /**
@@ -151,7 +160,7 @@ public class PreconditionResource {
     @GetMapping("/preconditions/{id}")
     public ResponseEntity<Precondition> getPrecondition(@PathVariable String id) {
         log.debug("REST request to get Precondition : {}", id);
-        Optional<Precondition> precondition = preconditionService.findOne(id);
+        Optional<Precondition> precondition = preconditionRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(precondition);
     }
 
@@ -164,7 +173,7 @@ public class PreconditionResource {
     @DeleteMapping("/preconditions/{id}")
     public ResponseEntity<Void> deletePrecondition(@PathVariable String id) {
         log.debug("REST request to delete Precondition : {}", id);
-        preconditionService.delete(id);
+        preconditionRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

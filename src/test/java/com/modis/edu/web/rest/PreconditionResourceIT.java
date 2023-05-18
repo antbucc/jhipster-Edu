@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.modis.edu.IntegrationTest;
 import com.modis.edu.domain.Precondition;
 import com.modis.edu.repository.PreconditionRepository;
-import com.modis.edu.service.PreconditionService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -47,9 +46,6 @@ class PreconditionResourceIT {
 
     @Mock
     private PreconditionRepository preconditionRepositoryMock;
-
-    @Mock
-    private PreconditionService preconditionServiceMock;
 
     @Autowired
     private MockMvc restPreconditionMockMvc;
@@ -132,16 +128,16 @@ class PreconditionResourceIT {
 
     @SuppressWarnings({ "unchecked" })
     void getAllPreconditionsWithEagerRelationshipsIsEnabled() throws Exception {
-        when(preconditionServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(preconditionRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restPreconditionMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
-        verify(preconditionServiceMock, times(1)).findAllWithEagerRelationships(any());
+        verify(preconditionRepositoryMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @SuppressWarnings({ "unchecked" })
     void getAllPreconditionsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(preconditionServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(preconditionRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restPreconditionMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
         verify(preconditionRepositoryMock, times(1)).findAll(any(Pageable.class));

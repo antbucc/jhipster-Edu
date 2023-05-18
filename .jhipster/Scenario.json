@@ -66,5 +66,5 @@
       "relationshipType": "one-to-one"
     }
   ],
-  "service": "serviceImpl"
+  "service": "no"
 }

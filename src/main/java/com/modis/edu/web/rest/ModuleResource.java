@@ -2,7 +2,6 @@ package com.modis.edu.web.rest;
 
 import com.modis.edu.domain.Module;
 import com.modis.edu.repository.ModuleRepository;
-import com.modis.edu.service.ModuleService;
 import com.modis.edu.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,12 +30,9 @@ public class ModuleResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ModuleService moduleService;
-
     private final ModuleRepository moduleRepository;
 
-    public ModuleResource(ModuleService moduleService, ModuleRepository moduleRepository) {
-        this.moduleService = moduleService;
+    public ModuleResource(ModuleRepository moduleRepository) {
         this.moduleRepository = moduleRepository;
     }
 
@@ -53,7 +49,7 @@ public class ModuleResource {
         if (module.getId() != null) {
             throw new BadRequestAlertException("A new module cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Module result = moduleService.save(module);
+        Module result = moduleRepository.save(module);
         return ResponseEntity
             .created(new URI("/api/modules/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -85,7 +81,7 @@ public class ModuleResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Module result = moduleService.update(module);
+        Module result = moduleRepository.save(module);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, module.getId()))
@@ -120,7 +116,28 @@ public class ModuleResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Module> result = moduleService.partialUpdate(module);
+        Optional<Module> result = moduleRepository
+            .findById(module.getId())
+            .map(existingModule -> {
+                if (module.getTitle() != null) {
+                    existingModule.setTitle(module.getTitle());
+                }
+                if (module.getDescription() != null) {
+                    existingModule.setDescription(module.getDescription());
+                }
+                if (module.getStartDate() != null) {
+                    existingModule.setStartDate(module.getStartDate());
+                }
+                if (module.getEndData() != null) {
+                    existingModule.setEndData(module.getEndData());
+                }
+                if (module.getLevel() != null) {
+                    existingModule.setLevel(module.getLevel());
+                }
+
+                return existingModule;
+            })
+            .map(moduleRepository::save);
 
         return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, module.getId()));
     }
@@ -134,7 +151,11 @@ public class ModuleResource {
     @GetMapping("/modules")
     public List<Module> getAllModules(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Modules");
-        return moduleService.findAll();
+        if (eagerload) {
+            return moduleRepository.findAllWithEagerRelationships();
+        } else {
+            return moduleRepository.findAll();
+        }
     }
 
     /**
@@ -146,7 +167,7 @@ public class ModuleResource {
     @GetMapping("/modules/{id}")
     public ResponseEntity<Module> getModule(@PathVariable String id) {
         log.debug("REST request to get Module : {}", id);
-        Optional<Module> module = moduleService.findOne(id);
+        Optional<Module> module = moduleRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(module);
     }
 
@@ -159,7 +180,7 @@ public class ModuleResource {
     @DeleteMapping("/modules/{id}")
     public ResponseEntity<Void> deleteModule(@PathVariable String id) {
         log.debug("REST request to delete Module : {}", id);
-        moduleService.delete(id);
+        moduleRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

@@ -57,6 +57,9 @@ export const Fragment = () => {
                 <th>
                   <Translate contentKey="eduApp.fragment.activity">Activity</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="eduApp.fragment.goal">Goal</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -75,6 +78,16 @@ export const Fragment = () => {
                           <span key={j}>
                             <Link to={`/activity/${val.id}`}>{val.title}</Link>
                             {j === fragment.activities.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
+                  <td>
+                    {fragment.goals
+                      ? fragment.goals.map((val, j) => (
+                          <span key={j}>
+                            <Link to={`/goal/${val.id}`}>{val.title}</Link>
+                            {j === fragment.goals.length - 1 ? '' : ', '}
                           </span>
                         ))
                       : null}

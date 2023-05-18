@@ -57,9 +57,6 @@ export const Concept = () => {
                 <th>
                   <Translate contentKey="eduApp.concept.description">Description</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="eduApp.concept.goal">Goal</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -73,16 +70,6 @@ export const Concept = () => {
                   </td>
                   <td>{concept.title}</td>
                   <td>{concept.description}</td>
-                  <td>
-                    {concept.goals
-                      ? concept.goals.map((val, j) => (
-                          <span key={j}>
-                            <Link to={`/goal/${val.id}`}>{val.title}</Link>
-                            {j === concept.goals.length - 1 ? '' : ', '}
-                          </span>
-                        ))
-                      : null}
-                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/concept/${concept.id}`} color="info" size="sm" data-cy="entityDetailsButton">

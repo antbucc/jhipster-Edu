@@ -39,14 +39,14 @@ export const GoalDetail = () => {
           </dt>
           <dd>{goalEntity.title}</dd>
           <dt>
-            <Translate contentKey="eduApp.goal.fragment">Fragment</Translate>
+            <Translate contentKey="eduApp.goal.concept">Concept</Translate>
           </dt>
           <dd>
-            {goalEntity.fragments
-              ? goalEntity.fragments.map((val, i) => (
+            {goalEntity.concepts
+              ? goalEntity.concepts.map((val, i) => (
                   <span key={val.id}>
                     <a>{val.title}</a>
-                    {goalEntity.fragments && i === goalEntity.fragments.length - 1 ? '' : ', '}
+                    {goalEntity.concepts && i === goalEntity.concepts.length - 1 ? '' : ', '}
                   </span>
                 ))
               : null}

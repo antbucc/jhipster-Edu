@@ -10,7 +10,6 @@ import com.modis.edu.IntegrationTest;
 import com.modis.edu.domain.Scenario;
 import com.modis.edu.domain.enumeration.Language;
 import com.modis.edu.repository.ScenarioRepository;
-import com.modis.edu.service.ScenarioService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -54,9 +53,6 @@ class ScenarioResourceIT {
 
     @Mock
     private ScenarioRepository scenarioRepositoryMock;
-
-    @Mock
-    private ScenarioService scenarioServiceMock;
 
     @Autowired
     private MockMvc restScenarioMockMvc;
@@ -143,16 +139,16 @@ class ScenarioResourceIT {
 
     @SuppressWarnings({ "unchecked" })
     void getAllScenariosWithEagerRelationshipsIsEnabled() throws Exception {
-        when(scenarioServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(scenarioRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restScenarioMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
-        verify(scenarioServiceMock, times(1)).findAllWithEagerRelationships(any());
+        verify(scenarioRepositoryMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @SuppressWarnings({ "unchecked" })
     void getAllScenariosWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(scenarioServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(scenarioRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restScenarioMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
         verify(scenarioRepositoryMock, times(1)).findAll(any(Pageable.class));

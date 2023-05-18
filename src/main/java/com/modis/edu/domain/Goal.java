@@ -25,14 +25,14 @@ public class Goal implements Serializable {
     private String title;
 
     @DBRef
+    @Field("concepts")
+    @JsonIgnoreProperties(value = { "competences", "activities", "goals" }, allowSetters = true)
+    private Set<Concept> concepts = new HashSet<>();
+
+    @DBRef
     @Field("fragments")
     @JsonIgnoreProperties(value = { "preconditions", "effects", "outgoingPaths", "activities", "goals" }, allowSetters = true)
     private Set<Fragment> fragments = new HashSet<>();
-
-    @DBRef
-    @Field("concepts")
-    @JsonIgnoreProperties(value = { "goals", "competences", "activities" }, allowSetters = true)
-    private Set<Concept> concepts = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -62,42 +62,11 @@ public class Goal implements Serializable {
         this.title = title;
     }
 
-    public Set<Fragment> getFragments() {
-        return this.fragments;
-    }
-
-    public void setFragments(Set<Fragment> fragments) {
-        this.fragments = fragments;
-    }
-
-    public Goal fragments(Set<Fragment> fragments) {
-        this.setFragments(fragments);
-        return this;
-    }
-
-    public Goal addFragment(Fragment fragment) {
-        this.fragments.add(fragment);
-        fragment.getGoals().add(this);
-        return this;
-    }
-
-    public Goal removeFragment(Fragment fragment) {
-        this.fragments.remove(fragment);
-        fragment.getGoals().remove(this);
-        return this;
-    }
-
     public Set<Concept> getConcepts() {
         return this.concepts;
     }
 
     public void setConcepts(Set<Concept> concepts) {
-        if (this.concepts != null) {
-            this.concepts.forEach(i -> i.removeGoal(this));
-        }
-        if (concepts != null) {
-            concepts.forEach(i -> i.addGoal(this));
-        }
         this.concepts = concepts;
     }
 
@@ -115,6 +84,37 @@ public class Goal implements Serializable {
     public Goal removeConcept(Concept concept) {
         this.concepts.remove(concept);
         concept.getGoals().remove(this);
+        return this;
+    }
+
+    public Set<Fragment> getFragments() {
+        return this.fragments;
+    }
+
+    public void setFragments(Set<Fragment> fragments) {
+        if (this.fragments != null) {
+            this.fragments.forEach(i -> i.removeGoal(this));
+        }
+        if (fragments != null) {
+            fragments.forEach(i -> i.addGoal(this));
+        }
+        this.fragments = fragments;
+    }
+
+    public Goal fragments(Set<Fragment> fragments) {
+        this.setFragments(fragments);
+        return this;
+    }
+
+    public Goal addFragment(Fragment fragment) {
+        this.fragments.add(fragment);
+        fragment.getGoals().add(this);
+        return this;
+    }
+
+    public Goal removeFragment(Fragment fragment) {
+        this.fragments.remove(fragment);
+        fragment.getGoals().remove(this);
         return this;
     }
 

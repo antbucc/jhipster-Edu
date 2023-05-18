@@ -48,10 +48,10 @@
       "otherEntityField": "title",
       "otherEntityName": "goal",
       "otherEntityRelationshipName": "fragment",
-      "ownerSide": false,
+      "ownerSide": true,
       "relationshipName": "goal",
       "relationshipType": "many-to-many"
     }
   ],
-  "service": "serviceImpl"
+  "service": "no"
 }
