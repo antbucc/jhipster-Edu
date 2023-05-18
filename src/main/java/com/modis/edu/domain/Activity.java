@@ -40,6 +40,11 @@ public class Activity implements Serializable {
     private Difficulty difficulty;
 
     @DBRef
+    @Field("concepts")
+    @JsonIgnoreProperties(value = { "competences", "activities" }, allowSetters = true)
+    private Set<Concept> concepts = new HashSet<>();
+
+    @DBRef
     @Field("fragments")
     @JsonIgnoreProperties(value = { "activities", "module" }, allowSetters = true)
     private Set<Fragment> fragments = new HashSet<>();
@@ -122,6 +127,31 @@ public class Activity implements Serializable {
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public Set<Concept> getConcepts() {
+        return this.concepts;
+    }
+
+    public void setConcepts(Set<Concept> concepts) {
+        this.concepts = concepts;
+    }
+
+    public Activity concepts(Set<Concept> concepts) {
+        this.setConcepts(concepts);
+        return this;
+    }
+
+    public Activity addConcept(Concept concept) {
+        this.concepts.add(concept);
+        concept.getActivities().add(this);
+        return this;
+    }
+
+    public Activity removeConcept(Concept concept) {
+        this.concepts.remove(concept);
+        concept.getActivities().remove(this);
+        return this;
     }
 
     public Set<Fragment> getFragments() {

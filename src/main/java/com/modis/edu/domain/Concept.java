@@ -32,6 +32,11 @@ public class Concept implements Serializable {
     @JsonIgnoreProperties(value = { "concepts", "scenarios" }, allowSetters = true)
     private Set<Competence> competences = new HashSet<>();
 
+    @DBRef
+    @Field("activities")
+    @JsonIgnoreProperties(value = { "concepts", "fragments" }, allowSetters = true)
+    private Set<Activity> activities = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public String getId() {
@@ -101,6 +106,37 @@ public class Concept implements Serializable {
     public Concept removeCompetence(Competence competence) {
         this.competences.remove(competence);
         competence.getConcepts().remove(this);
+        return this;
+    }
+
+    public Set<Activity> getActivities() {
+        return this.activities;
+    }
+
+    public void setActivities(Set<Activity> activities) {
+        if (this.activities != null) {
+            this.activities.forEach(i -> i.removeConcept(this));
+        }
+        if (activities != null) {
+            activities.forEach(i -> i.addConcept(this));
+        }
+        this.activities = activities;
+    }
+
+    public Concept activities(Set<Activity> activities) {
+        this.setActivities(activities);
+        return this;
+    }
+
+    public Concept addActivity(Activity activity) {
+        this.activities.add(activity);
+        activity.getConcepts().add(this);
+        return this;
+    }
+
+    public Concept removeActivity(Activity activity) {
+        this.activities.remove(activity);
+        activity.getConcepts().remove(this);
         return this;
     }
 

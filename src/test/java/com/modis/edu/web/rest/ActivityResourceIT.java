@@ -2,6 +2,7 @@ package com.modis.edu.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -11,12 +12,19 @@ import com.modis.edu.domain.enumeration.ActivityType;
 import com.modis.edu.domain.enumeration.Difficulty;
 import com.modis.edu.domain.enumeration.Tool;
 import com.modis.edu.repository.ActivityRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,6 +33,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * Integration tests for the {@link ActivityResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class ActivityResourceIT {
@@ -49,6 +58,9 @@ class ActivityResourceIT {
 
     @Autowired
     private ActivityRepository activityRepository;
+
+    @Mock
+    private ActivityRepository activityRepositoryMock;
 
     @Autowired
     private MockMvc restActivityMockMvc;
@@ -145,6 +157,23 @@ class ActivityResourceIT {
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].tool").value(hasItem(DEFAULT_TOOL.toString())))
             .andExpect(jsonPath("$.[*].difficulty").value(hasItem(DEFAULT_DIFFICULTY.toString())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllActivitiesWithEagerRelationshipsIsEnabled() throws Exception {
+        when(activityRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restActivityMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(activityRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllActivitiesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(activityRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restActivityMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(activityRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test

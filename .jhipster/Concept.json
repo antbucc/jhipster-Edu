@@ -27,6 +27,14 @@
       "ownerSide": false,
       "relationshipName": "competence",
       "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "activity",
+      "otherEntityRelationshipName": "concept",
+      "ownerSide": false,
+      "relationshipName": "activity",
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "no"

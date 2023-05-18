@@ -62,6 +62,19 @@ export const ActivityDetail = () => {
             </span>
           </dt>
           <dd>{activityEntity.difficulty}</dd>
+          <dt>
+            <Translate contentKey="eduApp.activity.concept">Concept</Translate>
+          </dt>
+          <dd>
+            {activityEntity.concepts
+              ? activityEntity.concepts.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.title}</a>
+                    {activityEntity.concepts && i === activityEntity.concepts.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/activity" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
