@@ -102,9 +102,9 @@ relationship ManyToMany {
 }
 
 
-//relationship ManyToMany {
- // Competence { Concept(title) } to Concept{ Competence(title) }
-//}
+relationship ManyToMany {
+  Competence { Concept(title) } to Concept { Competence(title) }
+}
 
 
 relationship ManyToMany {

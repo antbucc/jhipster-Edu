@@ -1,7 +1,11 @@
 package com.modis.edu.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -22,6 +26,11 @@ public class Concept implements Serializable {
 
     @Field("description")
     private String description;
+
+    @DBRef
+    @Field("competences")
+    @JsonIgnoreProperties(value = { "concepts", "scenarios" }, allowSetters = true)
+    private Set<Competence> competences = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -62,6 +71,37 @@ public class Concept implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Competence> getCompetences() {
+        return this.competences;
+    }
+
+    public void setCompetences(Set<Competence> competences) {
+        if (this.competences != null) {
+            this.competences.forEach(i -> i.removeConcept(this));
+        }
+        if (competences != null) {
+            competences.forEach(i -> i.addConcept(this));
+        }
+        this.competences = competences;
+    }
+
+    public Concept competences(Set<Competence> competences) {
+        this.setCompetences(competences);
+        return this;
+    }
+
+    public Concept addCompetence(Competence competence) {
+        this.competences.add(competence);
+        competence.getConcepts().add(this);
+        return this;
+    }
+
+    public Concept removeCompetence(Competence competence) {
+        this.competences.remove(competence);
+        competence.getConcepts().remove(this);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

@@ -19,6 +19,15 @@
   "name": "Concept",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "competence",
+      "otherEntityRelationshipName": "concept",
+      "ownerSide": false,
+      "relationshipName": "competence",
+      "relationshipType": "many-to-many"
+    }
+  ],
   "service": "no"
 }

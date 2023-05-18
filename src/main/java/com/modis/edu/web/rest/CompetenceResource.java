@@ -144,12 +144,17 @@ public class CompetenceResource {
     /**
      * {@code GET  /competences} : get all the competences.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of competences in body.
      */
     @GetMapping("/competences")
-    public List<Competence> getAllCompetences() {
+    public List<Competence> getAllCompetences(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Competences");
-        return competenceRepository.findAll();
+        if (eagerload) {
+            return competenceRepository.findAllWithEagerRelationships();
+        } else {
+            return competenceRepository.findAll();
+        }
     }
 
     /**
@@ -161,7 +166,7 @@ public class CompetenceResource {
     @GetMapping("/competences/{id}")
     public ResponseEntity<Competence> getCompetence(@PathVariable String id) {
         log.debug("REST request to get Competence : {}", id);
-        Optional<Competence> competence = competenceRepository.findById(id);
+        Optional<Competence> competence = competenceRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(competence);
     }
 

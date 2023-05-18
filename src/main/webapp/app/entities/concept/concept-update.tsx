@@ -8,6 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { ICompetence } from 'app/shared/model/competence.model';
+import { getEntities as getCompetences } from 'app/entities/competence/competence.reducer';
 import { IConcept } from 'app/shared/model/concept.model';
 import { getEntity, updateEntity, createEntity, reset } from './concept.reducer';
 
@@ -19,6 +21,7 @@ export const ConceptUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const competences = useAppSelector(state => state.competence.entities);
   const conceptEntity = useAppSelector(state => state.concept.entity);
   const loading = useAppSelector(state => state.concept.loading);
   const updating = useAppSelector(state => state.concept.updating);
@@ -34,6 +37,8 @@ export const ConceptUpdate = () => {
     } else {
       dispatch(getEntity(id));
     }
+
+    dispatch(getCompetences({}));
   }, []);
 
   useEffect(() => {
