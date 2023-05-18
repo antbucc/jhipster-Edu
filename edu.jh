@@ -157,7 +157,7 @@ paginate Domain, Scenario with pagination
 // dto * with mapstruct
 
 // Set service options to all except few
-//service all with serviceImpl except Domain, Scenario
+service all with serviceImpl except Path
 
 // Set an angular suffix
 // angularSuffix * with mySuffix
