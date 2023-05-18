@@ -21,9 +21,7 @@
       "title": "Title",
       "description": "Description",
       "type": "Type",
-      "sons": "Sons",
       "concept": "Concept",
-      "parent": "Parent",
       "scenario": "Scenario"
     }
   }

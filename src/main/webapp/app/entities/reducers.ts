@@ -11,6 +11,7 @@ import precondition from 'app/entities/precondition/precondition.reducer';
 import effect from 'app/entities/effect/effect.reducer';
 import condition from 'app/entities/condition/condition.reducer';
 import path from 'app/entities/path/path.reducer';
+import goal from 'app/entities/goal/goal.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const entitiesReducers = {
@@ -27,6 +28,7 @@ const entitiesReducers = {
   effect,
   condition,
   path,
+  goal,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
 };
 

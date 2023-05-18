@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { byteSize, Translate } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -52,10 +52,10 @@ export const Effect = () => {
                   <Translate contentKey="eduApp.effect.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="eduApp.effect.metadata">Metadata</Translate>
+                  <Translate contentKey="eduApp.effect.title">Title</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="eduApp.effect.activity">Activity</Translate>
+                  <Translate contentKey="eduApp.effect.fragment">Fragment</Translate>
                 </th>
                 <th />
               </tr>
@@ -68,8 +68,8 @@ export const Effect = () => {
                       {effect.id}
                     </Button>
                   </td>
-                  <td>{effect.metadata}</td>
-                  <td>{effect.activity ? <Link to={`/activity/${effect.activity.id}`}>{effect.activity.title}</Link> : ''}</td>
+                  <td>{effect.title}</td>
+                  <td>{effect.fragment ? <Link to={`/fragment/${effect.fragment.id}`}>{effect.fragment.title}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/effect/${effect.id}`} color="info" size="sm" data-cy="entityDetailsButton">

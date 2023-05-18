@@ -52,14 +52,6 @@ export const FragmentDetail = () => {
               : null}
           </dd>
           <dt>
-            <Translate contentKey="eduApp.fragment.next">Next</Translate>
-          </dt>
-          <dd>{fragmentEntity.next ? fragmentEntity.next.id : ''}</dd>
-          <dt>
-            <Translate contentKey="eduApp.fragment.source">Source</Translate>
-          </dt>
-          <dd>{fragmentEntity.source ? fragmentEntity.source.id : ''}</dd>
-          <dt>
             <Translate contentKey="eduApp.fragment.module">Module</Translate>
           </dt>
           <dd>{fragmentEntity.module ? fragmentEntity.module.title : ''}</dd>

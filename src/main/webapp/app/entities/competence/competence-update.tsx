@@ -8,7 +8,6 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { getEntities as getCompetences } from 'app/entities/competence/competence.reducer';
 import { IConcept } from 'app/shared/model/concept.model';
 import { getEntities as getConcepts } from 'app/entities/concept/concept.reducer';
 import { IScenario } from 'app/shared/model/scenario.model';
@@ -25,7 +24,6 @@ export const CompetenceUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const competences = useAppSelector(state => state.competence.entities);
   const concepts = useAppSelector(state => state.concept.entities);
   const scenarios = useAppSelector(state => state.scenario.entities);
   const competenceEntity = useAppSelector(state => state.competence.entity);
@@ -45,7 +43,6 @@ export const CompetenceUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getCompetences({}));
     dispatch(getConcepts({}));
     dispatch(getScenarios({}));
   }, []);
@@ -61,7 +58,6 @@ export const CompetenceUpdate = () => {
       ...competenceEntity,
       ...values,
       concepts: mapIdList(values.concepts),
-      parent: competences.find(it => it.id.toString() === values.parent.toString()),
     };
 
     if (isNew) {
@@ -78,7 +74,6 @@ export const CompetenceUpdate = () => {
           type: 'SKILL',
           ...competenceEntity,
           concepts: competenceEntity?.concepts?.map(e => e.id.toString()),
-          parent: competenceEntity?.parent?.id,
         };
 
   return (
@@ -134,22 +129,6 @@ export const CompetenceUpdate = () => {
                   ? concepts.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.title}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="competence-parent"
-                name="parent"
-                data-cy="parent"
-                label={translate('eduApp.competence.parent')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {competences
-                  ? competences.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
                       </option>
                     ))
                   : null}

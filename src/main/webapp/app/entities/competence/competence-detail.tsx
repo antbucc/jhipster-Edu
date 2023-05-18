@@ -63,10 +63,6 @@ export const CompetenceDetail = () => {
                 ))
               : null}
           </dd>
-          <dt>
-            <Translate contentKey="eduApp.competence.parent">Parent</Translate>
-          </dt>
-          <dd>{competenceEntity.parent ? competenceEntity.parent.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/competence" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

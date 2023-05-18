@@ -71,8 +71,7 @@ class ConditionGatlingTest extends Simulation {
             .post("/api/conditions")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "description":"SAMPLE_TEXT"
-                , "type":"UNCONDITIONAL"
+                "title":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_condition_url"))).exitHereIfFailed

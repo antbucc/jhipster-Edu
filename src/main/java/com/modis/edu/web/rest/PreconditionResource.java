@@ -121,8 +121,8 @@ public class PreconditionResource {
         Optional<Precondition> result = preconditionRepository
             .findById(precondition.getId())
             .map(existingPrecondition -> {
-                if (precondition.getMetadata() != null) {
-                    existingPrecondition.setMetadata(precondition.getMetadata());
+                if (precondition.getTitle() != null) {
+                    existingPrecondition.setTitle(precondition.getTitle());
                 }
 
                 return existingPrecondition;

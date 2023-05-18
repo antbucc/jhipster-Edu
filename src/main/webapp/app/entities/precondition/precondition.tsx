@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { byteSize, Translate } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -52,10 +52,10 @@ export const Precondition = () => {
                   <Translate contentKey="eduApp.precondition.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="eduApp.precondition.metadata">Metadata</Translate>
+                  <Translate contentKey="eduApp.precondition.title">Title</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="eduApp.precondition.activity">Activity</Translate>
+                  <Translate contentKey="eduApp.precondition.fragment">Fragment</Translate>
                 </th>
                 <th />
               </tr>
@@ -68,9 +68,9 @@ export const Precondition = () => {
                       {precondition.id}
                     </Button>
                   </td>
-                  <td>{precondition.metadata}</td>
+                  <td>{precondition.title}</td>
                   <td>
-                    {precondition.activity ? <Link to={`/activity/${precondition.activity.id}`}>{precondition.activity.title}</Link> : ''}
+                    {precondition.fragment ? <Link to={`/fragment/${precondition.fragment.id}`}>{precondition.fragment.title}</Link> : ''}
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

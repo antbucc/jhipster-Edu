@@ -52,10 +52,7 @@ export const Condition = () => {
                   <Translate contentKey="eduApp.condition.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="eduApp.condition.description">Description</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="eduApp.condition.type">Type</Translate>
+                  <Translate contentKey="eduApp.condition.title">Title</Translate>
                 </th>
                 <th />
               </tr>
@@ -68,10 +65,7 @@ export const Condition = () => {
                       {condition.id}
                     </Button>
                   </td>
-                  <td>{condition.description}</td>
-                  <td>
-                    <Translate contentKey={`eduApp.ConditionType.${condition.type}`} />
-                  </td>
+                  <td>{condition.title}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/condition/${condition.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -44,18 +44,6 @@ export const ConceptDetail = () => {
             </span>
           </dt>
           <dd>{conceptEntity.description}</dd>
-          <dt>
-            <Translate contentKey="eduApp.concept.precondition">Precondition</Translate>
-          </dt>
-          <dd>{conceptEntity.precondition ? conceptEntity.precondition.metadata : ''}</dd>
-          <dt>
-            <Translate contentKey="eduApp.concept.effect">Effect</Translate>
-          </dt>
-          <dd>{conceptEntity.effect ? conceptEntity.effect.metadata : ''}</dd>
-          <dt>
-            <Translate contentKey="eduApp.concept.parent">Parent</Translate>
-          </dt>
-          <dd>{conceptEntity.parent ? conceptEntity.parent.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/concept" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -1,12 +1,7 @@
 package com.modis.edu.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.modis.edu.domain.enumeration.ConditionType;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -22,16 +17,8 @@ public class Condition implements Serializable {
     @Id
     private String id;
 
-    @Field("description")
-    private String description;
-
-    @Field("type")
-    private ConditionType type;
-
-    @DBRef
-    @Field("type")
-    @JsonIgnoreProperties(value = { "previous", "activities", "next", "source", "module" }, allowSetters = true)
-    private Set<Fragment> types = new HashSet<>();
+    @Field("title")
+    private String title;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -48,61 +35,17 @@ public class Condition implements Serializable {
         this.id = id;
     }
 
-    public String getDescription() {
-        return this.description;
+    public String getTitle() {
+        return this.title;
     }
 
-    public Condition description(String description) {
-        this.setDescription(description);
+    public Condition title(String title) {
+        this.setTitle(title);
         return this;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public ConditionType getType() {
-        return this.type;
-    }
-
-    public Condition type(ConditionType type) {
-        this.setType(type);
-        return this;
-    }
-
-    public void setType(ConditionType type) {
-        this.type = type;
-    }
-
-    public Set<Fragment> getTypes() {
-        return this.types;
-    }
-
-    public void setTypes(Set<Fragment> fragments) {
-        if (this.types != null) {
-            this.types.forEach(i -> i.setSource(null));
-        }
-        if (fragments != null) {
-            fragments.forEach(i -> i.setSource(this));
-        }
-        this.types = fragments;
-    }
-
-    public Condition types(Set<Fragment> fragments) {
-        this.setTypes(fragments);
-        return this;
-    }
-
-    public Condition addType(Fragment fragment) {
-        this.types.add(fragment);
-        fragment.setSource(this);
-        return this;
-    }
-
-    public Condition removeType(Fragment fragment) {
-        this.types.remove(fragment);
-        fragment.setSource(null);
-        return this;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -129,8 +72,7 @@ public class Condition implements Serializable {
     public String toString() {
         return "Condition{" +
             "id=" + getId() +
-            ", description='" + getDescription() + "'" +
-            ", type='" + getType() + "'" +
+            ", title='" + getTitle() + "'" +
             "}";
     }
 }

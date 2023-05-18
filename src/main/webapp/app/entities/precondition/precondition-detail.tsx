@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { Translate, byteSize } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -33,15 +33,15 @@ export const PreconditionDetail = () => {
           </dt>
           <dd>{preconditionEntity.id}</dd>
           <dt>
-            <span id="metadata">
-              <Translate contentKey="eduApp.precondition.metadata">Metadata</Translate>
+            <span id="title">
+              <Translate contentKey="eduApp.precondition.title">Title</Translate>
             </span>
           </dt>
-          <dd>{preconditionEntity.metadata}</dd>
+          <dd>{preconditionEntity.title}</dd>
           <dt>
-            <Translate contentKey="eduApp.precondition.activity">Activity</Translate>
+            <Translate contentKey="eduApp.precondition.fragment">Fragment</Translate>
           </dt>
-          <dd>{preconditionEntity.activity ? preconditionEntity.activity.title : ''}</dd>
+          <dd>{preconditionEntity.fragment ? preconditionEntity.fragment.title : ''}</dd>
         </dl>
         <Button tag={Link} to="/precondition" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

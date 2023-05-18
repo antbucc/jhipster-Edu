@@ -25,7 +25,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.Base64Utils;
 
 /**
  * Integration tests for the {@link PreconditionResource} REST controller.
@@ -36,8 +35,8 @@ import org.springframework.util.Base64Utils;
 @WithMockUser
 class PreconditionResourceIT {
 
-    private static final String DEFAULT_METADATA = "AAAAAAAAAA";
-    private static final String UPDATED_METADATA = "BBBBBBBBBB";
+    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/preconditions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -60,7 +59,7 @@ class PreconditionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Precondition createEntity() {
-        Precondition precondition = new Precondition().metadata(DEFAULT_METADATA);
+        Precondition precondition = new Precondition().title(DEFAULT_TITLE);
         return precondition;
     }
 
@@ -71,7 +70,7 @@ class PreconditionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Precondition createUpdatedEntity() {
-        Precondition precondition = new Precondition().metadata(UPDATED_METADATA);
+        Precondition precondition = new Precondition().title(UPDATED_TITLE);
         return precondition;
     }
 
@@ -93,7 +92,7 @@ class PreconditionResourceIT {
         List<Precondition> preconditionList = preconditionRepository.findAll();
         assertThat(preconditionList).hasSize(databaseSizeBeforeCreate + 1);
         Precondition testPrecondition = preconditionList.get(preconditionList.size() - 1);
-        assertThat(testPrecondition.getMetadata()).isEqualTo(DEFAULT_METADATA);
+        assertThat(testPrecondition.getTitle()).isEqualTo(DEFAULT_TITLE);
     }
 
     @Test
@@ -124,7 +123,7 @@ class PreconditionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(precondition.getId())))
-            .andExpect(jsonPath("$.[*].metadata").value(hasItem(DEFAULT_METADATA.toString())));
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -155,7 +154,7 @@ class PreconditionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(precondition.getId()))
-            .andExpect(jsonPath("$.metadata").value(DEFAULT_METADATA.toString()));
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE));
     }
 
     @Test
@@ -173,7 +172,7 @@ class PreconditionResourceIT {
 
         // Update the precondition
         Precondition updatedPrecondition = preconditionRepository.findById(precondition.getId()).get();
-        updatedPrecondition.metadata(UPDATED_METADATA);
+        updatedPrecondition.title(UPDATED_TITLE);
 
         restPreconditionMockMvc
             .perform(
@@ -187,7 +186,7 @@ class PreconditionResourceIT {
         List<Precondition> preconditionList = preconditionRepository.findAll();
         assertThat(preconditionList).hasSize(databaseSizeBeforeUpdate);
         Precondition testPrecondition = preconditionList.get(preconditionList.size() - 1);
-        assertThat(testPrecondition.getMetadata()).isEqualTo(UPDATED_METADATA);
+        assertThat(testPrecondition.getTitle()).isEqualTo(UPDATED_TITLE);
     }
 
     @Test
@@ -266,7 +265,7 @@ class PreconditionResourceIT {
         List<Precondition> preconditionList = preconditionRepository.findAll();
         assertThat(preconditionList).hasSize(databaseSizeBeforeUpdate);
         Precondition testPrecondition = preconditionList.get(preconditionList.size() - 1);
-        assertThat(testPrecondition.getMetadata()).isEqualTo(DEFAULT_METADATA);
+        assertThat(testPrecondition.getTitle()).isEqualTo(DEFAULT_TITLE);
     }
 
     @Test
@@ -280,7 +279,7 @@ class PreconditionResourceIT {
         Precondition partialUpdatedPrecondition = new Precondition();
         partialUpdatedPrecondition.setId(precondition.getId());
 
-        partialUpdatedPrecondition.metadata(UPDATED_METADATA);
+        partialUpdatedPrecondition.title(UPDATED_TITLE);
 
         restPreconditionMockMvc
             .perform(
@@ -294,7 +293,7 @@ class PreconditionResourceIT {
         List<Precondition> preconditionList = preconditionRepository.findAll();
         assertThat(preconditionList).hasSize(databaseSizeBeforeUpdate);
         Precondition testPrecondition = preconditionList.get(preconditionList.size() - 1);
-        assertThat(testPrecondition.getMetadata()).isEqualTo(UPDATED_METADATA);
+        assertThat(testPrecondition.getTitle()).isEqualTo(UPDATED_TITLE);
     }
 
     @Test

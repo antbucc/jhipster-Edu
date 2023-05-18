@@ -40,23 +40,13 @@ public class Activity implements Serializable {
     private Difficulty difficulty;
 
     @DBRef
-    @Field("precondition")
-    @JsonIgnoreProperties(value = { "concepts", "activity" }, allowSetters = true)
-    private Set<Precondition> preconditions = new HashSet<>();
-
-    @DBRef
-    @Field("effect")
-    @JsonIgnoreProperties(value = { "concepts", "activity" }, allowSetters = true)
-    private Set<Effect> effects = new HashSet<>();
-
-    @DBRef
     @Field("concepts")
-    @JsonIgnoreProperties(value = { "sons", "precondition", "effect", "parent", "competences", "activities" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "competences", "activities" }, allowSetters = true)
     private Set<Concept> concepts = new HashSet<>();
 
     @DBRef
     @Field("fragments")
-    @JsonIgnoreProperties(value = { "previous", "activities", "next", "source", "module" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "preconditions", "effects", "goals", "activities", "module" }, allowSetters = true)
     private Set<Fragment> fragments = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -137,68 +127,6 @@ public class Activity implements Serializable {
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
-    }
-
-    public Set<Precondition> getPreconditions() {
-        return this.preconditions;
-    }
-
-    public void setPreconditions(Set<Precondition> preconditions) {
-        if (this.preconditions != null) {
-            this.preconditions.forEach(i -> i.setActivity(null));
-        }
-        if (preconditions != null) {
-            preconditions.forEach(i -> i.setActivity(this));
-        }
-        this.preconditions = preconditions;
-    }
-
-    public Activity preconditions(Set<Precondition> preconditions) {
-        this.setPreconditions(preconditions);
-        return this;
-    }
-
-    public Activity addPrecondition(Precondition precondition) {
-        this.preconditions.add(precondition);
-        precondition.setActivity(this);
-        return this;
-    }
-
-    public Activity removePrecondition(Precondition precondition) {
-        this.preconditions.remove(precondition);
-        precondition.setActivity(null);
-        return this;
-    }
-
-    public Set<Effect> getEffects() {
-        return this.effects;
-    }
-
-    public void setEffects(Set<Effect> effects) {
-        if (this.effects != null) {
-            this.effects.forEach(i -> i.setActivity(null));
-        }
-        if (effects != null) {
-            effects.forEach(i -> i.setActivity(this));
-        }
-        this.effects = effects;
-    }
-
-    public Activity effects(Set<Effect> effects) {
-        this.setEffects(effects);
-        return this;
-    }
-
-    public Activity addEffect(Effect effect) {
-        this.effects.add(effect);
-        effect.setActivity(this);
-        return this;
-    }
-
-    public Activity removeEffect(Effect effect) {
-        this.effects.remove(effect);
-        effect.setActivity(null);
-        return this;
     }
 
     public Set<Concept> getConcepts() {

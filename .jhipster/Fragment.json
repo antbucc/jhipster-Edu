@@ -17,9 +17,24 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "fragment",
-      "otherEntityRelationshipName": "next",
-      "relationshipName": "previous",
+      "otherEntityField": "title",
+      "otherEntityName": "precondition",
+      "otherEntityRelationshipName": "fragment",
+      "relationshipName": "precondition",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "effect",
+      "otherEntityRelationshipName": "fragment",
+      "relationshipName": "effect",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "goal",
+      "otherEntityRelationshipName": "fragment",
+      "relationshipName": "goal",
       "relationshipType": "one-to-many"
     },
     {
@@ -29,18 +44,6 @@
       "ownerSide": true,
       "relationshipName": "activity",
       "relationshipType": "many-to-many"
-    },
-    {
-      "otherEntityName": "fragment",
-      "otherEntityRelationshipName": "previous",
-      "relationshipName": "next",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "condition",
-      "otherEntityRelationshipName": "type",
-      "relationshipName": "source",
-      "relationshipType": "many-to-one"
     },
     {
       "otherEntityField": "title",

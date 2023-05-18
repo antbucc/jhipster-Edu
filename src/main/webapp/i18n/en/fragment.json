@@ -19,10 +19,10 @@
       },
       "id": "ID",
       "title": "Title",
-      "previous": "Previous",
+      "precondition": "Precondition",
+      "effect": "Effect",
+      "goal": "Goal",
       "activity": "Activity",
-      "next": "Next",
-      "source": "Source",
       "module": "Module"
     }
   }

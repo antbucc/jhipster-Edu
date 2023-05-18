@@ -33,17 +33,11 @@ export const ConditionDetail = () => {
           </dt>
           <dd>{conditionEntity.id}</dd>
           <dt>
-            <span id="description">
-              <Translate contentKey="eduApp.condition.description">Description</Translate>
+            <span id="title">
+              <Translate contentKey="eduApp.condition.title">Title</Translate>
             </span>
           </dt>
-          <dd>{conditionEntity.description}</dd>
-          <dt>
-            <span id="type">
-              <Translate contentKey="eduApp.condition.type">Type</Translate>
-            </span>
-          </dt>
-          <dd>{conditionEntity.type}</dd>
+          <dd>{conditionEntity.title}</dd>
         </dl>
         <Button tag={Link} to="/condition" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -32,19 +32,9 @@ public class Competence implements Serializable {
     private CompetenceType type;
 
     @DBRef
-    @Field("sons")
-    @JsonIgnoreProperties(value = { "sons", "concepts", "parent", "scenarios" }, allowSetters = true)
-    private Set<Competence> sons = new HashSet<>();
-
-    @DBRef
     @Field("concepts")
-    @JsonIgnoreProperties(value = { "sons", "precondition", "effect", "parent", "competences", "activities" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "competences", "activities" }, allowSetters = true)
     private Set<Concept> concepts = new HashSet<>();
-
-    @DBRef
-    @Field("parent")
-    @JsonIgnoreProperties(value = { "sons", "concepts", "parent", "scenarios" }, allowSetters = true)
-    private Competence parent;
 
     @DBRef
     @Field("scenarios")
@@ -105,37 +95,6 @@ public class Competence implements Serializable {
         this.type = type;
     }
 
-    public Set<Competence> getSons() {
-        return this.sons;
-    }
-
-    public void setSons(Set<Competence> competences) {
-        if (this.sons != null) {
-            this.sons.forEach(i -> i.setParent(null));
-        }
-        if (competences != null) {
-            competences.forEach(i -> i.setParent(this));
-        }
-        this.sons = competences;
-    }
-
-    public Competence sons(Set<Competence> competences) {
-        this.setSons(competences);
-        return this;
-    }
-
-    public Competence addSons(Competence competence) {
-        this.sons.add(competence);
-        competence.setParent(this);
-        return this;
-    }
-
-    public Competence removeSons(Competence competence) {
-        this.sons.remove(competence);
-        competence.setParent(null);
-        return this;
-    }
-
     public Set<Concept> getConcepts() {
         return this.concepts;
     }
@@ -158,19 +117,6 @@ public class Competence implements Serializable {
     public Competence removeConcept(Concept concept) {
         this.concepts.remove(concept);
         concept.getCompetences().remove(this);
-        return this;
-    }
-
-    public Competence getParent() {
-        return this.parent;
-    }
-
-    public void setParent(Competence competence) {
-        this.parent = competence;
-    }
-
-    public Competence parent(Competence competence) {
-        this.setParent(competence);
         return this;
     }
 

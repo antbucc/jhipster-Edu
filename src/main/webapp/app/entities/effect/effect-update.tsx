@@ -8,8 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IActivity } from 'app/shared/model/activity.model';
-import { getEntities as getActivities } from 'app/entities/activity/activity.reducer';
+import { IFragment } from 'app/shared/model/fragment.model';
+import { getEntities as getFragments } from 'app/entities/fragment/fragment.reducer';
 import { IEffect } from 'app/shared/model/effect.model';
 import { getEntity, updateEntity, createEntity, reset } from './effect.reducer';
 
@@ -21,7 +21,7 @@ export const EffectUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const activities = useAppSelector(state => state.activity.entities);
+  const fragments = useAppSelector(state => state.fragment.entities);
   const effectEntity = useAppSelector(state => state.effect.entity);
   const loading = useAppSelector(state => state.effect.loading);
   const updating = useAppSelector(state => state.effect.updating);
@@ -38,7 +38,7 @@ export const EffectUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getActivities({}));
+    dispatch(getFragments({}));
   }, []);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export const EffectUpdate = () => {
     const entity = {
       ...effectEntity,
       ...values,
-      activity: activities.find(it => it.id.toString() === values.activity.toString()),
+      fragment: fragments.find(it => it.id.toString() === values.fragment.toString()),
     };
 
     if (isNew) {
@@ -66,7 +66,7 @@ export const EffectUpdate = () => {
       ? {}
       : {
           ...effectEntity,
-          activity: effectEntity?.activity?.id,
+          fragment: effectEntity?.fragment?.id,
         };
 
   return (
@@ -94,23 +94,17 @@ export const EffectUpdate = () => {
                   validate={{ required: true }}
                 />
               ) : null}
+              <ValidatedField label={translate('eduApp.effect.title')} id="effect-title" name="title" data-cy="title" type="text" />
               <ValidatedField
-                label={translate('eduApp.effect.metadata')}
-                id="effect-metadata"
-                name="metadata"
-                data-cy="metadata"
-                type="textarea"
-              />
-              <ValidatedField
-                id="effect-activity"
-                name="activity"
-                data-cy="activity"
-                label={translate('eduApp.effect.activity')}
+                id="effect-fragment"
+                name="fragment"
+                data-cy="fragment"
+                label={translate('eduApp.effect.fragment')}
                 type="select"
               >
                 <option value="" key="0" />
-                {activities
-                  ? activities.map(otherEntity => (
+                {fragments
+                  ? fragments.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.title}
                       </option>

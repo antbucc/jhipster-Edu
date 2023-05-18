@@ -20,6 +20,7 @@
         "effect": "Effect",
         "condition": "Condition",
         "path": "Path",
+        "goal": "Goal",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

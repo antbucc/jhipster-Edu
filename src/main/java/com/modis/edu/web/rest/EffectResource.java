@@ -119,8 +119,8 @@ public class EffectResource {
         Optional<Effect> result = effectRepository
             .findById(effect.getId())
             .map(existingEffect -> {
-                if (effect.getMetadata() != null) {
-                    existingEffect.setMetadata(effect.getMetadata());
+                if (effect.getTitle() != null) {
+                    existingEffect.setTitle(effect.getTitle());
                 }
 
                 return existingEffect;

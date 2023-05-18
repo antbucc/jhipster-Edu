@@ -71,7 +71,7 @@ class PreconditionGatlingTest extends Simulation {
             .post("/api/preconditions")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "metadata":null
+                "title":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_precondition_url"))).exitHereIfFailed

@@ -7,9 +7,7 @@ export interface ICompetence {
   title?: string | null;
   description?: string | null;
   type?: CompetenceType | null;
-  sons?: ICompetence[] | null;
   concepts?: IConcept[] | null;
-  parent?: ICompetence | null;
   scenarios?: IScenario[] | null;
 }
 

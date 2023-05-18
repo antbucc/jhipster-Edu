@@ -121,11 +121,8 @@ public class ConditionResource {
         Optional<Condition> result = conditionRepository
             .findById(condition.getId())
             .map(existingCondition -> {
-                if (condition.getDescription() != null) {
-                    existingCondition.setDescription(condition.getDescription());
-                }
-                if (condition.getType() != null) {
-                    existingCondition.setType(condition.getType());
+                if (condition.getTitle() != null) {
+                    existingCondition.setTitle(condition.getTitle());
                 }
 
                 return existingCondition;

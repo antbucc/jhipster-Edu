@@ -18,9 +18,8 @@
         "title": "Effect"
       },
       "id": "ID",
-      "metadata": "Metadata",
-      "concept": "Concept",
-      "activity": "Activity"
+      "title": "Title",
+      "fragment": "Fragment"
     }
   }
 }

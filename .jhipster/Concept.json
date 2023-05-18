@@ -21,32 +21,6 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "concept",
-      "otherEntityRelationshipName": "parent",
-      "relationshipName": "sons",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityField": "metadata",
-      "otherEntityName": "precondition",
-      "otherEntityRelationshipName": "concept",
-      "relationshipName": "precondition",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityField": "metadata",
-      "otherEntityName": "effect",
-      "otherEntityRelationshipName": "concept",
-      "relationshipName": "effect",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "concept",
-      "otherEntityRelationshipName": "sons",
-      "relationshipName": "parent",
-      "relationshipType": "many-to-one"
-    },
-    {
       "otherEntityField": "title",
       "otherEntityName": "competence",
       "otherEntityRelationshipName": "concept",

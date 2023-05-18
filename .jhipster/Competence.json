@@ -26,24 +26,12 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "competence",
-      "otherEntityRelationshipName": "parent",
-      "relationshipName": "sons",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityField": "title",
       "otherEntityName": "concept",
       "otherEntityRelationshipName": "competence",
       "ownerSide": true,
       "relationshipName": "concept",
       "relationshipType": "many-to-many"
-    },
-    {
-      "otherEntityName": "competence",
-      "otherEntityRelationshipName": "sons",
-      "relationshipName": "parent",
-      "relationshipType": "many-to-one"
     },
     {
       "otherEntityField": "title",

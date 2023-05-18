@@ -1,0 +1,25 @@
+{
+  "eduApp": {
+    "goal": {
+      "home": {
+        "title": "Goals",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Goal",
+        "createOrEditLabel": "Genera o modifica un Goal",
+        "notFound": "No Goals found"
+      },
+      "created": "&Egrave; stato generato un nuovo Goal con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Goal identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Goal con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Goal {{ id }}?"
+      },
+      "detail": {
+        "title": "Goal"
+      },
+      "id": "ID",
+      "title": "Title",
+      "fragment": "Fragment"
+    }
+  }
+}

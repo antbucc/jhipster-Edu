@@ -25,7 +25,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.Base64Utils;
 
 /**
  * Integration tests for the {@link EffectResource} REST controller.
@@ -36,8 +35,8 @@ import org.springframework.util.Base64Utils;
 @WithMockUser
 class EffectResourceIT {
 
-    private static final String DEFAULT_METADATA = "AAAAAAAAAA";
-    private static final String UPDATED_METADATA = "BBBBBBBBBB";
+    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/effects";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -60,7 +59,7 @@ class EffectResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Effect createEntity() {
-        Effect effect = new Effect().metadata(DEFAULT_METADATA);
+        Effect effect = new Effect().title(DEFAULT_TITLE);
         return effect;
     }
 
@@ -71,7 +70,7 @@ class EffectResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Effect createUpdatedEntity() {
-        Effect effect = new Effect().metadata(UPDATED_METADATA);
+        Effect effect = new Effect().title(UPDATED_TITLE);
         return effect;
     }
 
@@ -93,7 +92,7 @@ class EffectResourceIT {
         List<Effect> effectList = effectRepository.findAll();
         assertThat(effectList).hasSize(databaseSizeBeforeCreate + 1);
         Effect testEffect = effectList.get(effectList.size() - 1);
-        assertThat(testEffect.getMetadata()).isEqualTo(DEFAULT_METADATA);
+        assertThat(testEffect.getTitle()).isEqualTo(DEFAULT_TITLE);
     }
 
     @Test
@@ -124,7 +123,7 @@ class EffectResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(effect.getId())))
-            .andExpect(jsonPath("$.[*].metadata").value(hasItem(DEFAULT_METADATA.toString())));
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -155,7 +154,7 @@ class EffectResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(effect.getId()))
-            .andExpect(jsonPath("$.metadata").value(DEFAULT_METADATA.toString()));
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE));
     }
 
     @Test
@@ -173,7 +172,7 @@ class EffectResourceIT {
 
         // Update the effect
         Effect updatedEffect = effectRepository.findById(effect.getId()).get();
-        updatedEffect.metadata(UPDATED_METADATA);
+        updatedEffect.title(UPDATED_TITLE);
 
         restEffectMockMvc
             .perform(
@@ -187,7 +186,7 @@ class EffectResourceIT {
         List<Effect> effectList = effectRepository.findAll();
         assertThat(effectList).hasSize(databaseSizeBeforeUpdate);
         Effect testEffect = effectList.get(effectList.size() - 1);
-        assertThat(testEffect.getMetadata()).isEqualTo(UPDATED_METADATA);
+        assertThat(testEffect.getTitle()).isEqualTo(UPDATED_TITLE);
     }
 
     @Test
@@ -254,7 +253,7 @@ class EffectResourceIT {
         Effect partialUpdatedEffect = new Effect();
         partialUpdatedEffect.setId(effect.getId());
 
-        partialUpdatedEffect.metadata(UPDATED_METADATA);
+        partialUpdatedEffect.title(UPDATED_TITLE);
 
         restEffectMockMvc
             .perform(
@@ -268,7 +267,7 @@ class EffectResourceIT {
         List<Effect> effectList = effectRepository.findAll();
         assertThat(effectList).hasSize(databaseSizeBeforeUpdate);
         Effect testEffect = effectList.get(effectList.size() - 1);
-        assertThat(testEffect.getMetadata()).isEqualTo(UPDATED_METADATA);
+        assertThat(testEffect.getTitle()).isEqualTo(UPDATED_TITLE);
     }
 
     @Test
@@ -282,7 +281,7 @@ class EffectResourceIT {
         Effect partialUpdatedEffect = new Effect();
         partialUpdatedEffect.setId(effect.getId());
 
-        partialUpdatedEffect.metadata(UPDATED_METADATA);
+        partialUpdatedEffect.title(UPDATED_TITLE);
 
         restEffectMockMvc
             .perform(
@@ -296,7 +295,7 @@ class EffectResourceIT {
         List<Effect> effectList = effectRepository.findAll();
         assertThat(effectList).hasSize(databaseSizeBeforeUpdate);
         Effect testEffect = effectList.get(effectList.size() - 1);
-        assertThat(testEffect.getMetadata()).isEqualTo(UPDATED_METADATA);
+        assertThat(testEffect.getTitle()).isEqualTo(UPDATED_TITLE);
     }
 
     @Test

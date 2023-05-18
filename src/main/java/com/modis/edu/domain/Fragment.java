@@ -25,24 +25,24 @@ public class Fragment implements Serializable {
     private String title;
 
     @DBRef
-    @Field("previous")
-    @JsonIgnoreProperties(value = { "previous", "activities", "next", "source", "module" }, allowSetters = true)
-    private Set<Fragment> previous = new HashSet<>();
+    @Field("precondition")
+    @JsonIgnoreProperties(value = { "fragment" }, allowSetters = true)
+    private Set<Precondition> preconditions = new HashSet<>();
+
+    @DBRef
+    @Field("effect")
+    @JsonIgnoreProperties(value = { "fragment" }, allowSetters = true)
+    private Set<Effect> effects = new HashSet<>();
+
+    @DBRef
+    @Field("goal")
+    @JsonIgnoreProperties(value = { "fragment" }, allowSetters = true)
+    private Set<Goal> goals = new HashSet<>();
 
     @DBRef
     @Field("activities")
-    @JsonIgnoreProperties(value = { "preconditions", "effects", "concepts", "fragments" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "concepts", "fragments" }, allowSetters = true)
     private Set<Activity> activities = new HashSet<>();
-
-    @DBRef
-    @Field("next")
-    @JsonIgnoreProperties(value = { "previous", "activities", "next", "source", "module" }, allowSetters = true)
-    private Fragment next;
-
-    @DBRef
-    @Field("source")
-    @JsonIgnoreProperties(value = { "types" }, allowSetters = true)
-    private Condition source;
 
     @DBRef
     @Field("module")
@@ -77,34 +77,96 @@ public class Fragment implements Serializable {
         this.title = title;
     }
 
-    public Set<Fragment> getPrevious() {
-        return this.previous;
+    public Set<Precondition> getPreconditions() {
+        return this.preconditions;
     }
 
-    public void setPrevious(Set<Fragment> fragments) {
-        if (this.previous != null) {
-            this.previous.forEach(i -> i.setNext(null));
+    public void setPreconditions(Set<Precondition> preconditions) {
+        if (this.preconditions != null) {
+            this.preconditions.forEach(i -> i.setFragment(null));
         }
-        if (fragments != null) {
-            fragments.forEach(i -> i.setNext(this));
+        if (preconditions != null) {
+            preconditions.forEach(i -> i.setFragment(this));
         }
-        this.previous = fragments;
+        this.preconditions = preconditions;
     }
 
-    public Fragment previous(Set<Fragment> fragments) {
-        this.setPrevious(fragments);
+    public Fragment preconditions(Set<Precondition> preconditions) {
+        this.setPreconditions(preconditions);
         return this;
     }
 
-    public Fragment addPrevious(Fragment fragment) {
-        this.previous.add(fragment);
-        fragment.setNext(this);
+    public Fragment addPrecondition(Precondition precondition) {
+        this.preconditions.add(precondition);
+        precondition.setFragment(this);
         return this;
     }
 
-    public Fragment removePrevious(Fragment fragment) {
-        this.previous.remove(fragment);
-        fragment.setNext(null);
+    public Fragment removePrecondition(Precondition precondition) {
+        this.preconditions.remove(precondition);
+        precondition.setFragment(null);
+        return this;
+    }
+
+    public Set<Effect> getEffects() {
+        return this.effects;
+    }
+
+    public void setEffects(Set<Effect> effects) {
+        if (this.effects != null) {
+            this.effects.forEach(i -> i.setFragment(null));
+        }
+        if (effects != null) {
+            effects.forEach(i -> i.setFragment(this));
+        }
+        this.effects = effects;
+    }
+
+    public Fragment effects(Set<Effect> effects) {
+        this.setEffects(effects);
+        return this;
+    }
+
+    public Fragment addEffect(Effect effect) {
+        this.effects.add(effect);
+        effect.setFragment(this);
+        return this;
+    }
+
+    public Fragment removeEffect(Effect effect) {
+        this.effects.remove(effect);
+        effect.setFragment(null);
+        return this;
+    }
+
+    public Set<Goal> getGoals() {
+        return this.goals;
+    }
+
+    public void setGoals(Set<Goal> goals) {
+        if (this.goals != null) {
+            this.goals.forEach(i -> i.setFragment(null));
+        }
+        if (goals != null) {
+            goals.forEach(i -> i.setFragment(this));
+        }
+        this.goals = goals;
+    }
+
+    public Fragment goals(Set<Goal> goals) {
+        this.setGoals(goals);
+        return this;
+    }
+
+    public Fragment addGoal(Goal goal) {
+        this.goals.add(goal);
+        goal.setFragment(this);
+        return this;
+    }
+
+    public Fragment removeGoal(Goal goal) {
+        this.goals.remove(goal);
+        goal.setFragment(null);
         return this;
     }
 
@@ -130,32 +192,6 @@ public class Fragment implements Serializable {
     public Fragment removeActivity(Activity activity) {
         this.activities.remove(activity);
         activity.getFragments().remove(this);
-        return this;
-    }
-
-    public Fragment getNext() {
-        return this.next;
-    }
-
-    public void setNext(Fragment fragment) {
-        this.next = fragment;
-    }
-
-    public Fragment next(Fragment fragment) {
-        this.setNext(fragment);
-        return this;
-    }
-
-    public Condition getSource() {
-        return this.source;
-    }
-
-    public void setSource(Condition condition) {
-        this.source = condition;
-    }
-
-    public Fragment source(Condition condition) {
-        this.setSource(condition);
         return this;
     }
 
