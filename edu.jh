@@ -66,10 +66,6 @@ entity Effect{
  title String
 }
 
-entity Path {
- title String
- type PathType
-}
 
 
 entity Goal {
@@ -89,9 +85,7 @@ enum ActivityType {
 INDIVIDUAL, GROUP
 }
 
-enum PathType {
-PASS, FAIL, UNCONDITIONAL
-}
+
 enum Difficulty {
 LOW, MODERATE, INTERMEDIATE, HIGH, ADVANCED, PERSONALIZED
 }
@@ -163,18 +157,20 @@ relationship ManyToMany {
 
 
 
-
-relationship ManyToMany {
-Module{Path} to Path{modules}
+relationship OneToMany {
+Fragment{source} to Fragment{targets}
 }
 
 relationship OneToMany {
-Fragment{outgoingPaths} to Path{sourceFragment}
+Concept{parent} to Concept{childs}
 }
 
-relationship ManyToOne {
-Path{targetFragment} to Fragment
+relationship ManyToMany {
+Module{fragments} to Fragment{modules}
 }
+
+
+
 
 
 // Set pagination options
