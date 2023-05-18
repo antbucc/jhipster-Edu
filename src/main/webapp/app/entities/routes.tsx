@@ -14,6 +14,8 @@ import Activity from './activity';
 import Fragment from './fragment';
 import Precondition from './precondition';
 import Effect from './effect';
+import Condition from './condition';
+import Path from './path';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 export default () => {
@@ -32,6 +34,8 @@ export default () => {
         <Route path="fragment/*" element={<Fragment />} />
         <Route path="precondition/*" element={<Precondition />} />
         <Route path="effect/*" element={<Effect />} />
+        <Route path="condition/*" element={<Condition />} />
+        <Route path="path/*" element={<Path />} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </ErrorBoundaryRoutes>
     </div>

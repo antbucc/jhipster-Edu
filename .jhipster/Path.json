@@ -1,0 +1,20 @@
+{
+  "applications": "*",
+  "changelogDate": "20230518081530",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "path",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Path",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

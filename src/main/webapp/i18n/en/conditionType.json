@@ -1,0 +1,10 @@
+{
+  "eduApp": {
+    "ConditionType": {
+      "null": "",
+      "UNCONDITIONAL": "UNCONDITIONAL",
+      "PASS": "PASS",
+      "FAIL": "FAIL"
+    }
+  }
+}

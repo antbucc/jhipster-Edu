@@ -1,0 +1,24 @@
+{
+  "eduApp": {
+    "path": {
+      "home": {
+        "title": "Paths",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Path",
+        "createOrEditLabel": "Genera o modifica un Path",
+        "notFound": "No Paths found"
+      },
+      "created": "&Egrave; stato generato un nuovo Path con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Path identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Path con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Path {{ id }}?"
+      },
+      "detail": {
+        "title": "Path"
+      },
+      "id": "ID",
+      "title": "Title"
+    }
+  }
+}

@@ -11,6 +11,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntities as getFragments } from 'app/entities/fragment/fragment.reducer';
 import { IActivity } from 'app/shared/model/activity.model';
 import { getEntities as getActivities } from 'app/entities/activity/activity.reducer';
+import { ICondition } from 'app/shared/model/condition.model';
+import { getEntities as getConditions } from 'app/entities/condition/condition.reducer';
 import { IModule } from 'app/shared/model/module.model';
 import { getEntities as getModules } from 'app/entities/module/module.reducer';
 import { IFragment } from 'app/shared/model/fragment.model';
@@ -26,6 +28,7 @@ export const FragmentUpdate = () => {
 
   const fragments = useAppSelector(state => state.fragment.entities);
   const activities = useAppSelector(state => state.activity.entities);
+  const conditions = useAppSelector(state => state.condition.entities);
   const modules = useAppSelector(state => state.module.entities);
   const fragmentEntity = useAppSelector(state => state.fragment.entity);
   const loading = useAppSelector(state => state.fragment.loading);
@@ -45,6 +48,7 @@ export const FragmentUpdate = () => {
 
     dispatch(getFragments({}));
     dispatch(getActivities({}));
+    dispatch(getConditions({}));
     dispatch(getModules({}));
   }, []);
 
@@ -60,6 +64,7 @@ export const FragmentUpdate = () => {
       ...values,
       activities: mapIdList(values.activities),
       next: fragments.find(it => it.id.toString() === values.next.toString()),
+      source: conditions.find(it => it.id.toString() === values.source.toString()),
       module: modules.find(it => it.id.toString() === values.module.toString()),
     };
 
@@ -77,6 +82,7 @@ export const FragmentUpdate = () => {
           ...fragmentEntity,
           activities: fragmentEntity?.activities?.map(e => e.id.toString()),
           next: fragmentEntity?.next?.id,
+          source: fragmentEntity?.source?.id,
           module: fragmentEntity?.module?.id,
         };
 
@@ -127,6 +133,16 @@ export const FragmentUpdate = () => {
                 <option value="" key="0" />
                 {fragments
                   ? fragments.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField id="fragment-source" name="source" data-cy="source" label={translate('eduApp.fragment.source')} type="select">
+                <option value="" key="0" />
+                {conditions
+                  ? conditions.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

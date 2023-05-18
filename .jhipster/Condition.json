@@ -1,0 +1,32 @@
+{
+  "applications": "*",
+  "changelogDate": "20230518081529",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "condition",
+  "fields": [
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "ConditionType",
+      "fieldValues": "UNCONDITIONAL,PASS,FAIL"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Condition",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "fragment",
+      "otherEntityRelationshipName": "source",
+      "relationshipName": "type",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

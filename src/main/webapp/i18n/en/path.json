@@ -1,0 +1,24 @@
+{
+  "eduApp": {
+    "path": {
+      "home": {
+        "title": "Paths",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Path",
+        "createOrEditLabel": "Create or edit a Path",
+        "notFound": "No Paths found"
+      },
+      "created": "A new Path is created with identifier {{ param }}",
+      "updated": "A Path is updated with identifier {{ param }}",
+      "deleted": "A Path is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Path {{ id }}?"
+      },
+      "detail": {
+        "title": "Path"
+      },
+      "id": "ID",
+      "title": "Title"
+    }
+  }
+}
