@@ -2,6 +2,7 @@ package com.modis.edu.web.rest;
 
 import com.modis.edu.domain.Concept;
 import com.modis.edu.repository.ConceptRepository;
+import com.modis.edu.service.ConceptService;
 import com.modis.edu.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,9 +31,12 @@ public class ConceptResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ConceptService conceptService;
+
     private final ConceptRepository conceptRepository;
 
-    public ConceptResource(ConceptRepository conceptRepository) {
+    public ConceptResource(ConceptService conceptService, ConceptRepository conceptRepository) {
+        this.conceptService = conceptService;
         this.conceptRepository = conceptRepository;
     }
 
@@ -49,7 +53,7 @@ public class ConceptResource {
         if (concept.getId() != null) {
             throw new BadRequestAlertException("A new concept cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Concept result = conceptRepository.save(concept);
+        Concept result = conceptService.save(concept);
         return ResponseEntity
             .created(new URI("/api/concepts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -83,7 +87,7 @@ public class ConceptResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Concept result = conceptRepository.save(concept);
+        Concept result = conceptService.update(concept);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, concept.getId()))
@@ -118,19 +122,7 @@ public class ConceptResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Concept> result = conceptRepository
-            .findById(concept.getId())
-            .map(existingConcept -> {
-                if (concept.getTitle() != null) {
-                    existingConcept.setTitle(concept.getTitle());
-                }
-                if (concept.getDescription() != null) {
-                    existingConcept.setDescription(concept.getDescription());
-                }
-
-                return existingConcept;
-            })
-            .map(conceptRepository::save);
+        Optional<Concept> result = conceptService.partialUpdate(concept);
 
         return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, concept.getId()));
     }
@@ -143,7 +135,7 @@ public class ConceptResource {
     @GetMapping("/concepts")
     public List<Concept> getAllConcepts() {
         log.debug("REST request to get all Concepts");
-        return conceptRepository.findAll();
+        return conceptService.findAll();
     }
 
     /**
@@ -155,7 +147,7 @@ public class ConceptResource {
     @GetMapping("/concepts/{id}")
     public ResponseEntity<Concept> getConcept(@PathVariable String id) {
         log.debug("REST request to get Concept : {}", id);
-        Optional<Concept> concept = conceptRepository.findById(id);
+        Optional<Concept> concept = conceptService.findOne(id);
         return ResponseUtil.wrapOrNotFound(concept);
     }
 
@@ -168,7 +160,7 @@ public class ConceptResource {
     @DeleteMapping("/concepts/{id}")
     public ResponseEntity<Void> deleteConcept(@PathVariable String id) {
         log.debug("REST request to delete Concept : {}", id);
-        conceptRepository.deleteById(id);
+        conceptService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.modis.edu.IntegrationTest;
 import com.modis.edu.domain.Effect;
 import com.modis.edu.repository.EffectRepository;
+import com.modis.edu.service.EffectService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -46,6 +47,9 @@ class EffectResourceIT {
 
     @Mock
     private EffectRepository effectRepositoryMock;
+
+    @Mock
+    private EffectService effectServiceMock;
 
     @Autowired
     private MockMvc restEffectMockMvc;
@@ -128,16 +132,16 @@ class EffectResourceIT {
 
     @SuppressWarnings({ "unchecked" })
     void getAllEffectsWithEagerRelationshipsIsEnabled() throws Exception {
-        when(effectRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(effectServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restEffectMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
-        verify(effectRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+        verify(effectServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @SuppressWarnings({ "unchecked" })
     void getAllEffectsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(effectRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(effectServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restEffectMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
         verify(effectRepositoryMock, times(1)).findAll(any(Pageable.class));

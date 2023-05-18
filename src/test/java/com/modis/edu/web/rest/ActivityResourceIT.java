@@ -12,6 +12,7 @@ import com.modis.edu.domain.enumeration.ActivityType;
 import com.modis.edu.domain.enumeration.Difficulty;
 import com.modis.edu.domain.enumeration.Tool;
 import com.modis.edu.repository.ActivityRepository;
+import com.modis.edu.service.ActivityService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -61,6 +62,9 @@ class ActivityResourceIT {
 
     @Mock
     private ActivityRepository activityRepositoryMock;
+
+    @Mock
+    private ActivityService activityServiceMock;
 
     @Autowired
     private MockMvc restActivityMockMvc;
@@ -161,16 +165,16 @@ class ActivityResourceIT {
 
     @SuppressWarnings({ "unchecked" })
     void getAllActivitiesWithEagerRelationshipsIsEnabled() throws Exception {
-        when(activityRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(activityServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restActivityMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
-        verify(activityRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+        verify(activityServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @SuppressWarnings({ "unchecked" })
     void getAllActivitiesWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(activityRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(activityServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restActivityMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
         verify(activityRepositoryMock, times(1)).findAll(any(Pageable.class));
