@@ -13,6 +13,10 @@ entity Module {
     level Level
 }
 
+entity Path {
+title String
+}
+
 
 entity Learner {
 	
@@ -153,6 +157,9 @@ relationship OneToMany {
 }
 
 
+relationship ManyToMany {
+Module{fragments} to Fragment{ modules(order) }
+}
 
 // Set pagination options
 paginate Learner, Educator with infinite-scroll
