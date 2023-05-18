@@ -2,6 +2,7 @@ package com.modis.edu.web.rest;
 
 import com.modis.edu.domain.Condition;
 import com.modis.edu.repository.ConditionRepository;
+import com.modis.edu.service.ConditionService;
 import com.modis.edu.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,9 +31,12 @@ public class ConditionResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ConditionService conditionService;
+
     private final ConditionRepository conditionRepository;
 
-    public ConditionResource(ConditionRepository conditionRepository) {
+    public ConditionResource(ConditionService conditionService, ConditionRepository conditionRepository) {
+        this.conditionService = conditionService;
         this.conditionRepository = conditionRepository;
     }
 
@@ -49,7 +53,7 @@ public class ConditionResource {
         if (condition.getId() != null) {
             throw new BadRequestAlertException("A new condition cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Condition result = conditionRepository.save(condition);
+        Condition result = conditionService.save(condition);
         return ResponseEntity
             .created(new URI("/api/conditions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -83,7 +87,7 @@ public class ConditionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Condition result = conditionRepository.save(condition);
+        Condition result = conditionService.update(condition);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, condition.getId()))
@@ -118,16 +122,7 @@ public class ConditionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Condition> result = conditionRepository
-            .findById(condition.getId())
-            .map(existingCondition -> {
-                if (condition.getTitle() != null) {
-                    existingCondition.setTitle(condition.getTitle());
-                }
-
-                return existingCondition;
-            })
-            .map(conditionRepository::save);
+        Optional<Condition> result = conditionService.partialUpdate(condition);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -143,7 +138,7 @@ public class ConditionResource {
     @GetMapping("/conditions")
     public List<Condition> getAllConditions() {
         log.debug("REST request to get all Conditions");
-        return conditionRepository.findAll();
+        return conditionService.findAll();
     }
 
     /**
@@ -155,7 +150,7 @@ public class ConditionResource {
     @GetMapping("/conditions/{id}")
     public ResponseEntity<Condition> getCondition(@PathVariable String id) {
         log.debug("REST request to get Condition : {}", id);
-        Optional<Condition> condition = conditionRepository.findById(id);
+        Optional<Condition> condition = conditionService.findOne(id);
         return ResponseUtil.wrapOrNotFound(condition);
     }
 
@@ -168,7 +163,7 @@ public class ConditionResource {
     @DeleteMapping("/conditions/{id}")
     public ResponseEntity<Void> deleteCondition(@PathVariable String id) {
         log.debug("REST request to delete Condition : {}", id);
-        conditionRepository.deleteById(id);
+        conditionService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

@@ -24,10 +24,7 @@ public class Goal implements Serializable {
 
     @DBRef
     @Field("fragment")
-    @JsonIgnoreProperties(
-        value = { "condition", "parents", "preconditions", "effects", "activities", "children", "modules" },
-        allowSetters = true
-    )
+    @JsonIgnoreProperties(value = { "outgoingConditions", "preconditions", "effects", "activities", "modules" }, allowSetters = true)
     private Fragment fragment;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.modis.edu.IntegrationTest;
 import com.modis.edu.domain.Condition;
+import com.modis.edu.domain.enumeration.ConditionType;
 import com.modis.edu.repository.ConditionRepository;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +30,9 @@ class ConditionResourceIT {
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
+    private static final ConditionType DEFAULT_TYPE = ConditionType.PASS;
+    private static final ConditionType UPDATED_TYPE = ConditionType.FAIL;
+
     private static final String ENTITY_API_URL = "/api/conditions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -47,7 +51,7 @@ class ConditionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Condition createEntity() {
-        Condition condition = new Condition().title(DEFAULT_TITLE);
+        Condition condition = new Condition().title(DEFAULT_TITLE).type(DEFAULT_TYPE);
         return condition;
     }
 
@@ -58,7 +62,7 @@ class ConditionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Condition createUpdatedEntity() {
-        Condition condition = new Condition().title(UPDATED_TITLE);
+        Condition condition = new Condition().title(UPDATED_TITLE).type(UPDATED_TYPE);
         return condition;
     }
 
@@ -81,6 +85,7 @@ class ConditionResourceIT {
         assertThat(conditionList).hasSize(databaseSizeBeforeCreate + 1);
         Condition testCondition = conditionList.get(conditionList.size() - 1);
         assertThat(testCondition.getTitle()).isEqualTo(DEFAULT_TITLE);
+        assertThat(testCondition.getType()).isEqualTo(DEFAULT_TYPE);
     }
 
     @Test
@@ -111,7 +116,8 @@ class ConditionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(condition.getId())))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)));
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
     }
 
     @Test
@@ -125,7 +131,8 @@ class ConditionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(condition.getId()))
-            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE));
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()));
     }
 
     @Test
@@ -143,7 +150,7 @@ class ConditionResourceIT {
 
         // Update the condition
         Condition updatedCondition = conditionRepository.findById(condition.getId()).get();
-        updatedCondition.title(UPDATED_TITLE);
+        updatedCondition.title(UPDATED_TITLE).type(UPDATED_TYPE);
 
         restConditionMockMvc
             .perform(
@@ -158,6 +165,7 @@ class ConditionResourceIT {
         assertThat(conditionList).hasSize(databaseSizeBeforeUpdate);
         Condition testCondition = conditionList.get(conditionList.size() - 1);
         assertThat(testCondition.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testCondition.getType()).isEqualTo(UPDATED_TYPE);
     }
 
     @Test
@@ -239,6 +247,7 @@ class ConditionResourceIT {
         assertThat(conditionList).hasSize(databaseSizeBeforeUpdate);
         Condition testCondition = conditionList.get(conditionList.size() - 1);
         assertThat(testCondition.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testCondition.getType()).isEqualTo(DEFAULT_TYPE);
     }
 
     @Test
@@ -252,7 +261,7 @@ class ConditionResourceIT {
         Condition partialUpdatedCondition = new Condition();
         partialUpdatedCondition.setId(condition.getId());
 
-        partialUpdatedCondition.title(UPDATED_TITLE);
+        partialUpdatedCondition.title(UPDATED_TITLE).type(UPDATED_TYPE);
 
         restConditionMockMvc
             .perform(
@@ -267,6 +276,7 @@ class ConditionResourceIT {
         assertThat(conditionList).hasSize(databaseSizeBeforeUpdate);
         Condition testCondition = conditionList.get(conditionList.size() - 1);
         assertThat(testCondition.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testCondition.getType()).isEqualTo(UPDATED_TYPE);
     }
 
     @Test

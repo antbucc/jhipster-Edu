@@ -8,6 +8,11 @@
     {
       "fieldName": "title",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "ConditionType",
+      "fieldValues": "PASS,FAIL,UNCONDITIONAL"
     }
   ],
   "fluentMethods": true,
@@ -15,6 +20,18 @@
   "name": "Condition",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [],
-  "service": "no"
+  "relationships": [
+    {
+      "otherEntityName": "fragment",
+      "relationshipName": "targetFragment",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "fragment",
+      "otherEntityRelationshipName": "outgoingConditions",
+      "relationshipName": "sourceFragment",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
 }

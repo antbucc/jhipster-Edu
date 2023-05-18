@@ -1,7 +1,10 @@
 package com.modis.edu.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.modis.edu.domain.enumeration.ConditionType;
 import java.io.Serializable;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -19,6 +22,19 @@ public class Condition implements Serializable {
 
     @Field("title")
     private String title;
+
+    @Field("type")
+    private ConditionType type;
+
+    @DBRef
+    @Field("targetFragment")
+    @JsonIgnoreProperties(value = { "outgoingConditions", "preconditions", "effects", "activities", "modules" }, allowSetters = true)
+    private Fragment targetFragment;
+
+    @DBRef
+    @Field("sourceFragment")
+    @JsonIgnoreProperties(value = { "outgoingConditions", "preconditions", "effects", "activities", "modules" }, allowSetters = true)
+    private Fragment sourceFragment;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -48,6 +64,45 @@ public class Condition implements Serializable {
         this.title = title;
     }
 
+    public ConditionType getType() {
+        return this.type;
+    }
+
+    public Condition type(ConditionType type) {
+        this.setType(type);
+        return this;
+    }
+
+    public void setType(ConditionType type) {
+        this.type = type;
+    }
+
+    public Fragment getTargetFragment() {
+        return this.targetFragment;
+    }
+
+    public void setTargetFragment(Fragment fragment) {
+        this.targetFragment = fragment;
+    }
+
+    public Condition targetFragment(Fragment fragment) {
+        this.setTargetFragment(fragment);
+        return this;
+    }
+
+    public Fragment getSourceFragment() {
+        return this.sourceFragment;
+    }
+
+    public void setSourceFragment(Fragment fragment) {
+        this.sourceFragment = fragment;
+    }
+
+    public Condition sourceFragment(Fragment fragment) {
+        this.setSourceFragment(fragment);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -73,6 +128,7 @@ public class Condition implements Serializable {
         return "Condition{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
+            ", type='" + getType() + "'" +
             "}";
     }
 }
