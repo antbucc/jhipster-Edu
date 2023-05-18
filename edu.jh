@@ -60,6 +60,13 @@ entity Fragment {
  title String 
 }
 
+entity Precondition {
+ metadata TextBlob
+}
+entity Effect {
+ metadata TextBlob
+}
+
 
 enum Tool {
  COMPUTER, MOBILE
@@ -119,10 +126,26 @@ relationship ManyToMany {
   Activity { Concept(title) } to Concept{ Activity(title) }
 }
 
+relationship OneToMany {
+  Activity { Precondition(metadata) } to Precondition{ Activity(title) }
+}
 
-//relationship OneToMany {
- // Competence { Competence(title) } to Competence{ Competence(title) }
-//}
+relationship OneToMany {
+  Activity { Effect(metadata) } to Effect{ Activity(title) }
+}
+
+relationship OneToMany {
+  Precondition { Concept(title) } to Concept{ Precondition(metadata) }
+}
+
+relationship OneToMany {
+  Effect { Concept(title) } to Concept{ Effect(metadata) }
+}
+
+
+relationship ManyToMany {
+  Competence { Competence(title) } to Competence{ Competence(title) }
+}
 
 
 //relationship OneToMany {

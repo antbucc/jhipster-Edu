@@ -63,6 +63,9 @@ export const Competence = () => {
                 <th>
                   <Translate contentKey="eduApp.competence.concept">Concept</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="eduApp.competence.competence">Competence</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -85,6 +88,16 @@ export const Competence = () => {
                           <span key={j}>
                             <Link to={`/concept/${val.id}`}>{val.title}</Link>
                             {j === competence.concepts.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
+                  <td>
+                    {competence.competences
+                      ? competence.competences.map((val, j) => (
+                          <span key={j}>
+                            <Link to={`/competence/${val.id}`}>{val.title}</Link>
+                            {j === competence.competences.length - 1 ? '' : ', '}
                           </span>
                         ))
                       : null}

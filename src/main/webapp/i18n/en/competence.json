@@ -22,7 +22,9 @@
       "description": "Description",
       "type": "Type",
       "concept": "Concept",
-      "scenario": "Scenario"
+      "competence": "Competence",
+      "scenario": "Scenario",
+      "competence": "Competence"
     }
   }
 }

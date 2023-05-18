@@ -28,13 +28,23 @@ public class Concept implements Serializable {
     private String description;
 
     @DBRef
+    @Field("precondition")
+    @JsonIgnoreProperties(value = { "concepts", "activity" }, allowSetters = true)
+    private Precondition precondition;
+
+    @DBRef
+    @Field("effect")
+    @JsonIgnoreProperties(value = { "concepts", "activity" }, allowSetters = true)
+    private Effect effect;
+
+    @DBRef
     @Field("competences")
-    @JsonIgnoreProperties(value = { "concepts", "scenarios" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "concepts", "competences", "scenarios", "competences" }, allowSetters = true)
     private Set<Competence> competences = new HashSet<>();
 
     @DBRef
     @Field("activities")
-    @JsonIgnoreProperties(value = { "concepts", "fragments" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "preconditions", "effects", "concepts", "fragments" }, allowSetters = true)
     private Set<Activity> activities = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -76,6 +86,32 @@ public class Concept implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Precondition getPrecondition() {
+        return this.precondition;
+    }
+
+    public void setPrecondition(Precondition precondition) {
+        this.precondition = precondition;
+    }
+
+    public Concept precondition(Precondition precondition) {
+        this.setPrecondition(precondition);
+        return this;
+    }
+
+    public Effect getEffect() {
+        return this.effect;
+    }
+
+    public void setEffect(Effect effect) {
+        this.effect = effect;
+    }
+
+    public Concept effect(Effect effect) {
+        this.setEffect(effect);
+        return this;
     }
 
     public Set<Competence> getCompetences() {

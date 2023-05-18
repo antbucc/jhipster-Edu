@@ -21,6 +21,20 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "metadata",
+      "otherEntityName": "precondition",
+      "otherEntityRelationshipName": "concept",
+      "relationshipName": "precondition",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "metadata",
+      "otherEntityName": "effect",
+      "otherEntityRelationshipName": "concept",
+      "relationshipName": "effect",
+      "relationshipType": "many-to-one"
+    },
+    {
       "otherEntityField": "title",
       "otherEntityName": "competence",
       "otherEntityRelationshipName": "concept",
