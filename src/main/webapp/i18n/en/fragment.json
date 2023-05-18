@@ -23,7 +23,6 @@
       "parent": "Parent",
       "precondition": "Precondition",
       "effect": "Effect",
-      "goal": "Goal",
       "activity": "Activity",
       "children": "Children",
       "modules": "Modules"

@@ -47,7 +47,7 @@ public class Activity implements Serializable {
     @DBRef
     @Field("fragments")
     @JsonIgnoreProperties(
-        value = { "condition", "parents", "preconditions", "effects", "goals", "activities", "children", "modules" },
+        value = { "condition", "parents", "preconditions", "effects", "activities", "children", "modules" },
         allowSetters = true
     )
     private Set<Fragment> fragments = new HashSet<>();
