@@ -142,15 +142,20 @@ relationship OneToMany {
   Effect { Concept(title) } to Concept{ Effect(metadata) }
 }
 
+relationship OneToMany {
+  Competence{sons} to Competence{parent}
+}
 
-relationship ManyToMany {
-  Competence  to Competence
+relationship OneToMany {
+  Concept{sons} to Concept{parent}
 }
 
 
-//relationship OneToMany {
-//  Concept { Concept(title) } to Concept{Concept(title)}
-//}
+relationship OneToMany {
+  Fragment{previous} to Fragment{next}
+}
+
+
 
 
 
