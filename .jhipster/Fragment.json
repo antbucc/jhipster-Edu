@@ -17,12 +17,24 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "fragment",
+      "otherEntityRelationshipName": "next",
+      "relationshipName": "previous",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityField": "title",
       "otherEntityName": "activity",
       "otherEntityRelationshipName": "fragment",
       "ownerSide": true,
       "relationshipName": "activity",
       "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "fragment",
+      "otherEntityRelationshipName": "previous",
+      "relationshipName": "next",
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityField": "title",

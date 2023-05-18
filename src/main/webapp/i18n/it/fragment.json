@@ -19,7 +19,9 @@
       },
       "id": "ID",
       "title": "Title",
+      "previous": "Previous",
       "activity": "Activity",
+      "next": "Next",
       "module": "Module"
     }
   }

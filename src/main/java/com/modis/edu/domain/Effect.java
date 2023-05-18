@@ -26,7 +26,7 @@ public class Effect implements Serializable {
 
     @DBRef
     @Field("concept")
-    @JsonIgnoreProperties(value = { "precondition", "effect", "competences", "activities" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "sons", "precondition", "effect", "parent", "competences", "activities" }, allowSetters = true)
     private Set<Concept> concepts = new HashSet<>();
 
     @DBRef

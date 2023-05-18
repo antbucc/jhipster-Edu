@@ -8,6 +8,7 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { getEntities as getFragments } from 'app/entities/fragment/fragment.reducer';
 import { IActivity } from 'app/shared/model/activity.model';
 import { getEntities as getActivities } from 'app/entities/activity/activity.reducer';
 import { IModule } from 'app/shared/model/module.model';
@@ -23,6 +24,7 @@ export const FragmentUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const fragments = useAppSelector(state => state.fragment.entities);
   const activities = useAppSelector(state => state.activity.entities);
   const modules = useAppSelector(state => state.module.entities);
   const fragmentEntity = useAppSelector(state => state.fragment.entity);
@@ -41,6 +43,7 @@ export const FragmentUpdate = () => {
       dispatch(getEntity(id));
     }
 
+    dispatch(getFragments({}));
     dispatch(getActivities({}));
     dispatch(getModules({}));
   }, []);
@@ -56,6 +59,7 @@ export const FragmentUpdate = () => {
       ...fragmentEntity,
       ...values,
       activities: mapIdList(values.activities),
+      next: fragments.find(it => it.id.toString() === values.next.toString()),
       module: modules.find(it => it.id.toString() === values.module.toString()),
     };
 
@@ -72,6 +76,7 @@ export const FragmentUpdate = () => {
       : {
           ...fragmentEntity,
           activities: fragmentEntity?.activities?.map(e => e.id.toString()),
+          next: fragmentEntity?.next?.id,
           module: fragmentEntity?.module?.id,
         };
 
@@ -114,6 +119,16 @@ export const FragmentUpdate = () => {
                   ? activities.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.title}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField id="fragment-next" name="next" data-cy="next" label={translate('eduApp.fragment.next')} type="select">
+                <option value="" key="0" />
+                {fragments
+                  ? fragments.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

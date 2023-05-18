@@ -21,10 +21,10 @@
       "title": "Title",
       "description": "Description",
       "type": "Type",
+      "sons": "Sons",
       "concept": "Concept",
-      "competence": "Competence",
-      "scenario": "Scenario",
-      "competence": "Competence"
+      "parent": "Parent",
+      "scenario": "Scenario"
     }
   }
 }

@@ -7,10 +7,10 @@ export interface ICompetence {
   title?: string | null;
   description?: string | null;
   type?: CompetenceType | null;
+  sons?: ICompetence[] | null;
   concepts?: IConcept[] | null;
-  competences?: ICompetence[] | null;
+  parent?: ICompetence | null;
   scenarios?: IScenario[] | null;
-  competences?: ICompetence[] | null;
 }
 
 export const defaultValue: Readonly<ICompetence> = {};

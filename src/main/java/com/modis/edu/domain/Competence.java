@@ -32,28 +32,24 @@ public class Competence implements Serializable {
     private CompetenceType type;
 
     @DBRef
+    @Field("sons")
+    @JsonIgnoreProperties(value = { "sons", "concepts", "parent", "scenarios" }, allowSetters = true)
+    private Set<Competence> sons = new HashSet<>();
+
+    @DBRef
     @Field("concepts")
-    @JsonIgnoreProperties(value = { "precondition", "effect", "competences", "activities" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "sons", "precondition", "effect", "parent", "competences", "activities" }, allowSetters = true)
     private Set<Concept> concepts = new HashSet<>();
 
     @DBRef
-    @Field("competences")
-    @DBRef
-    @Field("competences")
-    @JsonIgnoreProperties(value = { "concepts", "competences", "scenarios", "competences" }, allowSetters = true)
-    private Set<Competence> competences = new HashSet<>();
+    @Field("parent")
+    @JsonIgnoreProperties(value = { "sons", "concepts", "parent", "scenarios" }, allowSetters = true)
+    private Competence parent;
 
     @DBRef
     @Field("scenarios")
     @JsonIgnoreProperties(value = { "domain", "educators", "competences", "learners", "module" }, allowSetters = true)
     private Set<Scenario> scenarios = new HashSet<>();
-
-    @DBRef
-    @Field("competences")
-    @DBRef
-    @Field("competences")
-    @JsonIgnoreProperties(value = { "concepts", "competences", "scenarios", "competences" }, allowSetters = true)
-    private Set<Competence> competences = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -109,6 +105,37 @@ public class Competence implements Serializable {
         this.type = type;
     }
 
+    public Set<Competence> getSons() {
+        return this.sons;
+    }
+
+    public void setSons(Set<Competence> competences) {
+        if (this.sons != null) {
+            this.sons.forEach(i -> i.setParent(null));
+        }
+        if (competences != null) {
+            competences.forEach(i -> i.setParent(this));
+        }
+        this.sons = competences;
+    }
+
+    public Competence sons(Set<Competence> competences) {
+        this.setSons(competences);
+        return this;
+    }
+
+    public Competence addSons(Competence competence) {
+        this.sons.add(competence);
+        competence.setParent(this);
+        return this;
+    }
+
+    public Competence removeSons(Competence competence) {
+        this.sons.remove(competence);
+        competence.setParent(null);
+        return this;
+    }
+
     public Set<Concept> getConcepts() {
         return this.concepts;
     }
@@ -134,28 +161,16 @@ public class Competence implements Serializable {
         return this;
     }
 
-    public Set<Competence> getCompetences() {
-        return this.competences;
+    public Competence getParent() {
+        return this.parent;
     }
 
-    public void setCompetences(Set<Competence> competences) {
-        this.competences = competences;
+    public void setParent(Competence competence) {
+        this.parent = competence;
     }
 
-    public Competence competences(Set<Competence> competences) {
-        this.setCompetences(competences);
-        return this;
-    }
-
-    public Competence addCompetence(Competence competence) {
-        this.competences.add(competence);
-        competence.getCompetences().add(this);
-        return this;
-    }
-
-    public Competence removeCompetence(Competence competence) {
-        this.competences.remove(competence);
-        competence.getCompetences().remove(this);
+    public Competence parent(Competence competence) {
+        this.setParent(competence);
         return this;
     }
 
@@ -187,37 +202,6 @@ public class Competence implements Serializable {
     public Competence removeScenario(Scenario scenario) {
         this.scenarios.remove(scenario);
         scenario.getCompetences().remove(this);
-        return this;
-    }
-
-    public Set<Competence> getCompetences() {
-        return this.competences;
-    }
-
-    public void setCompetences(Set<Competence> competences) {
-        if (this.competences != null) {
-            this.competences.forEach(i -> i.removeCompetence(this));
-        }
-        if (competences != null) {
-            competences.forEach(i -> i.addCompetence(this));
-        }
-        this.competences = competences;
-    }
-
-    public Competence competences(Set<Competence> competences) {
-        this.setCompetences(competences);
-        return this;
-    }
-
-    public Competence addCompetence(Competence competence) {
-        this.competences.add(competence);
-        competence.getCompetences().add(this);
-        return this;
-    }
-
-    public Competence removeCompetence(Competence competence) {
-        this.competences.remove(competence);
-        competence.getCompetences().remove(this);
         return this;
     }
 

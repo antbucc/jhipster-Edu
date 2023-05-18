@@ -8,9 +8,9 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { getEntities as getCompetences } from 'app/entities/competence/competence.reducer';
 import { IConcept } from 'app/shared/model/concept.model';
 import { getEntities as getConcepts } from 'app/entities/concept/concept.reducer';
-import { getEntities as getCompetences } from 'app/entities/competence/competence.reducer';
 import { IScenario } from 'app/shared/model/scenario.model';
 import { getEntities as getScenarios } from 'app/entities/scenario/scenario.reducer';
 import { ICompetence } from 'app/shared/model/competence.model';
@@ -25,8 +25,8 @@ export const CompetenceUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const concepts = useAppSelector(state => state.concept.entities);
   const competences = useAppSelector(state => state.competence.entities);
+  const concepts = useAppSelector(state => state.concept.entities);
   const scenarios = useAppSelector(state => state.scenario.entities);
   const competenceEntity = useAppSelector(state => state.competence.entity);
   const loading = useAppSelector(state => state.competence.loading);
@@ -45,8 +45,8 @@ export const CompetenceUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getConcepts({}));
     dispatch(getCompetences({}));
+    dispatch(getConcepts({}));
     dispatch(getScenarios({}));
   }, []);
 
@@ -61,7 +61,7 @@ export const CompetenceUpdate = () => {
       ...competenceEntity,
       ...values,
       concepts: mapIdList(values.concepts),
-      competences: mapIdList(values.competences),
+      parent: competences.find(it => it.id.toString() === values.parent.toString()),
     };
 
     if (isNew) {
@@ -78,7 +78,7 @@ export const CompetenceUpdate = () => {
           type: 'SKILL',
           ...competenceEntity,
           concepts: competenceEntity?.concepts?.map(e => e.id.toString()),
-          competences: competenceEntity?.competences?.map(e => e.id.toString()),
+          parent: competenceEntity?.parent?.id,
         };
 
   return (
@@ -139,12 +139,11 @@ export const CompetenceUpdate = () => {
                   : null}
               </ValidatedField>
               <ValidatedField
-                label={translate('eduApp.competence.competence')}
-                id="competence-competence"
-                data-cy="competence"
+                id="competence-parent"
+                name="parent"
+                data-cy="parent"
+                label={translate('eduApp.competence.parent')}
                 type="select"
-                multiple
-                name="competences"
               >
                 <option value="" key="0" />
                 {competences

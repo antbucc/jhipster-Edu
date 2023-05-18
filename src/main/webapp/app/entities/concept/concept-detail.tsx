@@ -52,6 +52,10 @@ export const ConceptDetail = () => {
             <Translate contentKey="eduApp.concept.effect">Effect</Translate>
           </dt>
           <dd>{conceptEntity.effect ? conceptEntity.effect.metadata : ''}</dd>
+          <dt>
+            <Translate contentKey="eduApp.concept.parent">Parent</Translate>
+          </dt>
+          <dd>{conceptEntity.parent ? conceptEntity.parent.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/concept" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
