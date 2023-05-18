@@ -3,6 +3,8 @@ package com.modis.edu.service;
 import com.modis.edu.domain.Concept;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Service Interface for managing {@link Concept}.
@@ -38,6 +40,14 @@ public interface ConceptService {
      * @return the list of entities.
      */
     List<Concept> findAll();
+
+    /**
+     * Get all the concepts with eager load of many-to-many relationships.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<Concept> findAllWithEagerRelationships(Pageable pageable);
 
     /**
      * Get the "id" concept.

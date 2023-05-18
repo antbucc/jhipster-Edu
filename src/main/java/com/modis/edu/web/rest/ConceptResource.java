@@ -130,10 +130,11 @@ public class ConceptResource {
     /**
      * {@code GET  /concepts} : get all the concepts.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of concepts in body.
      */
     @GetMapping("/concepts")
-    public List<Concept> getAllConcepts() {
+    public List<Concept> getAllConcepts(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Concepts");
         return conceptService.findAll();
     }

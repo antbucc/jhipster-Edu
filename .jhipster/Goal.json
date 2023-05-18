@@ -18,11 +18,18 @@
   "relationships": [
     {
       "otherEntityField": "title",
+      "otherEntityName": "concept",
+      "otherEntityRelationshipName": "goal",
+      "relationshipName": "concept",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "title",
       "otherEntityName": "fragment",
       "otherEntityRelationshipName": "goal",
       "relationshipName": "fragment",
       "relationshipType": "many-to-one"
     }
   ],
-  "service": "no"
+  "service": "serviceImpl"
 }

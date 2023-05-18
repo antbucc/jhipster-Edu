@@ -35,6 +35,11 @@ public class Fragment implements Serializable {
     private Set<Effect> effects = new HashSet<>();
 
     @DBRef
+    @Field("goal")
+    @JsonIgnoreProperties(value = { "concepts", "fragment" }, allowSetters = true)
+    private Set<Goal> goals = new HashSet<>();
+
+    @DBRef
     @Field("outgoingPaths")
     @JsonIgnoreProperties(value = { "targetFragment", "sourceFragment", "modules" }, allowSetters = true)
     private Set<Path> outgoingPaths = new HashSet<>();
@@ -131,6 +136,37 @@ public class Fragment implements Serializable {
     public Fragment removeEffect(Effect effect) {
         this.effects.remove(effect);
         effect.setFragment(null);
+        return this;
+    }
+
+    public Set<Goal> getGoals() {
+        return this.goals;
+    }
+
+    public void setGoals(Set<Goal> goals) {
+        if (this.goals != null) {
+            this.goals.forEach(i -> i.setFragment(null));
+        }
+        if (goals != null) {
+            goals.forEach(i -> i.setFragment(this));
+        }
+        this.goals = goals;
+    }
+
+    public Fragment goals(Set<Goal> goals) {
+        this.setGoals(goals);
+        return this;
+    }
+
+    public Fragment addGoal(Goal goal) {
+        this.goals.add(goal);
+        goal.setFragment(this);
+        return this;
+    }
+
+    public Fragment removeGoal(Goal goal) {
+        this.goals.remove(goal);
+        goal.setFragment(null);
         return this;
     }
 
