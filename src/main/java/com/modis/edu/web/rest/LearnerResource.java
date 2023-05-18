@@ -2,6 +2,7 @@ package com.modis.edu.web.rest;
 
 import com.modis.edu.domain.Learner;
 import com.modis.edu.repository.LearnerRepository;
+import com.modis.edu.service.LearnerService;
 import com.modis.edu.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -36,9 +37,12 @@ public class LearnerResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final LearnerService learnerService;
+
     private final LearnerRepository learnerRepository;
 
-    public LearnerResource(LearnerRepository learnerRepository) {
+    public LearnerResource(LearnerService learnerService, LearnerRepository learnerRepository) {
+        this.learnerService = learnerService;
         this.learnerRepository = learnerRepository;
     }
 
@@ -55,7 +59,7 @@ public class LearnerResource {
         if (learner.getId() != null) {
             throw new BadRequestAlertException("A new learner cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Learner result = learnerRepository.save(learner);
+        Learner result = learnerService.save(learner);
         return ResponseEntity
             .created(new URI("/api/learners/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -89,7 +93,7 @@ public class LearnerResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Learner result = learnerRepository.save(learner);
+        Learner result = learnerService.update(learner);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, learner.getId()))
@@ -124,25 +128,7 @@ public class LearnerResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Learner> result = learnerRepository
-            .findById(learner.getId())
-            .map(existingLearner -> {
-                if (learner.getFirstName() != null) {
-                    existingLearner.setFirstName(learner.getFirstName());
-                }
-                if (learner.getLastName() != null) {
-                    existingLearner.setLastName(learner.getLastName());
-                }
-                if (learner.getEmail() != null) {
-                    existingLearner.setEmail(learner.getEmail());
-                }
-                if (learner.getPhoneNumber() != null) {
-                    existingLearner.setPhoneNumber(learner.getPhoneNumber());
-                }
-
-                return existingLearner;
-            })
-            .map(learnerRepository::save);
+        Optional<Learner> result = learnerService.partialUpdate(learner);
 
         return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, learner.getId()));
     }
@@ -156,7 +142,7 @@ public class LearnerResource {
     @GetMapping("/learners")
     public ResponseEntity<List<Learner>> getAllLearners(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Learners");
-        Page<Learner> page = learnerRepository.findAll(pageable);
+        Page<Learner> page = learnerService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -170,7 +156,7 @@ public class LearnerResource {
     @GetMapping("/learners/{id}")
     public ResponseEntity<Learner> getLearner(@PathVariable String id) {
         log.debug("REST request to get Learner : {}", id);
-        Optional<Learner> learner = learnerRepository.findById(id);
+        Optional<Learner> learner = learnerService.findOne(id);
         return ResponseUtil.wrapOrNotFound(learner);
     }
 
@@ -183,7 +169,7 @@ public class LearnerResource {
     @DeleteMapping("/learners/{id}")
     public ResponseEntity<Void> deleteLearner(@PathVariable String id) {
         log.debug("REST request to delete Learner : {}", id);
-        learnerRepository.deleteById(id);
+        learnerService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

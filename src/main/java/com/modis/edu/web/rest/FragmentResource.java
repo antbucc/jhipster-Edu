@@ -2,6 +2,7 @@ package com.modis.edu.web.rest;
 
 import com.modis.edu.domain.Fragment;
 import com.modis.edu.repository.FragmentRepository;
+import com.modis.edu.service.FragmentService;
 import com.modis.edu.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,9 +31,12 @@ public class FragmentResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final FragmentService fragmentService;
+
     private final FragmentRepository fragmentRepository;
 
-    public FragmentResource(FragmentRepository fragmentRepository) {
+    public FragmentResource(FragmentService fragmentService, FragmentRepository fragmentRepository) {
+        this.fragmentService = fragmentService;
         this.fragmentRepository = fragmentRepository;
     }
 
@@ -49,7 +53,7 @@ public class FragmentResource {
         if (fragment.getId() != null) {
             throw new BadRequestAlertException("A new fragment cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Fragment result = fragmentRepository.save(fragment);
+        Fragment result = fragmentService.save(fragment);
         return ResponseEntity
             .created(new URI("/api/fragments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -83,7 +87,7 @@ public class FragmentResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Fragment result = fragmentRepository.save(fragment);
+        Fragment result = fragmentService.update(fragment);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, fragment.getId()))
@@ -118,16 +122,7 @@ public class FragmentResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Fragment> result = fragmentRepository
-            .findById(fragment.getId())
-            .map(existingFragment -> {
-                if (fragment.getTitle() != null) {
-                    existingFragment.setTitle(fragment.getTitle());
-                }
-
-                return existingFragment;
-            })
-            .map(fragmentRepository::save);
+        Optional<Fragment> result = fragmentService.partialUpdate(fragment);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -144,11 +139,7 @@ public class FragmentResource {
     @GetMapping("/fragments")
     public List<Fragment> getAllFragments(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Fragments");
-        if (eagerload) {
-            return fragmentRepository.findAllWithEagerRelationships();
-        } else {
-            return fragmentRepository.findAll();
-        }
+        return fragmentService.findAll();
     }
 
     /**
@@ -160,7 +151,7 @@ public class FragmentResource {
     @GetMapping("/fragments/{id}")
     public ResponseEntity<Fragment> getFragment(@PathVariable String id) {
         log.debug("REST request to get Fragment : {}", id);
-        Optional<Fragment> fragment = fragmentRepository.findOneWithEagerRelationships(id);
+        Optional<Fragment> fragment = fragmentService.findOne(id);
         return ResponseUtil.wrapOrNotFound(fragment);
     }
 
@@ -173,7 +164,7 @@ public class FragmentResource {
     @DeleteMapping("/fragments/{id}")
     public ResponseEntity<Void> deleteFragment(@PathVariable String id) {
         log.debug("REST request to delete Fragment : {}", id);
-        fragmentRepository.deleteById(id);
+        fragmentService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

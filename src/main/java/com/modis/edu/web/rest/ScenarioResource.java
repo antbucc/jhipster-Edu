@@ -2,13 +2,13 @@ package com.modis.edu.web.rest;
 
 import com.modis.edu.domain.Scenario;
 import com.modis.edu.repository.ScenarioRepository;
+import com.modis.edu.service.ScenarioService;
 import com.modis.edu.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +38,12 @@ public class ScenarioResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ScenarioService scenarioService;
+
     private final ScenarioRepository scenarioRepository;
 
-    public ScenarioResource(ScenarioRepository scenarioRepository) {
+    public ScenarioResource(ScenarioService scenarioService, ScenarioRepository scenarioRepository) {
+        this.scenarioService = scenarioService;
         this.scenarioRepository = scenarioRepository;
     }
 
@@ -57,7 +60,7 @@ public class ScenarioResource {
         if (scenario.getId() != null) {
             throw new BadRequestAlertException("A new scenario cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Scenario result = scenarioRepository.save(scenario);
+        Scenario result = scenarioService.save(scenario);
         return ResponseEntity
             .created(new URI("/api/scenarios/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -91,7 +94,7 @@ public class ScenarioResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Scenario result = scenarioRepository.save(scenario);
+        Scenario result = scenarioService.update(scenario);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, scenario.getId()))
@@ -126,22 +129,7 @@ public class ScenarioResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Scenario> result = scenarioRepository
-            .findById(scenario.getId())
-            .map(existingScenario -> {
-                if (scenario.getTitle() != null) {
-                    existingScenario.setTitle(scenario.getTitle());
-                }
-                if (scenario.getDescription() != null) {
-                    existingScenario.setDescription(scenario.getDescription());
-                }
-                if (scenario.getLanguage() != null) {
-                    existingScenario.setLanguage(scenario.getLanguage());
-                }
-
-                return existingScenario;
-            })
-            .map(scenarioRepository::save);
+        Optional<Scenario> result = scenarioService.partialUpdate(scenario);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -165,20 +153,14 @@ public class ScenarioResource {
     ) {
         if ("module-is-null".equals(filter)) {
             log.debug("REST request to get all Scenarios where module is null");
-            return new ResponseEntity<>(
-                StreamSupport
-                    .stream(scenarioRepository.findAll().spliterator(), false)
-                    .filter(scenario -> scenario.getModule() == null)
-                    .collect(Collectors.toList()),
-                HttpStatus.OK
-            );
+            return new ResponseEntity<>(scenarioService.findAllWhereModuleIsNull(), HttpStatus.OK);
         }
         log.debug("REST request to get a page of Scenarios");
         Page<Scenario> page;
         if (eagerload) {
-            page = scenarioRepository.findAllWithEagerRelationships(pageable);
+            page = scenarioService.findAllWithEagerRelationships(pageable);
         } else {
-            page = scenarioRepository.findAll(pageable);
+            page = scenarioService.findAll(pageable);
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
@@ -193,7 +175,7 @@ public class ScenarioResource {
     @GetMapping("/scenarios/{id}")
     public ResponseEntity<Scenario> getScenario(@PathVariable String id) {
         log.debug("REST request to get Scenario : {}", id);
-        Optional<Scenario> scenario = scenarioRepository.findOneWithEagerRelationships(id);
+        Optional<Scenario> scenario = scenarioService.findOne(id);
         return ResponseUtil.wrapOrNotFound(scenario);
     }
 
@@ -206,7 +188,7 @@ public class ScenarioResource {
     @DeleteMapping("/scenarios/{id}")
     public ResponseEntity<Void> deleteScenario(@PathVariable String id) {
         log.debug("REST request to delete Scenario : {}", id);
-        scenarioRepository.deleteById(id);
+        scenarioService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

@@ -2,6 +2,7 @@ package com.modis.edu.web.rest;
 
 import com.modis.edu.domain.Educator;
 import com.modis.edu.repository.EducatorRepository;
+import com.modis.edu.service.EducatorService;
 import com.modis.edu.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -36,9 +37,12 @@ public class EducatorResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final EducatorService educatorService;
+
     private final EducatorRepository educatorRepository;
 
-    public EducatorResource(EducatorRepository educatorRepository) {
+    public EducatorResource(EducatorService educatorService, EducatorRepository educatorRepository) {
+        this.educatorService = educatorService;
         this.educatorRepository = educatorRepository;
     }
 
@@ -55,7 +59,7 @@ public class EducatorResource {
         if (educator.getId() != null) {
             throw new BadRequestAlertException("A new educator cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Educator result = educatorRepository.save(educator);
+        Educator result = educatorService.save(educator);
         return ResponseEntity
             .created(new URI("/api/educators/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -89,7 +93,7 @@ public class EducatorResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Educator result = educatorRepository.save(educator);
+        Educator result = educatorService.update(educator);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, educator.getId()))
@@ -124,22 +128,7 @@ public class EducatorResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Educator> result = educatorRepository
-            .findById(educator.getId())
-            .map(existingEducator -> {
-                if (educator.getFirstName() != null) {
-                    existingEducator.setFirstName(educator.getFirstName());
-                }
-                if (educator.getLastName() != null) {
-                    existingEducator.setLastName(educator.getLastName());
-                }
-                if (educator.getEmail() != null) {
-                    existingEducator.setEmail(educator.getEmail());
-                }
-
-                return existingEducator;
-            })
-            .map(educatorRepository::save);
+        Optional<Educator> result = educatorService.partialUpdate(educator);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -156,7 +145,7 @@ public class EducatorResource {
     @GetMapping("/educators")
     public ResponseEntity<List<Educator>> getAllEducators(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Educators");
-        Page<Educator> page = educatorRepository.findAll(pageable);
+        Page<Educator> page = educatorService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -170,7 +159,7 @@ public class EducatorResource {
     @GetMapping("/educators/{id}")
     public ResponseEntity<Educator> getEducator(@PathVariable String id) {
         log.debug("REST request to get Educator : {}", id);
-        Optional<Educator> educator = educatorRepository.findById(id);
+        Optional<Educator> educator = educatorService.findOne(id);
         return ResponseUtil.wrapOrNotFound(educator);
     }
 
@@ -183,7 +172,7 @@ public class EducatorResource {
     @DeleteMapping("/educators/{id}")
     public ResponseEntity<Void> deleteEducator(@PathVariable String id) {
         log.debug("REST request to delete Educator : {}", id);
-        educatorRepository.deleteById(id);
+        educatorService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }
