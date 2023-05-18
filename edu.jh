@@ -1,6 +1,3 @@
-
-
-
 entity Scenario {
 	title String
     description String
@@ -60,6 +57,9 @@ entity Fragment {
  title String 
 }
 
+entity Precondition{
+ title String
+}
 
 
 enum Tool {
@@ -101,36 +101,28 @@ relationship ManyToMany {
   Scenario { Competence(title) } to Competence{Scenario(title)}
 }
 
-
 relationship ManyToMany {
   Competence { Concept(title) } to Concept { Competence(title) }
 }
 
-
 relationship ManyToMany {
-  Scenario { Learner(lastName) } to Learner{Scenario(title)}
+  Scenario { Learner(lastName) } to Learner{ Scenario(title) }
 }
 
 relationship ManyToMany {
-  Fragment { Activity(title) } to Activity{Fragment(title)}
+  Fragment { Activity(title) } to Activity{ Fragment(title) }
 }
 
 relationship ManyToMany {
   Activity { Concept(title) } to Concept{ Activity(title) }
 }
 
-
 relationship OneToMany {
-  Competence{sons} to Competence{parent}
+  Module { Fragment(title) } to Fragment{ Module(title) }
 }
 
 relationship OneToMany {
-  Concept{sons} to Concept{parent}
-}
-
-
-relationship OneToMany {
-  Module { Fragment(title) } to Fragment{Module(title)}
+  Fragment { Precondition(title) } to Precondition{ Fragment(title) }
 }
 
 
