@@ -153,12 +153,12 @@ relationship OneToMany {
 }
 
 
-relationship OneToMany {
-  Fragment { Goal(title) } to Goal{ Fragment(title) }
+relationship ManyToMany {
+  Goal { Fragment(title) } to Fragment{ Goal(title) }
 }
 
-relationship OneToMany {
-  Goal { Concept(title) } to Concept{ Goal(title) }
+relationship ManyToMany {
+  Concept { Goal(title) } to Goal{ Concept(title) }
 }
 
 
