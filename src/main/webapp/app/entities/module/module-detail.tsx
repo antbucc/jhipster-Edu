@@ -69,7 +69,16 @@ export const ModuleDetail = () => {
           <dt>
             <Translate contentKey="eduApp.module.path">Path</Translate>
           </dt>
-          <dd>{moduleEntity.path ? moduleEntity.path.id : ''}</dd>
+          <dd>
+            {moduleEntity.paths
+              ? moduleEntity.paths.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.id}</a>
+                    {moduleEntity.paths && i === moduleEntity.paths.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/module" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -8,7 +8,12 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { IFragment } from 'app/shared/model/fragment.model';
+import { getEntities as getFragments } from 'app/entities/fragment/fragment.reducer';
+import { IModule } from 'app/shared/model/module.model';
+import { getEntities as getModules } from 'app/entities/module/module.reducer';
 import { IPath } from 'app/shared/model/path.model';
+import { PathType } from 'app/shared/model/enumerations/path-type.model';
 import { getEntity, updateEntity, createEntity, reset } from './path.reducer';
 
 export const PathUpdate = () => {
@@ -19,10 +24,13 @@ export const PathUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const fragments = useAppSelector(state => state.fragment.entities);
+  const modules = useAppSelector(state => state.module.entities);
   const pathEntity = useAppSelector(state => state.path.entity);
   const loading = useAppSelector(state => state.path.loading);
   const updating = useAppSelector(state => state.path.updating);
   const updateSuccess = useAppSelector(state => state.path.updateSuccess);
+  const pathTypeValues = Object.keys(PathType);
 
   const handleClose = () => {
     navigate('/path');
@@ -34,6 +42,9 @@ export const PathUpdate = () => {
     } else {
       dispatch(getEntity(id));
     }
+
+    dispatch(getFragments({}));
+    dispatch(getModules({}));
   }, []);
 
   useEffect(() => {
@@ -46,6 +57,8 @@ export const PathUpdate = () => {
     const entity = {
       ...pathEntity,
       ...values,
+      targetFragment: fragments.find(it => it.id.toString() === values.targetFragment.toString()),
+      sourceFragment: fragments.find(it => it.id.toString() === values.sourceFragment.toString()),
     };
 
     if (isNew) {
@@ -59,7 +72,10 @@ export const PathUpdate = () => {
     isNew
       ? {}
       : {
+          type: 'PASS',
           ...pathEntity,
+          targetFragment: pathEntity?.targetFragment?.id,
+          sourceFragment: pathEntity?.sourceFragment?.id,
         };
 
   return (
@@ -88,6 +104,45 @@ export const PathUpdate = () => {
                 />
               ) : null}
               <ValidatedField label={translate('eduApp.path.title')} id="path-title" name="title" data-cy="title" type="text" />
+              <ValidatedField label={translate('eduApp.path.type')} id="path-type" name="type" data-cy="type" type="select">
+                {pathTypeValues.map(pathType => (
+                  <option value={pathType} key={pathType}>
+                    {translate('eduApp.PathType.' + pathType)}
+                  </option>
+                ))}
+              </ValidatedField>
+              <ValidatedField
+                id="path-targetFragment"
+                name="targetFragment"
+                data-cy="targetFragment"
+                label={translate('eduApp.path.targetFragment')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {fragments
+                  ? fragments.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="path-sourceFragment"
+                name="sourceFragment"
+                data-cy="sourceFragment"
+                label={translate('eduApp.path.sourceFragment')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {fragments
+                  ? fragments.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/path" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

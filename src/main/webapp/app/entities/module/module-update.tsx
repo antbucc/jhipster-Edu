@@ -60,8 +60,8 @@ export const ModuleUpdate = () => {
     const entity = {
       ...moduleEntity,
       ...values,
+      paths: mapIdList(values.paths),
       scenario: scenarios.find(it => it.id.toString() === values.scenario.toString()),
-      path: paths.find(it => it.id.toString() === values.path.toString()),
     };
 
     if (isNew) {
@@ -83,7 +83,7 @@ export const ModuleUpdate = () => {
           startDate: convertDateTimeFromServer(moduleEntity.startDate),
           endData: convertDateTimeFromServer(moduleEntity.endData),
           scenario: moduleEntity?.scenario?.id,
-          path: moduleEntity?.path?.id,
+          paths: moduleEntity?.paths?.map(e => e.id.toString()),
         };
 
   return (
@@ -158,7 +158,7 @@ export const ModuleUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
-              <ValidatedField id="module-path" name="path" data-cy="path" label={translate('eduApp.module.path')} type="select">
+              <ValidatedField label={translate('eduApp.module.path')} id="module-path" data-cy="path" type="select" multiple name="paths">
                 <option value="" key="0" />
                 {paths
                   ? paths.map(otherEntity => (

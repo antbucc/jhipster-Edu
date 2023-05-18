@@ -1,6 +1,7 @@
 package com.modis.edu.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.modis.edu.domain.enumeration.PathType;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,9 +25,22 @@ public class Path implements Serializable {
     @Field("title")
     private String title;
 
+    @Field("type")
+    private PathType type;
+
+    @DBRef
+    @Field("targetFragment")
+    @JsonIgnoreProperties(value = { "preconditions", "effects", "outgoingPaths", "activities" }, allowSetters = true)
+    private Fragment targetFragment;
+
+    @DBRef
+    @Field("sourceFragment")
+    @JsonIgnoreProperties(value = { "preconditions", "effects", "outgoingPaths", "activities" }, allowSetters = true)
+    private Fragment sourceFragment;
+
     @DBRef
     @Field("modules")
-    @JsonIgnoreProperties(value = { "scenario", "path" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "scenario", "paths" }, allowSetters = true)
     private Set<Module> modules = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -57,16 +71,55 @@ public class Path implements Serializable {
         this.title = title;
     }
 
+    public PathType getType() {
+        return this.type;
+    }
+
+    public Path type(PathType type) {
+        this.setType(type);
+        return this;
+    }
+
+    public void setType(PathType type) {
+        this.type = type;
+    }
+
+    public Fragment getTargetFragment() {
+        return this.targetFragment;
+    }
+
+    public void setTargetFragment(Fragment fragment) {
+        this.targetFragment = fragment;
+    }
+
+    public Path targetFragment(Fragment fragment) {
+        this.setTargetFragment(fragment);
+        return this;
+    }
+
+    public Fragment getSourceFragment() {
+        return this.sourceFragment;
+    }
+
+    public void setSourceFragment(Fragment fragment) {
+        this.sourceFragment = fragment;
+    }
+
+    public Path sourceFragment(Fragment fragment) {
+        this.setSourceFragment(fragment);
+        return this;
+    }
+
     public Set<Module> getModules() {
         return this.modules;
     }
 
     public void setModules(Set<Module> modules) {
         if (this.modules != null) {
-            this.modules.forEach(i -> i.setPath(null));
+            this.modules.forEach(i -> i.removePath(this));
         }
         if (modules != null) {
-            modules.forEach(i -> i.setPath(this));
+            modules.forEach(i -> i.addPath(this));
         }
         this.modules = modules;
     }
@@ -78,13 +131,13 @@ public class Path implements Serializable {
 
     public Path addModules(Module module) {
         this.modules.add(module);
-        module.setPath(this);
+        module.getPaths().add(this);
         return this;
     }
 
     public Path removeModules(Module module) {
         this.modules.remove(module);
-        module.setPath(null);
+        module.getPaths().remove(this);
         return this;
     }
 
@@ -113,6 +166,7 @@ public class Path implements Serializable {
         return "Path{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
+            ", type='" + getType() + "'" +
             "}";
     }
 }

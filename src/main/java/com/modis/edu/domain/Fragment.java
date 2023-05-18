@@ -25,11 +25,6 @@ public class Fragment implements Serializable {
     private String title;
 
     @DBRef
-    @Field("outgoingConditions")
-    @JsonIgnoreProperties(value = { "targetFragment", "sourceFragment" }, allowSetters = true)
-    private Set<Condition> outgoingConditions = new HashSet<>();
-
-    @DBRef
     @Field("precondition")
     @JsonIgnoreProperties(value = { "fragment" }, allowSetters = true)
     private Set<Precondition> preconditions = new HashSet<>();
@@ -38,6 +33,11 @@ public class Fragment implements Serializable {
     @Field("effect")
     @JsonIgnoreProperties(value = { "fragment" }, allowSetters = true)
     private Set<Effect> effects = new HashSet<>();
+
+    @DBRef
+    @Field("outgoingPaths")
+    @JsonIgnoreProperties(value = { "targetFragment", "sourceFragment", "modules" }, allowSetters = true)
+    private Set<Path> outgoingPaths = new HashSet<>();
 
     @DBRef
     @Field("activities")
@@ -70,37 +70,6 @@ public class Fragment implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Set<Condition> getOutgoingConditions() {
-        return this.outgoingConditions;
-    }
-
-    public void setOutgoingConditions(Set<Condition> conditions) {
-        if (this.outgoingConditions != null) {
-            this.outgoingConditions.forEach(i -> i.setSourceFragment(null));
-        }
-        if (conditions != null) {
-            conditions.forEach(i -> i.setSourceFragment(this));
-        }
-        this.outgoingConditions = conditions;
-    }
-
-    public Fragment outgoingConditions(Set<Condition> conditions) {
-        this.setOutgoingConditions(conditions);
-        return this;
-    }
-
-    public Fragment addOutgoingConditions(Condition condition) {
-        this.outgoingConditions.add(condition);
-        condition.setSourceFragment(this);
-        return this;
-    }
-
-    public Fragment removeOutgoingConditions(Condition condition) {
-        this.outgoingConditions.remove(condition);
-        condition.setSourceFragment(null);
-        return this;
     }
 
     public Set<Precondition> getPreconditions() {
@@ -162,6 +131,37 @@ public class Fragment implements Serializable {
     public Fragment removeEffect(Effect effect) {
         this.effects.remove(effect);
         effect.setFragment(null);
+        return this;
+    }
+
+    public Set<Path> getOutgoingPaths() {
+        return this.outgoingPaths;
+    }
+
+    public void setOutgoingPaths(Set<Path> paths) {
+        if (this.outgoingPaths != null) {
+            this.outgoingPaths.forEach(i -> i.setSourceFragment(null));
+        }
+        if (paths != null) {
+            paths.forEach(i -> i.setSourceFragment(this));
+        }
+        this.outgoingPaths = paths;
+    }
+
+    public Fragment outgoingPaths(Set<Path> paths) {
+        this.setOutgoingPaths(paths);
+        return this;
+    }
+
+    public Fragment addOutgoingPaths(Path path) {
+        this.outgoingPaths.add(path);
+        path.setSourceFragment(this);
+        return this;
+    }
+
+    public Fragment removeOutgoingPaths(Path path) {
+        this.outgoingPaths.remove(path);
+        path.setSourceFragment(null);
         return this;
     }
 

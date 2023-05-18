@@ -8,6 +8,11 @@
     {
       "fieldName": "title",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "PathType",
+      "fieldValues": "PASS,FAIL,UNCONDITIONAL"
     }
   ],
   "fluentMethods": true,
@@ -17,10 +22,22 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "fragment",
+      "relationshipName": "targetFragment",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "fragment",
+      "otherEntityRelationshipName": "outgoingPaths",
+      "relationshipName": "sourceFragment",
+      "relationshipType": "many-to-one"
+    },
+    {
       "otherEntityName": "module",
       "otherEntityRelationshipName": "path",
+      "ownerSide": false,
       "relationshipName": "modules",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "no"

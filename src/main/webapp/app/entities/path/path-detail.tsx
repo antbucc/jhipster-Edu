@@ -38,6 +38,20 @@ export const PathDetail = () => {
             </span>
           </dt>
           <dd>{pathEntity.title}</dd>
+          <dt>
+            <span id="type">
+              <Translate contentKey="eduApp.path.type">Type</Translate>
+            </span>
+          </dt>
+          <dd>{pathEntity.type}</dd>
+          <dt>
+            <Translate contentKey="eduApp.path.targetFragment">Target Fragment</Translate>
+          </dt>
+          <dd>{pathEntity.targetFragment ? pathEntity.targetFragment.id : ''}</dd>
+          <dt>
+            <Translate contentKey="eduApp.path.sourceFragment">Source Fragment</Translate>
+          </dt>
+          <dd>{pathEntity.sourceFragment ? pathEntity.sourceFragment.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/path" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

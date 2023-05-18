@@ -19,9 +19,9 @@
       },
       "id": "ID",
       "title": "Title",
-      "outgoingConditions": "Outgoing Conditions",
       "precondition": "Precondition",
       "effect": "Effect",
+      "outgoingPaths": "Outgoing Paths",
       "activity": "Activity"
     }
   }

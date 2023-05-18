@@ -44,8 +44,9 @@
     {
       "otherEntityName": "path",
       "otherEntityRelationshipName": "modules",
+      "ownerSide": true,
       "relationshipName": "path",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceImpl"

@@ -91,7 +91,16 @@ export const Module = () => {
                     <Translate contentKey={`eduApp.Level.${module.level}`} />
                   </td>
                   <td>{module.scenario ? <Link to={`/scenario/${module.scenario.id}`}>{module.scenario.title}</Link> : ''}</td>
-                  <td>{module.path ? <Link to={`/path/${module.path.id}`}>{module.path.id}</Link> : ''}</td>
+                  <td>
+                    {module.paths
+                      ? module.paths.map((val, j) => (
+                          <span key={j}>
+                            <Link to={`/path/${val.id}`}>{val.id}</Link>
+                            {j === module.paths.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/module/${module.id}`} color="info" size="sm" data-cy="entityDetailsButton">

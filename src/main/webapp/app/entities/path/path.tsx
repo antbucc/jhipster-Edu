@@ -54,6 +54,15 @@ export const Path = () => {
                 <th>
                   <Translate contentKey="eduApp.path.title">Title</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="eduApp.path.type">Type</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="eduApp.path.targetFragment">Target Fragment</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="eduApp.path.sourceFragment">Source Fragment</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -66,6 +75,11 @@ export const Path = () => {
                     </Button>
                   </td>
                   <td>{path.title}</td>
+                  <td>
+                    <Translate contentKey={`eduApp.PathType.${path.type}`} />
+                  </td>
+                  <td>{path.targetFragment ? <Link to={`/fragment/${path.targetFragment.id}`}>{path.targetFragment.id}</Link> : ''}</td>
+                  <td>{path.sourceFragment ? <Link to={`/fragment/${path.sourceFragment.id}`}>{path.sourceFragment.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/path/${path.id}`} color="info" size="sm" data-cy="entityDetailsButton">

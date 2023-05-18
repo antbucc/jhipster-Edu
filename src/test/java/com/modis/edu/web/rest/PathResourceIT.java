@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.modis.edu.IntegrationTest;
 import com.modis.edu.domain.Path;
+import com.modis.edu.domain.enumeration.PathType;
 import com.modis.edu.repository.PathRepository;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +30,9 @@ class PathResourceIT {
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
+    private static final PathType DEFAULT_TYPE = PathType.PASS;
+    private static final PathType UPDATED_TYPE = PathType.FAIL;
+
     private static final String ENTITY_API_URL = "/api/paths";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -47,7 +51,7 @@ class PathResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Path createEntity() {
-        Path path = new Path().title(DEFAULT_TITLE);
+        Path path = new Path().title(DEFAULT_TITLE).type(DEFAULT_TYPE);
         return path;
     }
 
@@ -58,7 +62,7 @@ class PathResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Path createUpdatedEntity() {
-        Path path = new Path().title(UPDATED_TITLE);
+        Path path = new Path().title(UPDATED_TITLE).type(UPDATED_TYPE);
         return path;
     }
 
@@ -81,6 +85,7 @@ class PathResourceIT {
         assertThat(pathList).hasSize(databaseSizeBeforeCreate + 1);
         Path testPath = pathList.get(pathList.size() - 1);
         assertThat(testPath.getTitle()).isEqualTo(DEFAULT_TITLE);
+        assertThat(testPath.getType()).isEqualTo(DEFAULT_TYPE);
     }
 
     @Test
@@ -111,7 +116,8 @@ class PathResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(path.getId())))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)));
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
     }
 
     @Test
@@ -125,7 +131,8 @@ class PathResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(path.getId()))
-            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE));
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()));
     }
 
     @Test
@@ -143,7 +150,7 @@ class PathResourceIT {
 
         // Update the path
         Path updatedPath = pathRepository.findById(path.getId()).get();
-        updatedPath.title(UPDATED_TITLE);
+        updatedPath.title(UPDATED_TITLE).type(UPDATED_TYPE);
 
         restPathMockMvc
             .perform(
@@ -158,6 +165,7 @@ class PathResourceIT {
         assertThat(pathList).hasSize(databaseSizeBeforeUpdate);
         Path testPath = pathList.get(pathList.size() - 1);
         assertThat(testPath.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testPath.getType()).isEqualTo(UPDATED_TYPE);
     }
 
     @Test
@@ -239,6 +247,7 @@ class PathResourceIT {
         assertThat(pathList).hasSize(databaseSizeBeforeUpdate);
         Path testPath = pathList.get(pathList.size() - 1);
         assertThat(testPath.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testPath.getType()).isEqualTo(DEFAULT_TYPE);
     }
 
     @Test
@@ -252,7 +261,7 @@ class PathResourceIT {
         Path partialUpdatedPath = new Path();
         partialUpdatedPath.setId(path.getId());
 
-        partialUpdatedPath.title(UPDATED_TITLE);
+        partialUpdatedPath.title(UPDATED_TITLE).type(UPDATED_TYPE);
 
         restPathMockMvc
             .perform(
@@ -267,6 +276,7 @@ class PathResourceIT {
         assertThat(pathList).hasSize(databaseSizeBeforeUpdate);
         Path testPath = pathList.get(pathList.size() - 1);
         assertThat(testPath.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testPath.getType()).isEqualTo(UPDATED_TYPE);
     }
 
     @Test
