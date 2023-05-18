@@ -2,13 +2,13 @@ package com.modis.edu.web.rest;
 
 import com.modis.edu.domain.Domain;
 import com.modis.edu.repository.DomainRepository;
+import com.modis.edu.service.DomainService;
 import com.modis.edu.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +38,12 @@ public class DomainResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final DomainService domainService;
+
     private final DomainRepository domainRepository;
 
-    public DomainResource(DomainRepository domainRepository) {
+    public DomainResource(DomainService domainService, DomainRepository domainRepository) {
+        this.domainService = domainService;
         this.domainRepository = domainRepository;
     }
 
@@ -57,7 +60,7 @@ public class DomainResource {
         if (domain.getId() != null) {
             throw new BadRequestAlertException("A new domain cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Domain result = domainRepository.save(domain);
+        Domain result = domainService.save(domain);
         return ResponseEntity
             .created(new URI("/api/domains/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -89,7 +92,7 @@ public class DomainResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Domain result = domainRepository.save(domain);
+        Domain result = domainService.update(domain);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, domain.getId()))
@@ -124,22 +127,7 @@ public class DomainResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Domain> result = domainRepository
-            .findById(domain.getId())
-            .map(existingDomain -> {
-                if (domain.getTitle() != null) {
-                    existingDomain.setTitle(domain.getTitle());
-                }
-                if (domain.getDescription() != null) {
-                    existingDomain.setDescription(domain.getDescription());
-                }
-                if (domain.getCity() != null) {
-                    existingDomain.setCity(domain.getCity());
-                }
-
-                return existingDomain;
-            })
-            .map(domainRepository::save);
+        Optional<Domain> result = domainService.partialUpdate(domain);
 
         return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, domain.getId()));
     }
@@ -158,16 +146,10 @@ public class DomainResource {
     ) {
         if ("scenario-is-null".equals(filter)) {
             log.debug("REST request to get all Domains where scenario is null");
-            return new ResponseEntity<>(
-                StreamSupport
-                    .stream(domainRepository.findAll().spliterator(), false)
-                    .filter(domain -> domain.getScenario() == null)
-                    .collect(Collectors.toList()),
-                HttpStatus.OK
-            );
+            return new ResponseEntity<>(domainService.findAllWhereScenarioIsNull(), HttpStatus.OK);
         }
         log.debug("REST request to get a page of Domains");
-        Page<Domain> page = domainRepository.findAll(pageable);
+        Page<Domain> page = domainService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -181,7 +163,7 @@ public class DomainResource {
     @GetMapping("/domains/{id}")
     public ResponseEntity<Domain> getDomain(@PathVariable String id) {
         log.debug("REST request to get Domain : {}", id);
-        Optional<Domain> domain = domainRepository.findById(id);
+        Optional<Domain> domain = domainService.findOne(id);
         return ResponseUtil.wrapOrNotFound(domain);
     }
 
@@ -194,7 +176,7 @@ public class DomainResource {
     @DeleteMapping("/domains/{id}")
     public ResponseEntity<Void> deleteDomain(@PathVariable String id) {
         log.debug("REST request to delete Domain : {}", id);
-        domainRepository.deleteById(id);
+        domainService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

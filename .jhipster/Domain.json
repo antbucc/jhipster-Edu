@@ -33,5 +33,5 @@
       "relationshipType": "one-to-one"
     }
   ],
-  "service": "no"
+  "service": "serviceImpl"
 }
