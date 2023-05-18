@@ -120,6 +120,9 @@ public class PathResource {
                 if (path.getTitle() != null) {
                     existingPath.setTitle(path.getTitle());
                 }
+                if (path.getType() != null) {
+                    existingPath.setType(path.getType());
+                }
 
                 return existingPath;
             })

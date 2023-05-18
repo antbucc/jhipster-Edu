@@ -17,12 +17,6 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "condition",
-      "otherEntityRelationshipName": "sourceFragment",
-      "relationshipName": "outgoingConditions",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityField": "title",
       "otherEntityName": "precondition",
       "otherEntityRelationshipName": "fragment",
@@ -34,6 +28,12 @@
       "otherEntityName": "effect",
       "otherEntityRelationshipName": "fragment",
       "relationshipName": "effect",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "path",
+      "otherEntityRelationshipName": "sourceFragment",
+      "relationshipName": "outgoingPaths",
       "relationshipType": "one-to-many"
     },
     {

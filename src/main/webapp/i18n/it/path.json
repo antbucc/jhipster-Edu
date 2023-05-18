@@ -19,6 +19,9 @@
       },
       "id": "ID",
       "title": "Title",
+      "type": "Type",
+      "targetFragment": "Target Fragment",
+      "sourceFragment": "Source Fragment",
       "modules": "Modules"
     }
   }

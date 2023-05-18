@@ -1,0 +1,10 @@
+{
+  "eduApp": {
+    "PathType": {
+      "null": "",
+      "PASS": "PASS",
+      "FAIL": "FAIL",
+      "UNCONDITIONAL": "UNCONDITIONAL"
+    }
+  }
+}

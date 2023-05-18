@@ -11,7 +11,7 @@ export interface IModule {
   endData?: string | null;
   level?: Level | null;
   scenario?: IScenario | null;
-  path?: IPath | null;
+  paths?: IPath[] | null;
 }
 
 export const defaultValue: Readonly<IModule> = {};

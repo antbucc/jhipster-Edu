@@ -72,6 +72,7 @@ class PathGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "title":"SAMPLE_TEXT"
+                , "type":"PASS"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_path_url"))).exitHereIfFailed

@@ -28,12 +28,12 @@ public class Condition implements Serializable {
 
     @DBRef
     @Field("targetFragment")
-    @JsonIgnoreProperties(value = { "outgoingConditions", "preconditions", "effects", "activities" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "preconditions", "effects", "outgoingPaths", "activities" }, allowSetters = true)
     private Fragment targetFragment;
 
     @DBRef
     @Field("sourceFragment")
-    @JsonIgnoreProperties(value = { "outgoingConditions", "preconditions", "effects", "activities" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "preconditions", "effects", "outgoingPaths", "activities" }, allowSetters = true)
     private Fragment sourceFragment;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
