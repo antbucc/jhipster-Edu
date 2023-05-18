@@ -60,27 +60,8 @@ entity Fragment {
  title String 
 }
 
-entity Precondition {
- metadata TextBlob
-}
-entity Effect {
- metadata TextBlob
-}
-
-entity Condition {
-  description String
-  type ConditionType
-}
-
-entity Path {
- title String
-}
 
 
-
-enum ConditionType {
- UNCONDITIONAL, PASS, FAIL
-}
 enum Tool {
  COMPUTER, MOBILE
 }
@@ -102,10 +83,6 @@ enum Level {
 enum CompetenceType {
 SKILL, KNOWLEDGE, ATTITUDE
 }
-
-
-
-
 
 
 relationship OneToOne {
@@ -142,21 +119,6 @@ relationship ManyToMany {
   Activity { Concept(title) } to Concept{ Activity(title) }
 }
 
-relationship OneToMany {
-  Activity { Precondition(metadata) } to Precondition{ Activity(title) }
-}
-
-relationship OneToMany {
-  Activity { Effect(metadata) } to Effect{ Activity(title) }
-}
-
-relationship OneToMany {
-  Precondition { Concept(title) } to Concept{ Precondition(metadata) }
-}
-
-relationship OneToMany {
-  Effect { Concept(title) } to Concept{ Effect(metadata) }
-}
 
 relationship OneToMany {
   Competence{sons} to Competence{parent}
@@ -165,19 +127,6 @@ relationship OneToMany {
 relationship OneToMany {
   Concept{sons} to Concept{parent}
 }
-
-
-relationship OneToMany {
-  Fragment{previous} to Fragment{next}
-}
-
-
-relationship OneToMany {
-  Condition{type} to Fragment{source}
-}
-
-
-
 
 
 relationship OneToMany {
