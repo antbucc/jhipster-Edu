@@ -150,7 +150,7 @@ export const CompetenceUpdate = () => {
                 {competences
                   ? competences.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.title}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

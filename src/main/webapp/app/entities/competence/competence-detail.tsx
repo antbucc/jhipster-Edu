@@ -70,7 +70,7 @@ export const CompetenceDetail = () => {
             {competenceEntity.competences
               ? competenceEntity.competences.map((val, i) => (
                   <span key={val.id}>
-                    <a>{val.title}</a>
+                    <a>{val.id}</a>
                     {competenceEntity.competences && i === competenceEntity.competences.length - 1 ? '' : ', '}
                   </span>
                 ))

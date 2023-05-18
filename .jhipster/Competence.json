@@ -34,7 +34,6 @@
       "relationshipType": "many-to-many"
     },
     {
-      "otherEntityField": "title",
       "otherEntityName": "competence",
       "otherEntityRelationshipName": "competence",
       "ownerSide": true,
@@ -50,7 +49,6 @@
       "relationshipType": "many-to-many"
     },
     {
-      "otherEntityField": "title",
       "otherEntityName": "competence",
       "otherEntityRelationshipName": "competence",
       "ownerSide": false,
