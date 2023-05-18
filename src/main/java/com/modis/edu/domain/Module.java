@@ -45,7 +45,15 @@ public class Module implements Serializable {
     @DBRef
     @Field("fragment")
     @JsonIgnoreProperties(
-        value = { "condition", "parents", "preconditions", "effects", "goals", "activities", "children", "module" },
+        value = { "condition", "parents", "preconditions", "effects", "goals", "activities", "children", "module", "modules" },
+        allowSetters = true
+    )
+    private Set<Fragment> fragments = new HashSet<>();
+
+    @DBRef
+    @Field("fragments")
+    @JsonIgnoreProperties(
+        value = { "condition", "parents", "preconditions", "effects", "goals", "activities", "children", "module", "modules" },
         allowSetters = true
     )
     private Set<Fragment> fragments = new HashSet<>();
@@ -171,6 +179,31 @@ public class Module implements Serializable {
     public Module removeFragment(Fragment fragment) {
         this.fragments.remove(fragment);
         fragment.setModule(null);
+        return this;
+    }
+
+    public Set<Fragment> getFragments() {
+        return this.fragments;
+    }
+
+    public void setFragments(Set<Fragment> fragments) {
+        this.fragments = fragments;
+    }
+
+    public Module fragments(Set<Fragment> fragments) {
+        this.setFragments(fragments);
+        return this;
+    }
+
+    public Module addFragments(Fragment fragment) {
+        this.fragments.add(fragment);
+        fragment.getModules().add(this);
+        return this;
+    }
+
+    public Module removeFragments(Fragment fragment) {
+        this.fragments.remove(fragment);
+        fragment.getModules().remove(this);
         return this;
     }
 

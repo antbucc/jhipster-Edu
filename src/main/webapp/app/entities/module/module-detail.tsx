@@ -66,6 +66,19 @@ export const ModuleDetail = () => {
             <Translate contentKey="eduApp.module.scenario">Scenario</Translate>
           </dt>
           <dd>{moduleEntity.scenario ? moduleEntity.scenario.title : ''}</dd>
+          <dt>
+            <Translate contentKey="eduApp.module.fragments">Fragments</Translate>
+          </dt>
+          <dd>
+            {moduleEntity.fragments
+              ? moduleEntity.fragments.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.id}</a>
+                    {moduleEntity.fragments && i === moduleEntity.fragments.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/module" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

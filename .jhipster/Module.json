@@ -47,6 +47,13 @@
       "otherEntityRelationshipName": "module",
       "relationshipName": "fragment",
       "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "fragment",
+      "otherEntityRelationshipName": "modules",
+      "ownerSide": true,
+      "relationshipName": "fragments",
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "no"

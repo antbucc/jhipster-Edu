@@ -26,7 +26,8 @@
       "goal": "Goal",
       "activity": "Activity",
       "children": "Children",
-      "module": "Module"
+      "module": "Module",
+      "modules": "Modules"
     }
   }
 }
