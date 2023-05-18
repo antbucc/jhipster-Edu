@@ -9,6 +9,8 @@ import activity from 'app/entities/activity/activity.reducer';
 import fragment from 'app/entities/fragment/fragment.reducer';
 import precondition from 'app/entities/precondition/precondition.reducer';
 import effect from 'app/entities/effect/effect.reducer';
+import condition from 'app/entities/condition/condition.reducer';
+import path from 'app/entities/path/path.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const entitiesReducers = {
@@ -23,6 +25,8 @@ const entitiesReducers = {
   fragment,
   precondition,
   effect,
+  condition,
+  path,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
 };
 

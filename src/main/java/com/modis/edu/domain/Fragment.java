@@ -26,7 +26,7 @@ public class Fragment implements Serializable {
 
     @DBRef
     @Field("previous")
-    @JsonIgnoreProperties(value = { "previous", "activities", "next", "module" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "previous", "activities", "next", "source", "module" }, allowSetters = true)
     private Set<Fragment> previous = new HashSet<>();
 
     @DBRef
@@ -36,8 +36,13 @@ public class Fragment implements Serializable {
 
     @DBRef
     @Field("next")
-    @JsonIgnoreProperties(value = { "previous", "activities", "next", "module" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "previous", "activities", "next", "source", "module" }, allowSetters = true)
     private Fragment next;
+
+    @DBRef
+    @Field("source")
+    @JsonIgnoreProperties(value = { "types" }, allowSetters = true)
+    private Condition source;
 
     @DBRef
     @Field("module")
@@ -138,6 +143,19 @@ public class Fragment implements Serializable {
 
     public Fragment next(Fragment fragment) {
         this.setNext(fragment);
+        return this;
+    }
+
+    public Condition getSource() {
+        return this.source;
+    }
+
+    public void setSource(Condition condition) {
+        this.source = condition;
+    }
+
+    public Fragment source(Condition condition) {
+        this.setSource(condition);
         return this;
     }
 

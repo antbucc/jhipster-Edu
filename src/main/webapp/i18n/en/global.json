@@ -18,6 +18,8 @@
         "fragment": "Fragment",
         "precondition": "Precondition",
         "effect": "Effect",
+        "condition": "Condition",
+        "path": "Path",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

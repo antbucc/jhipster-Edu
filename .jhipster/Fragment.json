@@ -37,6 +37,12 @@
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityName": "condition",
+      "otherEntityRelationshipName": "type",
+      "relationshipName": "source",
+      "relationshipType": "many-to-one"
+    },
+    {
       "otherEntityField": "title",
       "otherEntityName": "module",
       "otherEntityRelationshipName": "fragment",

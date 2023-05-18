@@ -1,0 +1,26 @@
+{
+  "eduApp": {
+    "condition": {
+      "home": {
+        "title": "Conditions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Condition",
+        "createOrEditLabel": "Genera o modifica un Condition",
+        "notFound": "No Conditions found"
+      },
+      "created": "&Egrave; stato generato un nuovo Condition con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Condition identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Condition con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Condition {{ id }}?"
+      },
+      "detail": {
+        "title": "Condition"
+      },
+      "id": "ID",
+      "description": "Description",
+      "type": "Type",
+      "type": "Type"
+    }
+  }
+}
