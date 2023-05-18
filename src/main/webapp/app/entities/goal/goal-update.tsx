@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IFragment } from 'app/shared/model/fragment.model';
 import { getEntities as getFragments } from 'app/entities/fragment/fragment.reducer';
+import { IConcept } from 'app/shared/model/concept.model';
+import { getEntities as getConcepts } from 'app/entities/concept/concept.reducer';
 import { IGoal } from 'app/shared/model/goal.model';
 import { getEntity, updateEntity, createEntity, reset } from './goal.reducer';
 
@@ -22,6 +24,7 @@ export const GoalUpdate = () => {
   const isNew = id === undefined;
 
   const fragments = useAppSelector(state => state.fragment.entities);
+  const concepts = useAppSelector(state => state.concept.entities);
   const goalEntity = useAppSelector(state => state.goal.entity);
   const loading = useAppSelector(state => state.goal.loading);
   const updating = useAppSelector(state => state.goal.updating);
@@ -39,6 +42,7 @@ export const GoalUpdate = () => {
     }
 
     dispatch(getFragments({}));
+    dispatch(getConcepts({}));
   }, []);
 
   useEffect(() => {
@@ -51,7 +55,7 @@ export const GoalUpdate = () => {
     const entity = {
       ...goalEntity,
       ...values,
-      fragment: fragments.find(it => it.id.toString() === values.fragment.toString()),
+      fragments: mapIdList(values.fragments),
     };
 
     if (isNew) {
@@ -66,7 +70,7 @@ export const GoalUpdate = () => {
       ? {}
       : {
           ...goalEntity,
-          fragment: goalEntity?.fragment?.id,
+          fragments: goalEntity?.fragments?.map(e => e.id.toString()),
         };
 
   return (
@@ -95,7 +99,14 @@ export const GoalUpdate = () => {
                 />
               ) : null}
               <ValidatedField label={translate('eduApp.goal.title')} id="goal-title" name="title" data-cy="title" type="text" />
-              <ValidatedField id="goal-fragment" name="fragment" data-cy="fragment" label={translate('eduApp.goal.fragment')} type="select">
+              <ValidatedField
+                label={translate('eduApp.goal.fragment')}
+                id="goal-fragment"
+                data-cy="fragment"
+                type="select"
+                multiple
+                name="fragments"
+              >
                 <option value="" key="0" />
                 {fragments
                   ? fragments.map(otherEntity => (

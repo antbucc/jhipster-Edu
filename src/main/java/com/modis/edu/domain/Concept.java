@@ -28,9 +28,9 @@ public class Concept implements Serializable {
     private String description;
 
     @DBRef
-    @Field("goal")
-    @JsonIgnoreProperties(value = { "concepts", "fragment" }, allowSetters = true)
-    private Goal goal;
+    @Field("goals")
+    @JsonIgnoreProperties(value = { "fragments", "concepts" }, allowSetters = true)
+    private Set<Goal> goals = new HashSet<>();
 
     @DBRef
     @Field("competences")
@@ -83,16 +83,28 @@ public class Concept implements Serializable {
         this.description = description;
     }
 
-    public Goal getGoal() {
-        return this.goal;
+    public Set<Goal> getGoals() {
+        return this.goals;
     }
 
-    public void setGoal(Goal goal) {
-        this.goal = goal;
+    public void setGoals(Set<Goal> goals) {
+        this.goals = goals;
     }
 
-    public Concept goal(Goal goal) {
-        this.setGoal(goal);
+    public Concept goals(Set<Goal> goals) {
+        this.setGoals(goals);
+        return this;
+    }
+
+    public Concept addGoal(Goal goal) {
+        this.goals.add(goal);
+        goal.getConcepts().add(this);
+        return this;
+    }
+
+    public Concept removeGoal(Goal goal) {
+        this.goals.remove(goal);
+        goal.getConcepts().remove(this);
         return this;
     }
 

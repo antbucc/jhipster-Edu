@@ -19,8 +19,8 @@
       },
       "id": "ID",
       "title": "Title",
-      "concept": "Concept",
-      "fragment": "Fragment"
+      "fragment": "Fragment",
+      "concept": "Concept"
     }
   }
 }

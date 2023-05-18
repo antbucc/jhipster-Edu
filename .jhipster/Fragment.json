@@ -31,13 +31,6 @@
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityField": "title",
-      "otherEntityName": "goal",
-      "otherEntityRelationshipName": "fragment",
-      "relationshipName": "goal",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityName": "path",
       "otherEntityRelationshipName": "sourceFragment",
       "relationshipName": "outgoingPaths",
@@ -49,6 +42,14 @@
       "otherEntityRelationshipName": "fragment",
       "ownerSide": true,
       "relationshipName": "activity",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "goal",
+      "otherEntityRelationshipName": "fragment",
+      "ownerSide": false,
+      "relationshipName": "goal",
       "relationshipType": "many-to-many"
     }
   ],
