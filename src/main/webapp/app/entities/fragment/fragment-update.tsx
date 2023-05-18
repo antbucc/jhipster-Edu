@@ -8,6 +8,7 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { getEntities as getFragments } from 'app/entities/fragment/fragment.reducer';
 import { IActivity } from 'app/shared/model/activity.model';
 import { getEntities as getActivities } from 'app/entities/activity/activity.reducer';
 import { IModule } from 'app/shared/model/module.model';
@@ -23,6 +24,7 @@ export const FragmentUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const fragments = useAppSelector(state => state.fragment.entities);
   const activities = useAppSelector(state => state.activity.entities);
   const modules = useAppSelector(state => state.module.entities);
   const fragmentEntity = useAppSelector(state => state.fragment.entity);
@@ -41,6 +43,7 @@ export const FragmentUpdate = () => {
       dispatch(getEntity(id));
     }
 
+    dispatch(getFragments({}));
     dispatch(getActivities({}));
     dispatch(getModules({}));
   }, []);
@@ -56,6 +59,8 @@ export const FragmentUpdate = () => {
       ...fragmentEntity,
       ...values,
       activities: mapIdList(values.activities),
+      condition: fragments.find(it => it.id.toString() === values.condition.toString()),
+      children: fragments.find(it => it.id.toString() === values.children.toString()),
       module: modules.find(it => it.id.toString() === values.module.toString()),
     };
 
@@ -71,7 +76,9 @@ export const FragmentUpdate = () => {
       ? {}
       : {
           ...fragmentEntity,
+          condition: fragmentEntity?.condition?.id,
           activities: fragmentEntity?.activities?.map(e => e.id.toString()),
+          children: fragmentEntity?.children?.id,
           module: fragmentEntity?.module?.id,
         };
 
@@ -102,6 +109,22 @@ export const FragmentUpdate = () => {
               ) : null}
               <ValidatedField label={translate('eduApp.fragment.title')} id="fragment-title" name="title" data-cy="title" type="text" />
               <ValidatedField
+                id="fragment-condition"
+                name="condition"
+                data-cy="condition"
+                label={translate('eduApp.fragment.condition')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {fragments
+                  ? fragments.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
                 label={translate('eduApp.fragment.activity')}
                 id="fragment-activity"
                 data-cy="activity"
@@ -114,6 +137,22 @@ export const FragmentUpdate = () => {
                   ? activities.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.title}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="fragment-children"
+                name="children"
+                data-cy="children"
+                label={translate('eduApp.fragment.children')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {fragments
+                  ? fragments.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

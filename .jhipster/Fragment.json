@@ -17,6 +17,18 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "fragment",
+      "ownerSide": true,
+      "relationshipName": "condition",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "fragment",
+      "otherEntityRelationshipName": "children",
+      "relationshipName": "parent",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityField": "title",
       "otherEntityName": "precondition",
       "otherEntityRelationshipName": "fragment",
@@ -44,6 +56,12 @@
       "ownerSide": true,
       "relationshipName": "activity",
       "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "fragment",
+      "otherEntityRelationshipName": "parent",
+      "relationshipName": "children",
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityField": "title",

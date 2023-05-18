@@ -19,10 +19,13 @@
       },
       "id": "ID",
       "title": "Title",
+      "condition": "Condition",
+      "parent": "Parent",
       "precondition": "Precondition",
       "effect": "Effect",
       "goal": "Goal",
       "activity": "Activity",
+      "children": "Children",
       "module": "Module"
     }
   }
