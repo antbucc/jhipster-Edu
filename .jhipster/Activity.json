@@ -36,6 +36,20 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "metadata",
+      "otherEntityName": "precondition",
+      "otherEntityRelationshipName": "activity",
+      "relationshipName": "precondition",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "metadata",
+      "otherEntityName": "effect",
+      "otherEntityRelationshipName": "activity",
+      "relationshipName": "effect",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityField": "title",
       "otherEntityName": "concept",
       "otherEntityRelationshipName": "activity",

@@ -8,6 +8,10 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { IPrecondition } from 'app/shared/model/precondition.model';
+import { getEntities as getPreconditions } from 'app/entities/precondition/precondition.reducer';
+import { IEffect } from 'app/shared/model/effect.model';
+import { getEntities as getEffects } from 'app/entities/effect/effect.reducer';
 import { ICompetence } from 'app/shared/model/competence.model';
 import { getEntities as getCompetences } from 'app/entities/competence/competence.reducer';
 import { IActivity } from 'app/shared/model/activity.model';
@@ -23,6 +27,8 @@ export const ConceptUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const preconditions = useAppSelector(state => state.precondition.entities);
+  const effects = useAppSelector(state => state.effect.entities);
   const competences = useAppSelector(state => state.competence.entities);
   const activities = useAppSelector(state => state.activity.entities);
   const conceptEntity = useAppSelector(state => state.concept.entity);
@@ -41,6 +47,8 @@ export const ConceptUpdate = () => {
       dispatch(getEntity(id));
     }
 
+    dispatch(getPreconditions({}));
+    dispatch(getEffects({}));
     dispatch(getCompetences({}));
     dispatch(getActivities({}));
   }, []);
@@ -55,6 +63,8 @@ export const ConceptUpdate = () => {
     const entity = {
       ...conceptEntity,
       ...values,
+      precondition: preconditions.find(it => it.id.toString() === values.precondition.toString()),
+      effect: effects.find(it => it.id.toString() === values.effect.toString()),
     };
 
     if (isNew) {
@@ -69,6 +79,8 @@ export const ConceptUpdate = () => {
       ? {}
       : {
           ...conceptEntity,
+          precondition: conceptEntity?.precondition?.id,
+          effect: conceptEntity?.effect?.id,
         };
 
   return (
@@ -104,6 +116,32 @@ export const ConceptUpdate = () => {
                 data-cy="description"
                 type="text"
               />
+              <ValidatedField
+                id="concept-precondition"
+                name="precondition"
+                data-cy="precondition"
+                label={translate('eduApp.concept.precondition')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {preconditions
+                  ? preconditions.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.metadata}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField id="concept-effect" name="effect" data-cy="effect" label={translate('eduApp.concept.effect')} type="select">
+                <option value="" key="0" />
+                {effects
+                  ? effects.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.metadata}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/concept" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

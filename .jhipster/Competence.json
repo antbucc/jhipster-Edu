@@ -35,10 +35,26 @@
     },
     {
       "otherEntityField": "title",
+      "otherEntityName": "competence",
+      "otherEntityRelationshipName": "competence",
+      "ownerSide": true,
+      "relationshipName": "competence",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "title",
       "otherEntityName": "scenario",
       "otherEntityRelationshipName": "competence",
       "ownerSide": false,
       "relationshipName": "scenario",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "competence",
+      "otherEntityRelationshipName": "competence",
+      "ownerSide": false,
+      "relationshipName": "competence",
       "relationshipType": "many-to-many"
     }
   ],

@@ -8,7 +8,9 @@ export interface ICompetence {
   description?: string | null;
   type?: CompetenceType | null;
   concepts?: IConcept[] | null;
+  competences?: ICompetence[] | null;
   scenarios?: IScenario[] | null;
+  competences?: ICompetence[] | null;
 }
 
 export const defaultValue: Readonly<ICompetence> = {};

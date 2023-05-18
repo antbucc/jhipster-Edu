@@ -1,0 +1,36 @@
+{
+  "applications": "*",
+  "changelogDate": "20230518073116",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "effect",
+  "fields": [
+    {
+      "fieldName": "metadata",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Effect",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "concept",
+      "otherEntityRelationshipName": "effect",
+      "relationshipName": "concept",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "activity",
+      "otherEntityRelationshipName": "effect",
+      "relationshipName": "activity",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

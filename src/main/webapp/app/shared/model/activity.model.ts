@@ -1,3 +1,5 @@
+import { IPrecondition } from 'app/shared/model/precondition.model';
+import { IEffect } from 'app/shared/model/effect.model';
 import { IConcept } from 'app/shared/model/concept.model';
 import { IFragment } from 'app/shared/model/fragment.model';
 import { ActivityType } from 'app/shared/model/enumerations/activity-type.model';
@@ -11,6 +13,8 @@ export interface IActivity {
   type?: ActivityType | null;
   tool?: Tool | null;
   difficulty?: Difficulty | null;
+  preconditions?: IPrecondition[] | null;
+  effects?: IEffect[] | null;
   concepts?: IConcept[] | null;
   fragments?: IFragment[] | null;
 }

@@ -1,0 +1,26 @@
+{
+  "eduApp": {
+    "precondition": {
+      "home": {
+        "title": "Preconditions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Precondition",
+        "createOrEditLabel": "Genera o modifica un Precondition",
+        "notFound": "No Preconditions found"
+      },
+      "created": "&Egrave; stato generato un nuovo Precondition con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Precondition identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Precondition con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Precondition {{ id }}?"
+      },
+      "detail": {
+        "title": "Precondition"
+      },
+      "id": "ID",
+      "metadata": "Metadata",
+      "concept": "Concept",
+      "activity": "Activity"
+    }
+  }
+}

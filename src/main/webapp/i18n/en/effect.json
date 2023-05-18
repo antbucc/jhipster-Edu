@@ -1,0 +1,26 @@
+{
+  "eduApp": {
+    "effect": {
+      "home": {
+        "title": "Effects",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Effect",
+        "createOrEditLabel": "Create or edit a Effect",
+        "notFound": "No Effects found"
+      },
+      "created": "A new Effect is created with identifier {{ param }}",
+      "updated": "A Effect is updated with identifier {{ param }}",
+      "deleted": "A Effect is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Effect {{ id }}?"
+      },
+      "detail": {
+        "title": "Effect"
+      },
+      "id": "ID",
+      "metadata": "Metadata",
+      "concept": "Concept",
+      "activity": "Activity"
+    }
+  }
+}

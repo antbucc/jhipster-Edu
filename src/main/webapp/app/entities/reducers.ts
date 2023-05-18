@@ -7,6 +7,8 @@ import competence from 'app/entities/competence/competence.reducer';
 import concept from 'app/entities/concept/concept.reducer';
 import activity from 'app/entities/activity/activity.reducer';
 import fragment from 'app/entities/fragment/fragment.reducer';
+import precondition from 'app/entities/precondition/precondition.reducer';
+import effect from 'app/entities/effect/effect.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const entitiesReducers = {
@@ -19,6 +21,8 @@ const entitiesReducers = {
   concept,
   activity,
   fragment,
+  precondition,
+  effect,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
 };
 

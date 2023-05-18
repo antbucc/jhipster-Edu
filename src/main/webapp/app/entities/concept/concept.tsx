@@ -57,6 +57,12 @@ export const Concept = () => {
                 <th>
                   <Translate contentKey="eduApp.concept.description">Description</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="eduApp.concept.precondition">Precondition</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="eduApp.concept.effect">Effect</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -70,6 +76,14 @@ export const Concept = () => {
                   </td>
                   <td>{concept.title}</td>
                   <td>{concept.description}</td>
+                  <td>
+                    {concept.precondition ? (
+                      <Link to={`/precondition/${concept.precondition.id}`}>{concept.precondition.metadata}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>{concept.effect ? <Link to={`/effect/${concept.effect.id}`}>{concept.effect.metadata}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/concept/${concept.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -1,0 +1,36 @@
+{
+  "applications": "*",
+  "changelogDate": "20230518073115",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "precondition",
+  "fields": [
+    {
+      "fieldName": "metadata",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Precondition",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "concept",
+      "otherEntityRelationshipName": "precondition",
+      "relationshipName": "concept",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "activity",
+      "otherEntityRelationshipName": "precondition",
+      "relationshipName": "activity",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}
