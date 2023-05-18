@@ -69,8 +69,14 @@ entity Goal{
 title String
 }
 
-entity Condition {
-  title String
+
+
+relationship OneToMany {
+  Fragment{parent} to Fragment{children}
+}
+
+relationship OneToOne {
+Fragment{condition} to Fragment
 }
 
 

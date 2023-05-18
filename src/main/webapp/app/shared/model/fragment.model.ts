@@ -7,10 +7,13 @@ import { IModule } from 'app/shared/model/module.model';
 export interface IFragment {
   id?: string;
   title?: string | null;
+  condition?: IFragment | null;
+  parents?: IFragment[] | null;
   preconditions?: IPrecondition[] | null;
   effects?: IEffect[] | null;
   goals?: IGoal[] | null;
   activities?: IActivity[] | null;
+  children?: IFragment | null;
   module?: IModule | null;
 }
 

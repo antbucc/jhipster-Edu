@@ -55,7 +55,13 @@ export const Fragment = () => {
                   <Translate contentKey="eduApp.fragment.title">Title</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="eduApp.fragment.condition">Condition</Translate>
+                </th>
+                <th>
                   <Translate contentKey="eduApp.fragment.activity">Activity</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="eduApp.fragment.children">Children</Translate>
                 </th>
                 <th>
                   <Translate contentKey="eduApp.fragment.module">Module</Translate>
@@ -72,6 +78,7 @@ export const Fragment = () => {
                     </Button>
                   </td>
                   <td>{fragment.title}</td>
+                  <td>{fragment.condition ? <Link to={`/fragment/${fragment.condition.id}`}>{fragment.condition.id}</Link> : ''}</td>
                   <td>
                     {fragment.activities
                       ? fragment.activities.map((val, j) => (
@@ -82,6 +89,7 @@ export const Fragment = () => {
                         ))
                       : null}
                   </td>
+                  <td>{fragment.children ? <Link to={`/fragment/${fragment.children.id}`}>{fragment.children.id}</Link> : ''}</td>
                   <td>{fragment.module ? <Link to={`/module/${fragment.module.id}`}>{fragment.module.title}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
