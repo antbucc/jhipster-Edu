@@ -23,6 +23,7 @@
       "type": "Type",
       "tool": "Tool",
       "difficulty": "Difficulty",
+      "concept": "Concept",
       "fragment": "Fragment"
     }
   }

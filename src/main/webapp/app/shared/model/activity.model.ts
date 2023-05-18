@@ -1,3 +1,4 @@
+import { IConcept } from 'app/shared/model/concept.model';
 import { IFragment } from 'app/shared/model/fragment.model';
 import { ActivityType } from 'app/shared/model/enumerations/activity-type.model';
 import { Tool } from 'app/shared/model/enumerations/tool.model';
@@ -10,6 +11,7 @@ export interface IActivity {
   type?: ActivityType | null;
   tool?: Tool | null;
   difficulty?: Difficulty | null;
+  concepts?: IConcept[] | null;
   fragments?: IFragment[] | null;
 }
 

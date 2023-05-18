@@ -20,7 +20,8 @@
       "id": "ID",
       "title": "Title",
       "description": "Description",
-      "competence": "Competence"
+      "competence": "Competence",
+      "activity": "Activity"
     }
   }
 }

@@ -115,6 +115,10 @@ relationship ManyToMany {
   Fragment { Activity(title) } to Activity{Fragment(title)}
 }
 
+relationship ManyToMany {
+  Activity { Concept(title) } to Concept{ Activity(title) }
+}
+
 
 //relationship OneToMany {
  // Competence { Competence(title) } to Competence{ Competence(title) }

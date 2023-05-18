@@ -37,6 +37,14 @@
   "relationships": [
     {
       "otherEntityField": "title",
+      "otherEntityName": "concept",
+      "otherEntityRelationshipName": "activity",
+      "ownerSide": true,
+      "relationshipName": "concept",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "title",
       "otherEntityName": "fragment",
       "otherEntityRelationshipName": "activity",
       "ownerSide": false,
