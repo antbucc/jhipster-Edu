@@ -56,6 +56,7 @@ export const FragmentUpdate = () => {
       ...fragmentEntity,
       ...values,
       activities: mapIdList(values.activities),
+      goals: mapIdList(values.goals),
     };
 
     if (isNew) {
@@ -71,6 +72,7 @@ export const FragmentUpdate = () => {
       : {
           ...fragmentEntity,
           activities: fragmentEntity?.activities?.map(e => e.id.toString()),
+          goals: fragmentEntity?.goals?.map(e => e.id.toString()),
         };
 
   return (
@@ -110,6 +112,23 @@ export const FragmentUpdate = () => {
                 <option value="" key="0" />
                 {activities
                   ? activities.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.title}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                label={translate('eduApp.fragment.goal')}
+                id="fragment-goal"
+                data-cy="goal"
+                type="select"
+                multiple
+                name="goals"
+              >
+                <option value="" key="0" />
+                {goals
+                  ? goals.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.title}
                       </option>

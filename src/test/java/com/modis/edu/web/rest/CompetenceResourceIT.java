@@ -10,7 +10,6 @@ import com.modis.edu.IntegrationTest;
 import com.modis.edu.domain.Competence;
 import com.modis.edu.domain.enumeration.CompetenceType;
 import com.modis.edu.repository.CompetenceRepository;
-import com.modis.edu.service.CompetenceService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -54,9 +53,6 @@ class CompetenceResourceIT {
 
     @Mock
     private CompetenceRepository competenceRepositoryMock;
-
-    @Mock
-    private CompetenceService competenceServiceMock;
 
     @Autowired
     private MockMvc restCompetenceMockMvc;
@@ -143,16 +139,16 @@ class CompetenceResourceIT {
 
     @SuppressWarnings({ "unchecked" })
     void getAllCompetencesWithEagerRelationshipsIsEnabled() throws Exception {
-        when(competenceServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(competenceRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restCompetenceMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
-        verify(competenceServiceMock, times(1)).findAllWithEagerRelationships(any());
+        verify(competenceRepositoryMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @SuppressWarnings({ "unchecked" })
     void getAllCompetencesWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(competenceServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(competenceRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restCompetenceMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
         verify(competenceRepositoryMock, times(1)).findAll(any(Pageable.class));

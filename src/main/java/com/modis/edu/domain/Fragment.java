@@ -46,7 +46,7 @@ public class Fragment implements Serializable {
 
     @DBRef
     @Field("goals")
-    @JsonIgnoreProperties(value = { "fragments", "concepts" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "concepts", "fragments" }, allowSetters = true)
     private Set<Goal> goals = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -200,12 +200,6 @@ public class Fragment implements Serializable {
     }
 
     public void setGoals(Set<Goal> goals) {
-        if (this.goals != null) {
-            this.goals.forEach(i -> i.removeFragment(this));
-        }
-        if (goals != null) {
-            goals.forEach(i -> i.addFragment(this));
-        }
         this.goals = goals;
     }
 

@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.modis.edu.IntegrationTest;
 import com.modis.edu.domain.Fragment;
 import com.modis.edu.repository.FragmentRepository;
-import com.modis.edu.service.FragmentService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -47,9 +46,6 @@ class FragmentResourceIT {
 
     @Mock
     private FragmentRepository fragmentRepositoryMock;
-
-    @Mock
-    private FragmentService fragmentServiceMock;
 
     @Autowired
     private MockMvc restFragmentMockMvc;
@@ -132,16 +128,16 @@ class FragmentResourceIT {
 
     @SuppressWarnings({ "unchecked" })
     void getAllFragmentsWithEagerRelationshipsIsEnabled() throws Exception {
-        when(fragmentServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(fragmentRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restFragmentMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
-        verify(fragmentServiceMock, times(1)).findAllWithEagerRelationships(any());
+        verify(fragmentRepositoryMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @SuppressWarnings({ "unchecked" })
     void getAllFragmentsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(fragmentServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(fragmentRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restFragmentMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
         verify(fragmentRepositoryMock, times(1)).findAll(any(Pageable.class));

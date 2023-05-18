@@ -154,11 +154,11 @@ relationship OneToMany {
 
 
 relationship ManyToMany {
-  Goal { Fragment(title) } to Fragment{ Goal(title) }
+  Fragment { Goal(title) } to Goal{ Fragment(title) }
 }
 
 relationship ManyToMany {
-  Concept { Goal(title) } to Goal{ Concept(title) }
+  Goal { Concept(title) } to Concept{ Goal(title) }
 }
 
 
@@ -185,7 +185,7 @@ paginate Domain, Scenario with pagination
 // dto * with mapstruct
 
 // Set service options to all except few
-service all with serviceImpl except Path
+//service all with serviceImpl except Path
 
 // Set an angular suffix
 // angularSuffix * with mySuffix

@@ -18,20 +18,20 @@
   "relationships": [
     {
       "otherEntityField": "title",
-      "otherEntityName": "fragment",
+      "otherEntityName": "concept",
       "otherEntityRelationshipName": "goal",
       "ownerSide": true,
-      "relationshipName": "fragment",
+      "relationshipName": "concept",
       "relationshipType": "many-to-many"
     },
     {
       "otherEntityField": "title",
-      "otherEntityName": "concept",
+      "otherEntityName": "fragment",
       "otherEntityRelationshipName": "goal",
       "ownerSide": false,
-      "relationshipName": "concept",
+      "relationshipName": "fragment",
       "relationshipType": "many-to-many"
     }
   ],
-  "service": "serviceImpl"
+  "service": "no"
 }

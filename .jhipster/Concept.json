@@ -22,14 +22,6 @@
   "relationships": [
     {
       "otherEntityField": "title",
-      "otherEntityName": "goal",
-      "otherEntityRelationshipName": "concept",
-      "ownerSide": true,
-      "relationshipName": "goal",
-      "relationshipType": "many-to-many"
-    },
-    {
-      "otherEntityField": "title",
       "otherEntityName": "competence",
       "otherEntityRelationshipName": "concept",
       "ownerSide": false,
@@ -43,7 +35,15 @@
       "ownerSide": false,
       "relationshipName": "activity",
       "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "goal",
+      "otherEntityRelationshipName": "concept",
+      "ownerSide": false,
+      "relationshipName": "goal",
+      "relationshipType": "many-to-many"
     }
   ],
-  "service": "serviceImpl"
+  "service": "no"
 }
