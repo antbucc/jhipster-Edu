@@ -67,20 +67,7 @@ entity Effect {
  metadata TextBlob
 }
 
-entity Condition {
-  description String
-  type ConditionType
-}
 
-entity Path {
- title String
-}
-
-
-
-enum ConditionType {
- UNCONDITIONAL, PASS, FAIL
-}
 enum Tool {
  COMPUTER, MOBILE
 }
@@ -102,10 +89,6 @@ enum Level {
 enum CompetenceType {
 SKILL, KNOWLEDGE, ATTITUDE
 }
-
-
-
-
 
 
 relationship OneToOne {
@@ -170,13 +153,6 @@ relationship OneToMany {
 relationship OneToMany {
   Fragment{previous} to Fragment{next}
 }
-
-
-relationship OneToMany {
-  Condition{type} to Fragment{source}
-}
-
-
 
 
 
