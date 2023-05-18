@@ -8,7 +8,10 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { IFragment } from 'app/shared/model/fragment.model';
+import { getEntities as getFragments } from 'app/entities/fragment/fragment.reducer';
 import { ICondition } from 'app/shared/model/condition.model';
+import { ConditionType } from 'app/shared/model/enumerations/condition-type.model';
 import { getEntity, updateEntity, createEntity, reset } from './condition.reducer';
 
 export const ConditionUpdate = () => {
@@ -19,10 +22,12 @@ export const ConditionUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const fragments = useAppSelector(state => state.fragment.entities);
   const conditionEntity = useAppSelector(state => state.condition.entity);
   const loading = useAppSelector(state => state.condition.loading);
   const updating = useAppSelector(state => state.condition.updating);
   const updateSuccess = useAppSelector(state => state.condition.updateSuccess);
+  const conditionTypeValues = Object.keys(ConditionType);
 
   const handleClose = () => {
     navigate('/condition');
@@ -34,6 +39,8 @@ export const ConditionUpdate = () => {
     } else {
       dispatch(getEntity(id));
     }
+
+    dispatch(getFragments({}));
   }, []);
 
   useEffect(() => {
@@ -46,6 +53,8 @@ export const ConditionUpdate = () => {
     const entity = {
       ...conditionEntity,
       ...values,
+      targetFragment: fragments.find(it => it.id.toString() === values.targetFragment.toString()),
+      sourceFragment: fragments.find(it => it.id.toString() === values.sourceFragment.toString()),
     };
 
     if (isNew) {
@@ -59,7 +68,10 @@ export const ConditionUpdate = () => {
     isNew
       ? {}
       : {
+          type: 'PASS',
           ...conditionEntity,
+          targetFragment: conditionEntity?.targetFragment?.id,
+          sourceFragment: conditionEntity?.sourceFragment?.id,
         };
 
   return (
@@ -88,6 +100,45 @@ export const ConditionUpdate = () => {
                 />
               ) : null}
               <ValidatedField label={translate('eduApp.condition.title')} id="condition-title" name="title" data-cy="title" type="text" />
+              <ValidatedField label={translate('eduApp.condition.type')} id="condition-type" name="type" data-cy="type" type="select">
+                {conditionTypeValues.map(conditionType => (
+                  <option value={conditionType} key={conditionType}>
+                    {translate('eduApp.ConditionType.' + conditionType)}
+                  </option>
+                ))}
+              </ValidatedField>
+              <ValidatedField
+                id="condition-targetFragment"
+                name="targetFragment"
+                data-cy="targetFragment"
+                label={translate('eduApp.condition.targetFragment')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {fragments
+                  ? fragments.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="condition-sourceFragment"
+                name="sourceFragment"
+                data-cy="sourceFragment"
+                label={translate('eduApp.condition.sourceFragment')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {fragments
+                  ? fragments.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/condition" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

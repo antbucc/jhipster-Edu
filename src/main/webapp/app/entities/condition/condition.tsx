@@ -54,6 +54,15 @@ export const Condition = () => {
                 <th>
                   <Translate contentKey="eduApp.condition.title">Title</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="eduApp.condition.type">Type</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="eduApp.condition.targetFragment">Target Fragment</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="eduApp.condition.sourceFragment">Source Fragment</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -66,6 +75,23 @@ export const Condition = () => {
                     </Button>
                   </td>
                   <td>{condition.title}</td>
+                  <td>
+                    <Translate contentKey={`eduApp.ConditionType.${condition.type}`} />
+                  </td>
+                  <td>
+                    {condition.targetFragment ? (
+                      <Link to={`/fragment/${condition.targetFragment.id}`}>{condition.targetFragment.id}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {condition.sourceFragment ? (
+                      <Link to={`/fragment/${condition.sourceFragment.id}`}>{condition.sourceFragment.id}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/condition/${condition.id}`} color="info" size="sm" data-cy="entityDetailsButton">

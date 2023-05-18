@@ -25,16 +25,9 @@ public class Fragment implements Serializable {
     private String title;
 
     @DBRef
-    @Field("condition")
-    private Fragment condition;
-
-    @DBRef
-    @Field("parent")
-    @JsonIgnoreProperties(
-        value = { "condition", "parents", "preconditions", "effects", "activities", "children", "modules" },
-        allowSetters = true
-    )
-    private Set<Fragment> parents = new HashSet<>();
+    @Field("outgoingConditions")
+    @JsonIgnoreProperties(value = { "targetFragment", "sourceFragment" }, allowSetters = true)
+    private Set<Condition> outgoingConditions = new HashSet<>();
 
     @DBRef
     @Field("precondition")
@@ -50,14 +43,6 @@ public class Fragment implements Serializable {
     @Field("activities")
     @JsonIgnoreProperties(value = { "concepts", "fragments" }, allowSetters = true)
     private Set<Activity> activities = new HashSet<>();
-
-    @DBRef
-    @Field("children")
-    @JsonIgnoreProperties(
-        value = { "condition", "parents", "preconditions", "effects", "activities", "children", "modules" },
-        allowSetters = true
-    )
-    private Fragment children;
 
     @DBRef
     @Field("modules")
@@ -92,47 +77,34 @@ public class Fragment implements Serializable {
         this.title = title;
     }
 
-    public Fragment getCondition() {
-        return this.condition;
+    public Set<Condition> getOutgoingConditions() {
+        return this.outgoingConditions;
     }
 
-    public void setCondition(Fragment fragment) {
-        this.condition = fragment;
-    }
-
-    public Fragment condition(Fragment fragment) {
-        this.setCondition(fragment);
-        return this;
-    }
-
-    public Set<Fragment> getParents() {
-        return this.parents;
-    }
-
-    public void setParents(Set<Fragment> fragments) {
-        if (this.parents != null) {
-            this.parents.forEach(i -> i.setChildren(null));
+    public void setOutgoingConditions(Set<Condition> conditions) {
+        if (this.outgoingConditions != null) {
+            this.outgoingConditions.forEach(i -> i.setSourceFragment(null));
         }
-        if (fragments != null) {
-            fragments.forEach(i -> i.setChildren(this));
+        if (conditions != null) {
+            conditions.forEach(i -> i.setSourceFragment(this));
         }
-        this.parents = fragments;
+        this.outgoingConditions = conditions;
     }
 
-    public Fragment parents(Set<Fragment> fragments) {
-        this.setParents(fragments);
+    public Fragment outgoingConditions(Set<Condition> conditions) {
+        this.setOutgoingConditions(conditions);
         return this;
     }
 
-    public Fragment addParent(Fragment fragment) {
-        this.parents.add(fragment);
-        fragment.setChildren(this);
+    public Fragment addOutgoingConditions(Condition condition) {
+        this.outgoingConditions.add(condition);
+        condition.setSourceFragment(this);
         return this;
     }
 
-    public Fragment removeParent(Fragment fragment) {
-        this.parents.remove(fragment);
-        fragment.setChildren(null);
+    public Fragment removeOutgoingConditions(Condition condition) {
+        this.outgoingConditions.remove(condition);
+        condition.setSourceFragment(null);
         return this;
     }
 
@@ -220,19 +192,6 @@ public class Fragment implements Serializable {
     public Fragment removeActivity(Activity activity) {
         this.activities.remove(activity);
         activity.getFragments().remove(this);
-        return this;
-    }
-
-    public Fragment getChildren() {
-        return this.children;
-    }
-
-    public void setChildren(Fragment fragment) {
-        this.children = fragment;
-    }
-
-    public Fragment children(Fragment fragment) {
-        this.setChildren(fragment);
         return this;
     }
 

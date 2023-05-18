@@ -38,6 +38,20 @@ export const ConditionDetail = () => {
             </span>
           </dt>
           <dd>{conditionEntity.title}</dd>
+          <dt>
+            <span id="type">
+              <Translate contentKey="eduApp.condition.type">Type</Translate>
+            </span>
+          </dt>
+          <dd>{conditionEntity.type}</dd>
+          <dt>
+            <Translate contentKey="eduApp.condition.targetFragment">Target Fragment</Translate>
+          </dt>
+          <dd>{conditionEntity.targetFragment ? conditionEntity.targetFragment.id : ''}</dd>
+          <dt>
+            <Translate contentKey="eduApp.condition.sourceFragment">Source Fragment</Translate>
+          </dt>
+          <dd>{conditionEntity.sourceFragment ? conditionEntity.sourceFragment.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/condition" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

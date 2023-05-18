@@ -39,10 +39,6 @@ export const FragmentDetail = () => {
           </dt>
           <dd>{fragmentEntity.title}</dd>
           <dt>
-            <Translate contentKey="eduApp.fragment.condition">Condition</Translate>
-          </dt>
-          <dd>{fragmentEntity.condition ? fragmentEntity.condition.id : ''}</dd>
-          <dt>
             <Translate contentKey="eduApp.fragment.activity">Activity</Translate>
           </dt>
           <dd>
@@ -55,10 +51,6 @@ export const FragmentDetail = () => {
                 ))
               : null}
           </dd>
-          <dt>
-            <Translate contentKey="eduApp.fragment.children">Children</Translate>
-          </dt>
-          <dd>{fragmentEntity.children ? fragmentEntity.children.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/fragment" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
