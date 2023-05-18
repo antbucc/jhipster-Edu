@@ -18,7 +18,8 @@
         "title": "Path"
       },
       "id": "ID",
-      "title": "Title"
+      "title": "Title",
+      "modules": "Modules"
     }
   }
 }

@@ -44,11 +44,6 @@ public class Fragment implements Serializable {
     @JsonIgnoreProperties(value = { "concepts", "fragments" }, allowSetters = true)
     private Set<Activity> activities = new HashSet<>();
 
-    @DBRef
-    @Field("modules")
-    @JsonIgnoreProperties(value = { "scenario", "fragments" }, allowSetters = true)
-    private Set<Module> modules = new HashSet<>();
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public String getId() {
@@ -192,37 +187,6 @@ public class Fragment implements Serializable {
     public Fragment removeActivity(Activity activity) {
         this.activities.remove(activity);
         activity.getFragments().remove(this);
-        return this;
-    }
-
-    public Set<Module> getModules() {
-        return this.modules;
-    }
-
-    public void setModules(Set<Module> modules) {
-        if (this.modules != null) {
-            this.modules.forEach(i -> i.removeFragments(this));
-        }
-        if (modules != null) {
-            modules.forEach(i -> i.addFragments(this));
-        }
-        this.modules = modules;
-    }
-
-    public Fragment modules(Set<Module> modules) {
-        this.setModules(modules);
-        return this;
-    }
-
-    public Fragment addModules(Module module) {
-        this.modules.add(module);
-        module.getFragments().add(this);
-        return this;
-    }
-
-    public Fragment removeModules(Module module) {
-        this.modules.remove(module);
-        module.getFragments().remove(this);
         return this;
     }
 

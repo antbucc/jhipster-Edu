@@ -43,14 +43,6 @@
       "ownerSide": true,
       "relationshipName": "activity",
       "relationshipType": "many-to-many"
-    },
-    {
-      "otherEntityField": "order",
-      "otherEntityName": "module",
-      "otherEntityRelationshipName": "fragments",
-      "ownerSide": false,
-      "relationshipName": "modules",
-      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceImpl"

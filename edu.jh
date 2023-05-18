@@ -66,6 +66,11 @@ entity Effect{
  title String
 }
 
+entity Path {
+ title String
+}
+
+
 
 entity Condition {
 	title String
@@ -154,10 +159,9 @@ relationship OneToMany {
 
 
 
-relationship ManyToMany {
-Module{fragments} to Fragment{ modules(order) }
+relationship ManyToOne {
+Module{Path} to Path{modules}
 }
-
 // Set pagination options
 paginate Learner, Educator with infinite-scroll
 paginate Domain, Scenario with pagination

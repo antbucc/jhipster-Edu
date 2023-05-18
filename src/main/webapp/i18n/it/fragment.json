@@ -22,8 +22,7 @@
       "outgoingConditions": "Outgoing Conditions",
       "precondition": "Precondition",
       "effect": "Effect",
-      "activity": "Activity",
-      "modules": "Modules"
+      "activity": "Activity"
     }
   }
 }
