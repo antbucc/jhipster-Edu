@@ -58,6 +58,9 @@ export const Fragment = () => {
                   <Translate contentKey="eduApp.fragment.activity">Activity</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="eduApp.fragment.next">Next</Translate>
+                </th>
+                <th>
                   <Translate contentKey="eduApp.fragment.module">Module</Translate>
                 </th>
                 <th />
@@ -82,6 +85,7 @@ export const Fragment = () => {
                         ))
                       : null}
                   </td>
+                  <td>{fragment.next ? <Link to={`/fragment/${fragment.next.id}`}>{fragment.next.id}</Link> : ''}</td>
                   <td>{fragment.module ? <Link to={`/module/${fragment.module.id}`}>{fragment.module.title}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

@@ -26,6 +26,12 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "competence",
+      "otherEntityRelationshipName": "parent",
+      "relationshipName": "sons",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityField": "title",
       "otherEntityName": "concept",
       "otherEntityRelationshipName": "competence",
@@ -35,10 +41,9 @@
     },
     {
       "otherEntityName": "competence",
-      "otherEntityRelationshipName": "competence",
-      "ownerSide": true,
-      "relationshipName": "competence",
-      "relationshipType": "many-to-many"
+      "otherEntityRelationshipName": "sons",
+      "relationshipName": "parent",
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityField": "title",
@@ -46,13 +51,6 @@
       "otherEntityRelationshipName": "competence",
       "ownerSide": false,
       "relationshipName": "scenario",
-      "relationshipType": "many-to-many"
-    },
-    {
-      "otherEntityName": "competence",
-      "otherEntityRelationshipName": "competence",
-      "ownerSide": false,
-      "relationshipName": "competence",
       "relationshipType": "many-to-many"
     }
   ],

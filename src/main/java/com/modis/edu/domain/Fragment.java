@@ -25,9 +25,19 @@ public class Fragment implements Serializable {
     private String title;
 
     @DBRef
+    @Field("previous")
+    @JsonIgnoreProperties(value = { "previous", "activities", "next", "module" }, allowSetters = true)
+    private Set<Fragment> previous = new HashSet<>();
+
+    @DBRef
     @Field("activities")
     @JsonIgnoreProperties(value = { "preconditions", "effects", "concepts", "fragments" }, allowSetters = true)
     private Set<Activity> activities = new HashSet<>();
+
+    @DBRef
+    @Field("next")
+    @JsonIgnoreProperties(value = { "previous", "activities", "next", "module" }, allowSetters = true)
+    private Fragment next;
 
     @DBRef
     @Field("module")
@@ -62,6 +72,37 @@ public class Fragment implements Serializable {
         this.title = title;
     }
 
+    public Set<Fragment> getPrevious() {
+        return this.previous;
+    }
+
+    public void setPrevious(Set<Fragment> fragments) {
+        if (this.previous != null) {
+            this.previous.forEach(i -> i.setNext(null));
+        }
+        if (fragments != null) {
+            fragments.forEach(i -> i.setNext(this));
+        }
+        this.previous = fragments;
+    }
+
+    public Fragment previous(Set<Fragment> fragments) {
+        this.setPrevious(fragments);
+        return this;
+    }
+
+    public Fragment addPrevious(Fragment fragment) {
+        this.previous.add(fragment);
+        fragment.setNext(this);
+        return this;
+    }
+
+    public Fragment removePrevious(Fragment fragment) {
+        this.previous.remove(fragment);
+        fragment.setNext(null);
+        return this;
+    }
+
     public Set<Activity> getActivities() {
         return this.activities;
     }
@@ -84,6 +125,19 @@ public class Fragment implements Serializable {
     public Fragment removeActivity(Activity activity) {
         this.activities.remove(activity);
         activity.getFragments().remove(this);
+        return this;
+    }
+
+    public Fragment getNext() {
+        return this.next;
+    }
+
+    public void setNext(Fragment fragment) {
+        this.next = fragment;
+    }
+
+    public Fragment next(Fragment fragment) {
+        this.setNext(fragment);
         return this;
     }
 

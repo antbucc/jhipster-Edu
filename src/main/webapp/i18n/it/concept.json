@@ -20,8 +20,10 @@
       "id": "ID",
       "title": "Title",
       "description": "Description",
+      "sons": "Sons",
       "precondition": "Precondition",
       "effect": "Effect",
+      "parent": "Parent",
       "competence": "Competence",
       "activity": "Activity"
     }

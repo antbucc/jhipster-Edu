@@ -7,8 +7,10 @@ export interface IConcept {
   id?: string;
   title?: string | null;
   description?: string | null;
+  sons?: IConcept[] | null;
   precondition?: IPrecondition | null;
   effect?: IEffect | null;
+  parent?: IConcept | null;
   competences?: ICompetence[] | null;
   activities?: IActivity[] | null;
 }

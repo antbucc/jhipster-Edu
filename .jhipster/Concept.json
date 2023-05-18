@@ -21,6 +21,12 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "concept",
+      "otherEntityRelationshipName": "parent",
+      "relationshipName": "sons",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityField": "metadata",
       "otherEntityName": "precondition",
       "otherEntityRelationshipName": "concept",
@@ -32,6 +38,12 @@
       "otherEntityName": "effect",
       "otherEntityRelationshipName": "concept",
       "relationshipName": "effect",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "concept",
+      "otherEntityRelationshipName": "sons",
+      "relationshipName": "parent",
       "relationshipType": "many-to-one"
     },
     {

@@ -8,6 +8,7 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { getEntities as getConcepts } from 'app/entities/concept/concept.reducer';
 import { IPrecondition } from 'app/shared/model/precondition.model';
 import { getEntities as getPreconditions } from 'app/entities/precondition/precondition.reducer';
 import { IEffect } from 'app/shared/model/effect.model';
@@ -27,6 +28,7 @@ export const ConceptUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const concepts = useAppSelector(state => state.concept.entities);
   const preconditions = useAppSelector(state => state.precondition.entities);
   const effects = useAppSelector(state => state.effect.entities);
   const competences = useAppSelector(state => state.competence.entities);
@@ -47,6 +49,7 @@ export const ConceptUpdate = () => {
       dispatch(getEntity(id));
     }
 
+    dispatch(getConcepts({}));
     dispatch(getPreconditions({}));
     dispatch(getEffects({}));
     dispatch(getCompetences({}));
@@ -63,6 +66,7 @@ export const ConceptUpdate = () => {
     const entity = {
       ...conceptEntity,
       ...values,
+      parent: concepts.find(it => it.id.toString() === values.parent.toString()),
       precondition: preconditions.find(it => it.id.toString() === values.precondition.toString()),
       effect: effects.find(it => it.id.toString() === values.effect.toString()),
     };
@@ -81,6 +85,7 @@ export const ConceptUpdate = () => {
           ...conceptEntity,
           precondition: conceptEntity?.precondition?.id,
           effect: conceptEntity?.effect?.id,
+          parent: conceptEntity?.parent?.id,
         };
 
   return (
@@ -138,6 +143,16 @@ export const ConceptUpdate = () => {
                   ? effects.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.metadata}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField id="concept-parent" name="parent" data-cy="parent" label={translate('eduApp.concept.parent')} type="select">
+                <option value="" key="0" />
+                {concepts
+                  ? concepts.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}
