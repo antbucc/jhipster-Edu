@@ -42,13 +42,6 @@
       "relationshipType": "one-to-one"
     },
     {
-      "otherEntityField": "title",
-      "otherEntityName": "fragment",
-      "otherEntityRelationshipName": "module",
-      "relationshipName": "fragment",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityName": "fragment",
       "otherEntityRelationshipName": "modules",
       "ownerSide": true,

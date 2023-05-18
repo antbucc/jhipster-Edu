@@ -61,7 +61,6 @@ export const FragmentUpdate = () => {
       activities: mapIdList(values.activities),
       condition: fragments.find(it => it.id.toString() === values.condition.toString()),
       children: fragments.find(it => it.id.toString() === values.children.toString()),
-      module: modules.find(it => it.id.toString() === values.module.toString()),
     };
 
     if (isNew) {
@@ -79,7 +78,6 @@ export const FragmentUpdate = () => {
           condition: fragmentEntity?.condition?.id,
           activities: fragmentEntity?.activities?.map(e => e.id.toString()),
           children: fragmentEntity?.children?.id,
-          module: fragmentEntity?.module?.id,
         };
 
   return (
@@ -153,16 +151,6 @@ export const FragmentUpdate = () => {
                   ? fragments.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField id="fragment-module" name="module" data-cy="module" label={translate('eduApp.fragment.module')} type="select">
-                <option value="" key="0" />
-                {modules
-                  ? modules.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.title}
                       </option>
                     ))
                   : null}

@@ -13,9 +13,6 @@ entity Module {
     level Level
 }
 
-entity Path {
-title String
-}
 
 
 entity Learner {
@@ -139,9 +136,7 @@ relationship ManyToMany {
   Activity { Concept(title) } to Concept{ Activity(title) }
 }
 
-relationship OneToMany {
-  Module { Fragment(title) } to Fragment{ Module(title) }
-}
+
 
 relationship OneToMany {
   Fragment { Precondition(title) } to Precondition{ Fragment(title) }
