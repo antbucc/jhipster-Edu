@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -62,14 +60,10 @@ public class ConceptServiceImpl implements ConceptService {
         return conceptRepository.findAll();
     }
 
-    public Page<Concept> findAllWithEagerRelationships(Pageable pageable) {
-        return conceptRepository.findAllWithEagerRelationships(pageable);
-    }
-
     @Override
     public Optional<Concept> findOne(String id) {
         log.debug("Request to get Concept : {}", id);
-        return conceptRepository.findOneWithEagerRelationships(id);
+        return conceptRepository.findById(id);
     }
 
     @Override

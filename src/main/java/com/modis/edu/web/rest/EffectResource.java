@@ -2,6 +2,7 @@ package com.modis.edu.web.rest;
 
 import com.modis.edu.domain.Effect;
 import com.modis.edu.repository.EffectRepository;
+import com.modis.edu.service.EffectService;
 import com.modis.edu.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,9 +31,12 @@ public class EffectResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final EffectService effectService;
+
     private final EffectRepository effectRepository;
 
-    public EffectResource(EffectRepository effectRepository) {
+    public EffectResource(EffectService effectService, EffectRepository effectRepository) {
+        this.effectService = effectService;
         this.effectRepository = effectRepository;
     }
 
@@ -49,7 +53,7 @@ public class EffectResource {
         if (effect.getId() != null) {
             throw new BadRequestAlertException("A new effect cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Effect result = effectRepository.save(effect);
+        Effect result = effectService.save(effect);
         return ResponseEntity
             .created(new URI("/api/effects/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -81,7 +85,7 @@ public class EffectResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Effect result = effectRepository.save(effect);
+        Effect result = effectService.update(effect);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, effect.getId()))
@@ -116,16 +120,7 @@ public class EffectResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Effect> result = effectRepository
-            .findById(effect.getId())
-            .map(existingEffect -> {
-                if (effect.getTitle() != null) {
-                    existingEffect.setTitle(effect.getTitle());
-                }
-
-                return existingEffect;
-            })
-            .map(effectRepository::save);
+        Optional<Effect> result = effectService.partialUpdate(effect);
 
         return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, effect.getId()));
     }
@@ -139,11 +134,7 @@ public class EffectResource {
     @GetMapping("/effects")
     public List<Effect> getAllEffects(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Effects");
-        if (eagerload) {
-            return effectRepository.findAllWithEagerRelationships();
-        } else {
-            return effectRepository.findAll();
-        }
+        return effectService.findAll();
     }
 
     /**
@@ -155,7 +146,7 @@ public class EffectResource {
     @GetMapping("/effects/{id}")
     public ResponseEntity<Effect> getEffect(@PathVariable String id) {
         log.debug("REST request to get Effect : {}", id);
-        Optional<Effect> effect = effectRepository.findOneWithEagerRelationships(id);
+        Optional<Effect> effect = effectService.findOne(id);
         return ResponseUtil.wrapOrNotFound(effect);
     }
 
@@ -168,7 +159,7 @@ public class EffectResource {
     @DeleteMapping("/effects/{id}")
     public ResponseEntity<Void> deleteEffect(@PathVariable String id) {
         log.debug("REST request to delete Effect : {}", id);
-        effectRepository.deleteById(id);
+        effectService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

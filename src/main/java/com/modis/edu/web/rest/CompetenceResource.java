@@ -2,6 +2,7 @@ package com.modis.edu.web.rest;
 
 import com.modis.edu.domain.Competence;
 import com.modis.edu.repository.CompetenceRepository;
+import com.modis.edu.service.CompetenceService;
 import com.modis.edu.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,9 +31,12 @@ public class CompetenceResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final CompetenceService competenceService;
+
     private final CompetenceRepository competenceRepository;
 
-    public CompetenceResource(CompetenceRepository competenceRepository) {
+    public CompetenceResource(CompetenceService competenceService, CompetenceRepository competenceRepository) {
+        this.competenceService = competenceService;
         this.competenceRepository = competenceRepository;
     }
 
@@ -49,7 +53,7 @@ public class CompetenceResource {
         if (competence.getId() != null) {
             throw new BadRequestAlertException("A new competence cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Competence result = competenceRepository.save(competence);
+        Competence result = competenceService.save(competence);
         return ResponseEntity
             .created(new URI("/api/competences/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -83,7 +87,7 @@ public class CompetenceResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Competence result = competenceRepository.save(competence);
+        Competence result = competenceService.update(competence);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, competence.getId()))
@@ -118,22 +122,7 @@ public class CompetenceResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Competence> result = competenceRepository
-            .findById(competence.getId())
-            .map(existingCompetence -> {
-                if (competence.getTitle() != null) {
-                    existingCompetence.setTitle(competence.getTitle());
-                }
-                if (competence.getDescription() != null) {
-                    existingCompetence.setDescription(competence.getDescription());
-                }
-                if (competence.getType() != null) {
-                    existingCompetence.setType(competence.getType());
-                }
-
-                return existingCompetence;
-            })
-            .map(competenceRepository::save);
+        Optional<Competence> result = competenceService.partialUpdate(competence);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -150,11 +139,7 @@ public class CompetenceResource {
     @GetMapping("/competences")
     public List<Competence> getAllCompetences(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Competences");
-        if (eagerload) {
-            return competenceRepository.findAllWithEagerRelationships();
-        } else {
-            return competenceRepository.findAll();
-        }
+        return competenceService.findAll();
     }
 
     /**
@@ -166,7 +151,7 @@ public class CompetenceResource {
     @GetMapping("/competences/{id}")
     public ResponseEntity<Competence> getCompetence(@PathVariable String id) {
         log.debug("REST request to get Competence : {}", id);
-        Optional<Competence> competence = competenceRepository.findOneWithEagerRelationships(id);
+        Optional<Competence> competence = competenceService.findOne(id);
         return ResponseUtil.wrapOrNotFound(competence);
     }
 
@@ -179,7 +164,7 @@ public class CompetenceResource {
     @DeleteMapping("/competences/{id}")
     public ResponseEntity<Void> deleteCompetence(@PathVariable String id) {
         log.debug("REST request to delete Competence : {}", id);
-        competenceRepository.deleteById(id);
+        competenceService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

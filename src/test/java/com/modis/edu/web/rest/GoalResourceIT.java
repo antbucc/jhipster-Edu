@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.modis.edu.IntegrationTest;
 import com.modis.edu.domain.Goal;
 import com.modis.edu.repository.GoalRepository;
+import com.modis.edu.service.GoalService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -46,6 +47,9 @@ class GoalResourceIT {
 
     @Mock
     private GoalRepository goalRepositoryMock;
+
+    @Mock
+    private GoalService goalServiceMock;
 
     @Autowired
     private MockMvc restGoalMockMvc;
@@ -128,16 +132,16 @@ class GoalResourceIT {
 
     @SuppressWarnings({ "unchecked" })
     void getAllGoalsWithEagerRelationshipsIsEnabled() throws Exception {
-        when(goalRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(goalServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restGoalMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
-        verify(goalRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+        verify(goalServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @SuppressWarnings({ "unchecked" })
     void getAllGoalsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(goalRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(goalServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restGoalMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
         verify(goalRepositoryMock, times(1)).findAll(any(Pageable.class));
