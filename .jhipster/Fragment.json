@@ -44,13 +44,6 @@
     },
     {
       "otherEntityField": "title",
-      "otherEntityName": "goal",
-      "otherEntityRelationshipName": "fragment",
-      "relationshipName": "goal",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityField": "title",
       "otherEntityName": "activity",
       "otherEntityRelationshipName": "fragment",
       "ownerSide": true,

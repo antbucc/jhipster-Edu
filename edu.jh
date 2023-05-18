@@ -66,9 +66,6 @@ entity Effect{
  title String
 }
 
-entity Goal{
-title String
-}
 
 
 
@@ -146,10 +143,6 @@ relationship OneToMany {
   Fragment { Effect(title) } to Effect{ Fragment(title) }
 }
 
-
-relationship OneToMany {
-  Fragment { Goal(title) } to Goal{ Fragment(title) }
-}
 
 
 relationship ManyToMany {

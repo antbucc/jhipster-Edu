@@ -25,7 +25,7 @@ public class Effect implements Serializable {
     @DBRef
     @Field("fragment")
     @JsonIgnoreProperties(
-        value = { "condition", "parents", "preconditions", "effects", "goals", "activities", "children", "modules" },
+        value = { "condition", "parents", "preconditions", "effects", "activities", "children", "modules" },
         allowSetters = true
     )
     private Fragment fragment;
